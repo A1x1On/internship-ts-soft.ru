@@ -62,15 +62,8 @@ VALUES
 EXEC sp_rename 'TASKS.ID', 'TASKID', 'COLUMN';
 
 ALTER TABLE TASKS 
-ADD USID int REFERENCES USERS(USERID) --1 новый столбец,  2 таблица(столбец для связи)
+ADD USID int REFERENCES USERS(ID) --1 новый столбец,  2 таблица(столбец для связи)
 
 DELETE TASKS WHERE TASKID != 0;
 
 EXEC sp_rename 'TASKS.USERID', 'USID', 'COLUMN';
-
-ALTER TABLE TASKS drop column USID
-alter table TASKS 
-add OWNERID int NOT NULL
-DEFAULT '0'
-
-ALTER TABLE TASKS DROP COLUMN OWNERID
