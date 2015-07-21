@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "Registration";
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+}
+@model TaskManager.USERS
+
+<h2>Registration</h2>
+
+
+@using (Html.BeginForm("Registration", "Account", FormMethod.Post))
+{
+    @Html.LabelFor(m => m.FIRST_NAME)<br/>
+    @Html.EditorFor(x => x.FIRST_NAME)<br />
+    @Html.ValidationMessageFor(x => x.FIRST_NAME)<br /><br />
+
+    @Html.LabelFor(m => m.LAST_NAME)<br />
+    @Html.EditorFor(x => x.LAST_NAME)<br />
+    @Html.ValidationMessageFor(x => x.LAST_NAME)<br /><br />
+
+    @Html.LabelFor(m => m.LOGIN_NAME)<br />
+    @Html.EditorFor(x => x.LOGIN_NAME)<br />
+    @Html.ValidationMessageFor(x => x.LOGIN_NAME)<br /><br />
+
+    @Html.LabelFor(m => m.EMAIL)<br />
+    @Html.EditorFor(x => x.EMAIL)<br />
+    @Html.ValidationMessageFor(x => x.EMAIL)<br /><br />
+
+
+    @Html.LabelFor(m => m.PASS)<br />
+    @Html.PasswordFor(x => x.PASS)<br/>
+    @Html.ValidationMessageFor(x => x.PASS)<br/><br/>
+
+    @Html.LabelFor(m => m.PASSConfirm)<br />
+    @Html.PasswordFor(x => x.PASSConfirm)<br />
+    @Html.ValidationMessageFor(x => x.PASSConfirm)<br /><br /><br />
+
+
+    <input type="submit" value="Зарегистрироваться"/>
+}

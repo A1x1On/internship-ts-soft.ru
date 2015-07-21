@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TaskManagerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="TASKS">
+    <Key>
+      <PropertyRef Name="TASKID" />
+    </Key>
+    <Property Name="TASKID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TITLE" Type="varchar(max)" Nullable="false" />
+    <Property Name="TASKSTATUS" Type="varchar(max)" Nullable="false" />
+    <Property Name="TASKTERM" Type="varchar(max)" Nullable="false" />
+    <Property Name="TAGS" Type="varchar(max)" Nullable="false" />
+    <Property Name="DISCRIPTION" Type="varchar(max)" Nullable="false" />
+    <Property Name="USID" Type="int" />
+  </EntityType>
+  <EntityType Name="USERS">
+    <Key>
+      <PropertyRef Name="USERID" />
+    </Key>
+    <Property Name="USERID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FIRST_NAME" Type="varchar(max)" Nullable="false" />
+    <Property Name="LAST_NAME" Type="varchar(max)" Nullable="false" />
+    <Property Name="EMAIL" Type="varchar(max)" Nullable="false" />
+    <Property Name="LOGIN_NAME" Type="varchar(max)" Nullable="false" />
+    <Property Name="PASS" Type="varchar(max)" Nullable="false" />
+    <Property Name="CONFIRM" Type="varchar(max)" />
+  </EntityType>
+  <Association Name="FK__TASKS__USID__1367E606">
+    <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+    <End Role="TASKS" Type="Self.TASKS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="USERID" />
+      </Principal>
+      <Dependent Role="TASKS">
+        <PropertyRef Name="USID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TaskManagerModelStoreContainer">
+    <EntitySet Name="TASKS" EntityType="Self.TASKS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="USERS" EntityType="Self.USERS" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__TASKS__USID__1367E606" Association="Self.FK__TASKS__USID__1367E606">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="TASKS" EntitySet="TASKS" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
