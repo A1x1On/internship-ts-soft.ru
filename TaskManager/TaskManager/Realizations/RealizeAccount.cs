@@ -27,7 +27,6 @@ namespace TaskManager.Realizations
 
                 db.USERS.Add(u);
                 db.SaveChanges();
-
                 return "Пользователь успешно зарегистрирован, для подтверждения перейдите на почту";
             }
             return "Ошибка контекста";
