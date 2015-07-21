@@ -29,8 +29,6 @@ namespace TaskManager.Realizations
                 db.SaveChanges();
 
                 return "Пользователь успешно зарегистрирован, для подтверждения перейдите на почту";
-
-
             }
             return "Ошибка контекста";
         }
