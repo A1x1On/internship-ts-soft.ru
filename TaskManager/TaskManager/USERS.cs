@@ -38,7 +38,7 @@ namespace TaskManager
         public string LOGIN_NAME { get; set; }
         [Required(ErrorMessage = "Пожалуйста введите Пароль", AllowEmptyStrings = false)]
         [DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "Пароль должен состоять как минимум из 3-х символов")]
+        [StringLength(70, MinimumLength = 3, ErrorMessage = "Пароль должен состоять как минимум из 3-х символов")]
         [Display(Name = "Пароль")]
         public string PASS { get; set; }
         [Required(ErrorMessage = "Пожалуйста введите Подтверждение пароля", AllowEmptyStrings = false)]
@@ -47,6 +47,10 @@ namespace TaskManager
         [Display(Name = "Подтверждение")]
         public string PASSConfirm { get; set; }
         public string CONFIRM { get; set; }
+        [Required(ErrorMessage = "Пожалуйста введите Капчу", AllowEmptyStrings = false)]
+        [StringLength(15, MinimumLength = 5, ErrorMessage = "Капча должен иметь минимум 5 символов")]
+        [Display(Name = "Капча")]
+        public string CAPCHA { get; set; }
 
         public virtual ICollection<TASKS> TASKS { get; set; }
     }

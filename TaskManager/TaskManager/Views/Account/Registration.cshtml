@@ -32,8 +32,23 @@
 
     @Html.LabelFor(m => m.PASSConfirm)<br />
     @Html.PasswordFor(x => x.PASSConfirm)<br />
-    @Html.ValidationMessageFor(x => x.PASSConfirm)<br /><br /><br />
-
+    @Html.ValidationMessageFor(x => x.PASSConfirm)<br/><br/><br/>
+    
+    
+    // CAPCHA
+    <img src="@Url.Action("GetCapthcaImage", "Account")"/><br/>
+    @Html.LabelFor(m => m.CAPCHA)<br />
+    @Html.EditorFor(x => x.CAPCHA)<br />
+    @Html.ValidationMessageFor(x => x.CAPCHA)<br /><br />
+    <br /><br />
+    <div>
+        @if (ViewBag.Message2 != null)
+        {
+            <div style="border: 1px solid rgb(141, 27, 27); width: 300px; padding: 5px;">
+                @ViewBag.Message2
+            </div>
+        }
+    </div>
 
     <input type="submit" value="Зарегистрироваться"/>
 }

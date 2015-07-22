@@ -24,3 +24,4 @@ D:\Internship\TaskManager\TaskManager\bin\System.Web.WebPages.Razor.xml
 D:\Internship\TaskManager\TaskManager\obj\Debug\TaskManager.csprojResolveAssemblyReference.cache
 D:\Internship\TaskManager\TaskManager\obj\Debug\TaskManager.dll
 D:\Internship\TaskManager\TaskManager\obj\Debug\TaskManager.pdb
+D:\Internship\TaskManager\TaskManager\bin\SRVTextToImage.dll
