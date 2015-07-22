@@ -10,8 +10,10 @@ using System.Net.Mail;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using System.Web.Services.Description;
 using SRVTextToImage;
+using TaskManager.Models;
 using TaskManager.Realizations;
 
 namespace TaskManager.Controllers
@@ -60,7 +62,7 @@ namespace TaskManager.Controllers
              {
                  if (ModelState.IsValid)
                  {
-                     m_ResultMassage = m_relize.UserToDb(u); //IAccount
+                     m_ResultMassage = m_relize.UserToDb(u);
                      ModelState.Clear();
                  }
                  else
@@ -68,7 +70,7 @@ namespace TaskManager.Controllers
                      m_ResultMassage = "Капча верна но данные не корректны";
                  } 
              }
-             return RedirectToAction("Index", "Manager", new { m_ResultMassage });
+             return RedirectToAction("Index", "Account", new { m_ResultMassage });
         }
 
         /// <summary>
@@ -102,5 +104,45 @@ namespace TaskManager.Controllers
             stream.Seek(0, SeekOrigin.Begin);
             return new FileStreamResult(stream, "image/png");
         }
+
+        /// <summary>
+        /// Login View POST
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(LogIn model)
+        {
+            string[] dataAuth = new string[2];
+            if (ModelState.IsValid)
+            {
+                dataAuth = m_relize.UserAuthorisation(model);
+                if (dataAuth[1] == "true")
+                {
+                    m_ResultMassage = dataAuth[0];
+                    return RedirectToAction("Index", "Manager", new { m_ResultMassage });
+                }
+                else
+                {
+                    m_ResultMassage = dataAuth[0];
+                    return RedirectToAction("Index", "Account", new { m_ResultMassage });
+                }
+            }
+            return RedirectToAction("Index", "Account");
+        }
+
+        /// <summary>
+        /// Logout View POST
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult Logout()
+        {
+            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, "null");
+            Response.Cookies.Add(cookie);
+            return RedirectToAction("Index", "Account");
+        }
+
     }
 }

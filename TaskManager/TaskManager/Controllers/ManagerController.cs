@@ -8,9 +8,12 @@ namespace TaskManager.Controllers
 {
     public class ManagerController : Controller
     {
-        //
-        // GET: /Manager/
-
+       
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
         public ActionResult Index()
         {
             return View();
