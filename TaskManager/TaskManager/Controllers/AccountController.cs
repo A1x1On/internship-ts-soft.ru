@@ -29,7 +29,7 @@ namespace TaskManager.Controllers
         /// <summary>
         /// 
         /// </summary>
-        private readonly IAccount m_relize = new RealizeAccount();
+        private readonly IAccount m_Relize = new RealizeAccount();
 
         /// <summary>
         /// 
@@ -62,7 +62,7 @@ namespace TaskManager.Controllers
              {
                  if (ModelState.IsValid)
                  {
-                     m_ResultMassage = m_relize.UserToDb(u);
+                     m_ResultMassage = m_Relize.UserToDb(u);
                      ModelState.Clear();
                  }
                  else
@@ -82,7 +82,7 @@ namespace TaskManager.Controllers
         {
             if (Code != null)
             {
-                m_ResultMassage = m_relize.UserConfirm(Code);
+                m_ResultMassage = m_Relize.UserConfirm(Code);
                 return RedirectToAction("Index", "Manager", new { m_ResultMassage });
             }
             return View(); 
@@ -117,7 +117,7 @@ namespace TaskManager.Controllers
             string[] dataAuth = new string[2];
             if (ModelState.IsValid)
             {
-                dataAuth = m_relize.UserAuthorisation(model);
+                dataAuth = m_Relize.UserAuthorisation(model);
                 if (dataAuth[1] == "true")
                 {
                     m_ResultMassage = dataAuth[0];
@@ -144,5 +144,6 @@ namespace TaskManager.Controllers
             return RedirectToAction("Index", "Account");
         }
 
+        // ДОБАВИТЬ СПИСОК ДЕЛ ДОБАВЛЕНИЕ ИТП
     }
 }

@@ -1,8 +1,53 @@
-﻿@{
+﻿@model TaskManager.TASKS
+@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
 
 <h2>Список моих дел</h2>
+@Request.QueryString["m_ResultMassage"]
+<br/>
+
+
+
+
+
+<div>
+    @using (Html.BeginForm("Add", "Manager", FormMethod.Post))
+    {
+        @Html.ValidationSummary(true)
+        @Html.AntiForgeryToken()
+        @Html.TextBoxFor(x => x.TITLE, new {@placeholder = "Введите название"})<br/>
+        @Html.ValidationMessageFor(x => x.TITLE)
+        <br/>
+        <br/>
+        @Html.TextBoxFor(x => x.DISCRIPTION, new {@placeholder = "Описание задачи"})<br/>
+        @Html.ValidationMessageFor(x => x.DISCRIPTION)
+        <br/>
+        <br/>
+        <input type="date" runat="server" id="myDate" name="sel_date"/>
+        @Html.ValidationMessageFor(x => x.TASKTERM)
+        <br/>
+        <br/>
+        @Html.TextBoxFor(x => x.TASKSTATUS, new {@placeholder = "Статус"})<br/>
+        @Html.ValidationMessageFor(x => x.TASKSTATUS)
+
+        @Html.TextBoxFor(x => x.TAGS, new {@placeholder = "Введите теги"})
+        @Html.ValidationMessageFor(x => x.TAGS)
+
+        @Html.HiddenFor(x => x.TASKTERM, new {@Class = "valDate", @placeholder = "dd-mm-yy"})
+        @Html.HiddenFor(x => x.USID, new {@Value = @ViewBag.CurId})
+
+        <input type="submit" value="Вход"/>
+    }
+
+</div>
+
+
+@Html.Partial("_PartialSelectionTasks", ViewData["Query"])
+
+
+
+
 
 
