@@ -22,15 +22,31 @@ namespace TaskManager.Controllers
 
 
         /// <summary>
-        /// Selecting list of Tasks
+        /// View of Review list of Tasks, way adding task
         /// </summary>
         /// <returns></returns>
         [Authorize]
         public ActionResult Index()
         {
             int @id = Convert.ToInt32(m_Relize.CurrentUser(WebSecurity.CurrentUserName));
+            @ViewBag.CurId = m_Relize.CurrentUser(WebSecurity.CurrentUserName).ToString();
+            @ViewBag.CurStatus = "Активный";
             ViewData["Query"] = m_Relize.TaskSelect(@id);
             return View();
+        }
+
+        /// <summary>
+        /// Changing task
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public ActionResult Change(int Id)
+        {
+            int @id = Convert.ToInt32(m_Relize.CurrentUser(WebSecurity.CurrentUserName));
+            @ViewBag.CurId = m_Relize.CurrentUser(WebSecurity.CurrentUserName).ToString();
+            @ViewBag.CurStatus = "Активный";
+            ViewData["Query"] = m_Relize.TaskSelect(@id);
+            return View("Index", m_Relize.TaskChange(Id));
         }
 
         /// <summary>
@@ -53,6 +69,26 @@ namespace TaskManager.Controllers
             }
             return RedirectToAction("Index", "Manager", new { m_ResultMassage });
         }
+
+
+        // Removing task
+        /// <summary>
+        /// Removing tasks [HttpPost] [Ajax]
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult Delete(int Id = 0)
+        {
+            if (Request.IsAjaxRequest())
+            {
+                m_Relize.TaskDelete(Id); 
+            }
+            return Json(new { result = "Удалил: " + Id }, JsonRequestBehavior.AllowGet);
+        }
+
+        
+        
 
     }
 }

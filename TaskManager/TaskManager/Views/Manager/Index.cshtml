@@ -29,12 +29,10 @@
         @Html.ValidationMessageFor(x => x.TASKTERM)
         <br/>
         <br/>
-        @Html.TextBoxFor(x => x.TASKSTATUS, new {@placeholder = "Статус"})<br/>
-        @Html.ValidationMessageFor(x => x.TASKSTATUS)
-
         @Html.TextBoxFor(x => x.TAGS, new {@placeholder = "Введите теги"})
         @Html.ValidationMessageFor(x => x.TAGS)
 
+        @Html.HiddenFor(x => x.TASKSTATUS, new { @Value = @ViewBag.CurStatus })<br />
         @Html.HiddenFor(x => x.TASKTERM, new {@Class = "valDate", @placeholder = "dd-mm-yy"})
         @Html.HiddenFor(x => x.USID, new {@Value = @ViewBag.CurId})
 
@@ -42,8 +40,6 @@
     }
 
 </div>
-
-
 @Html.Partial("_PartialSelectionTasks", ViewData["Query"])
 
 

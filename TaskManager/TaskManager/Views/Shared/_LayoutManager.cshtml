@@ -15,6 +15,24 @@
     @RenderBody()
 </section>
 <footer></footer>
+
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $(".RemoveTask").click(function () {
+
+            var id = $(this).attr("id");
+            if (id != "") {
+                $(this).parent("div").fadeOut();
+                $.post("@Url.Action("Delete", "Manager")", { Id: id }, function (data) {
+                    $("header").html(data.result);
+                });
+            }
+        });
+    });
+    </script>
+
+
+
 </body>
 </html>
 

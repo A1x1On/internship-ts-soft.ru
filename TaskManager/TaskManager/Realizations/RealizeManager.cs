@@ -13,6 +13,8 @@ namespace TaskManager.Realizations
         int CurrentUser(string SafetyLogin);
         void TaskAdd(TASKS model);
         Array TaskSelect(int CurId);
+        void TaskDelete(int TaskId);
+        TASKS TaskChange(int TaskId);
     }
 
     public class RealizeManager : IManager
@@ -22,6 +24,30 @@ namespace TaskManager.Realizations
         /// </summary>
         private TaskManagerEntities m_db = new TaskManagerEntities();
 
+        /// <summary>
+        /// Getting task with TaskId for forward Changing task
+        /// </summary>
+        /// <param name="TaskId"></param>
+        /// <returns></returns>
+        public TASKS TaskChange(int TaskId)
+        {
+            var value = m_db.TASKS.FirstOrDefault(c => c.TASKID == TaskId);
+            return value;
+        }
+
+        /// <summary>
+        /// Removing task
+        /// </summary>
+        /// <param name="TaskId"></param>
+        public void TaskDelete(int TaskId)
+        {
+            var value = m_db.TASKS.FirstOrDefault(c => c.TASKID == TaskId);
+            if (value != null)
+            {
+                m_db.Set<TASKS>().Remove(value);
+                m_db.SaveChanges();
+            }
+        }
 
         /// <summary>
         /// Getting list of tasks
