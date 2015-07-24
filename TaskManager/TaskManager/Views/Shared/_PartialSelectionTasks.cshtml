@@ -1,0 +1,20 @@
+﻿@model IEnumerable<TaskManager.TASKS>
+
+
+<div style="background-color: #846; float: left; height: 200px;">
+    @foreach (var Task in Model.Take(100))
+    {
+        <div>
+            <span>Название: @Task.TITLE | </span>
+            <span>Описангие: @Task.DISCRIPTION | </span>
+            <span>Дата: @Task.TASKTERM | </span>
+            <span>Сnатус: @Task.TASKSTATUS | </span>
+            <span>Теги: @Task.TAGS | </span>
+            <span>User: @Task.USID </span>
+            <a href="@Url.Action("Change", "Manager", new {@Id = @Task.TASKID})">Изменить</a>
+            <span class="RemoveTask" id="@Task.TASKID">Удалить</span>
+
+        </div>
+    }
+
+</div>

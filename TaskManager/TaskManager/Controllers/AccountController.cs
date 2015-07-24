@@ -2,24 +2,49 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using System.Web.Services.Description;
+using SRVTextToImage;
+using TaskManager.Models;
 using TaskManager.Realizations;
 
 namespace TaskManager.Controllers
 {
     public class AccountController : Controller
     {
-        //
-        // GET: /Account/
-        private string m_ResultMassage = "";
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        private string m_ResultMassage = "Капча введена неверно";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private readonly IAccount m_Relize = new RealizeAccount();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
+            
             return View();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Registration()
         {
             return View();
@@ -33,22 +58,92 @@ namespace TaskManager.Controllers
         [HttpPost]
         public ActionResult Registration(USERS u)
         {
-            RealizeAccount reg = new RealizeAccount();
-            
-             //if (this.Session["CapthaImageText"].ToString() == CaptchaText.ToString())
-            //{
-                if (ModelState.IsValid)
-                {  
-                    m_ResultMassage = reg.UserToDb(u);
-                    ModelState.Clear();
-
-                }
-                
-          //  }
-                return RedirectToAction("Index", "Manager", new { m_ResultMassage });
-  
+             if (this.Session["CapthaImageText"].ToString() == u.CAPCHA)
+             {
+                 if (ModelState.IsValid)
+                 {
+                     m_ResultMassage = m_Relize.UserToDb(u);
+                     ModelState.Clear();
+                 }
+                 else
+                 {
+                     m_ResultMassage = "Капча верна но данные не корректны";
+                 } 
+             }
+             return RedirectToAction("Index", "Account", new { m_ResultMassage });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Code"></param>
+        /// <returns></returns>
+        public ActionResult ConfirMail(string Code)
+        {
+            if (Code != null)
+            {
+                m_ResultMassage = m_Relize.UserConfirm(Code);
+                return RedirectToAction("Index", "Manager", new { m_ResultMassage });
+            }
+            return View(); 
+        }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "none")]
+        public FileResult GetCapthcaImage()
+        {
+            CaptchaRandomImage CI = new CaptchaRandomImage();
+            this.Session["CapthaImageText"] = CI.GetRandomString(5);
+            CI.GenerateImage(this.Session["CapthaImageText"].ToString(), 300, 75, Color.DarkGreen, Color.White);
+            MemoryStream stream = new MemoryStream();
+            CI.Image.Save(stream, ImageFormat.Png);
+            stream.Seek(0, SeekOrigin.Begin);
+            return new FileStreamResult(stream, "image/png");
+        }
+
+        /// <summary>
+        /// Login View POST
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(LogIn model)
+        {
+            string[] dataAuth = new string[2];
+            if (ModelState.IsValid)
+            {
+                dataAuth = m_Relize.UserAuthorisation(model);
+                if (dataAuth[1] == "true")
+                {
+                    m_ResultMassage = dataAuth[0];
+                    return RedirectToAction("Index", "Manager", new { m_ResultMassage });
+                }
+                else
+                {
+                    m_ResultMassage = dataAuth[0];
+                    return RedirectToAction("Index", "Account", new { m_ResultMassage });
+                }
+            }
+            return RedirectToAction("Index", "Account");
+        }
+
+        /// <summary>
+        /// Logout View POST
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult Logout()
+        {
+            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, "null");
+            Response.Cookies.Add(cookie);
+            return RedirectToAction("Index", "Account");
+        }
+
+        // ДОБАВИТЬ СПИСОК ДЕЛ ДОБАВЛЕНИЕ ИТП
     }
 }
