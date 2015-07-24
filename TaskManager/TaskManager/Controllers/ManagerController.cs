@@ -70,6 +70,21 @@ namespace TaskManager.Controllers
             return RedirectToAction("Index", "Manager", new { m_ResultMassage });
         }
 
+        /// <summary>
+        /// Getting list of Tags with inputed Keyword [AJAX]
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        [Authorize]
+        public JsonResult GetTags(string name)
+        {
+            var tags = m_Relize.GettingTags(name);
+            foreach (var t in tags)
+            {
+                Debug.WriteLine("КВЕРИ: " + t.TITLETAG); 
+            }
+            return new JsonResult { Data = tags, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
 
         // Removing task
         /// <summary>

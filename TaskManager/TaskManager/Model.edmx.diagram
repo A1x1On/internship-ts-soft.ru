@@ -8,6 +8,7 @@
         <EntityTypeShape EntityType="TaskManagerModel.TASKS" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="TaskManagerModel.USERS" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="TaskManagerModel.FK__TASKS__USID__1367E606" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="TaskManagerModel.TAGS" Width="1.5" PointX="5" PointY="1.125" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

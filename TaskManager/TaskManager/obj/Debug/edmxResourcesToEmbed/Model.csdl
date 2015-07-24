@@ -45,5 +45,13 @@
       <End Role="USERS" EntitySet="USERS" />
       <End Role="TASKS" EntitySet="TASKS" />
     </AssociationSet>
+    <EntitySet Name="TAGS" EntityType="TaskManagerModel.TAGS" />
   </EntityContainer>
+  <EntityType Name="TAGS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TITLETAG" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
 </Schema>

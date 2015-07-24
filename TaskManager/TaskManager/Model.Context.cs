@@ -27,5 +27,6 @@ namespace TaskManager
     
         public DbSet<TASKS> TASKS { get; set; }
         public DbSet<USERS> USERS { get; set; }
+        public DbSet<TAGS> TAGS { get; set; }
     }
 }

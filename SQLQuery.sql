@@ -35,7 +35,7 @@ VALUES
 ('Юрий','Садовой', 'ura280@mail.ru', 'AxOn', '', ''),
 ('Михаил','Лаврищев', 'decastrio@gmail.com', 'MIHLAW', '', '');
 
-SELECT * FROM TASKS
+SELECT * FROM TAGS
 
 CREATE TABLE TASKS
 (
@@ -76,3 +76,19 @@ DEFAULT '0'
 ALTER TABLE TASKS DROP COLUMN OWNERID
 
 ALTER TABLE USERS ALTER COLUMN [CONFIRM] varchar(MAX) null
+
+CREATE TABLE TAGS
+(
+	ID int IDENTITY NOT NULL PRIMARY KEY,
+	TITLETAG varchar(255) NOT NULL,
+)
+
+INSERT INTO TAGS (TITLETAG)
+VALUES
+('доходы'),
+('расходы'),
+('работа'),
+('развлечение'),
+('семейный'),
+('бюджет');
+

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Security;
 
@@ -15,6 +16,8 @@ namespace TaskManager.Realizations
         Array TaskSelect(int CurId);
         void TaskDelete(int TaskId);
         TASKS TaskChange(int TaskId);
+        string TagsAdd(string TagRow);
+        IEnumerable<TAGS> GettingTags(string TagKeyword);
     }
 
     public class RealizeManager : IManager
@@ -23,6 +26,14 @@ namespace TaskManager.Realizations
         /// 
         /// </summary>
         private TaskManagerEntities m_db = new TaskManagerEntities();
+
+
+
+        
+
+
+
+
 
         /// <summary>
         /// Getting task with TaskId for forward Changing task
@@ -78,10 +89,62 @@ namespace TaskManager.Realizations
                 TASKTERM = model.TASKTERM,
                 USID = model.USID,
                 TASKSTATUS = model.TASKSTATUS,
-                TAGS = model.TAGS
+                TAGS = TagsAdd(model.TAGS)
             };
             m_db.TASKS.Add(TheTask);
             m_db.SaveChanges();
+        }
+
+        private int m_CountTag;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="TagRow"></param>
+        /// <returns></returns>
+        public string TagsAdd(string TagRow)
+        {
+            string @FinalTag = "";
+            TAGS @TagRes;
+            TagRow = TagRow.ToLower();
+
+            foreach (Match t in Regex.Matches(TagRow, @"([\b\w\-\w\b]+)"))
+            {
+                Debug.WriteLine("Уже есть: " + t.Value);
+
+                @TagRes = m_db.TAGS.Where(x => x.TITLETAG == t.Value).FirstOrDefault();
+                if (@TagRes != null)
+                {
+                    @FinalTag = @FinalTag + ", " + t.Value;
+                }
+                else
+                {
+                    Debug.WriteLine("Добавил: " + t.Value);
+                    @FinalTag = @FinalTag + ", " + t.Value;
+
+                    TAGS TheTag = new TAGS()
+                    {
+                        TITLETAG = t.Value
+                    };
+                    m_db.TAGS.Add(TheTag);
+                    m_db.SaveChanges();
+                }
+            }
+            m_CountTag = @FinalTag.Length - 2;
+            return @FinalTag.Substring(2, m_CountTag);
+        }
+
+        /// <summary>
+        /// Getting list of Tags with inputed Keyword 
+        /// </summary>
+        /// <param name="TagKeyword"></param>
+        /// <returns></returns>
+        public IEnumerable<TAGS> GettingTags(string TagKeyword)
+        {
+            IEnumerable<TAGS> QueryTags = from t in m_db.TAGS
+                where t.TITLETAG.Contains(TagKeyword)
+                orderby t.ID
+                select t;
+            return QueryTags.ToArray();
         }
 
         /// <summary>
