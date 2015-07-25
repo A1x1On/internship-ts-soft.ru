@@ -6,37 +6,28 @@
 @{
     string error = Request.QueryString["aspxerrorpath"];
 }
+@Request.QueryString["m_ResultMassage"]
 
-        Ошибка! Страницы @error не существует!
-
-        <h2>Авторизация</h2>
-        @Request.QueryString["m_ResultMassage"]
-
-        <br /><br />
-
-        <a href="@Url.Action("Index","Manager")">Мой список дел</a>
+<div class="auth-block">
+    <h2>Менеджер Задач</h2>
+    @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+    {
+        @Html.ValidationSummary(true)
+        @Html.AntiForgeryToken()
+        @Html.TextBoxFor(x => x.Login, new { @placeholder = "Введите логин" })
+        @Html.ValidationMessageFor(x => x.Login)
         <br />
-        <div class="auth-block">
-            <div><h2>Мои Докумены</h2></div>
-            @using (Html.BeginForm("Login", "Account", FormMethod.Post))
-            {
-                @Html.ValidationSummary(true)
-                @Html.AntiForgeryToken()
-                @Html.TextBoxFor(x => x.Login, new { @placeholder = "Введите логин" })
-                @Html.ValidationMessageFor(x => x.Login)
-                <br />
-                @Html.PasswordFor(x => x.Password, new { @placeholder = "Введите пароль" })
-                @Html.ValidationMessageFor(x => x.Password)
-                <br />
-                <font>@Request.QueryString["_error"]</font>
-                <br>
-                <input type="submit" value="Вход" />
-            }
-            @using (Html.BeginForm("Logout", "Account", FormMethod.Post))
-            {
-                <input type="submit" value="Выход" />
-            }
-            <br /><br />
-            <a href="@Url.Action("Registration", "Account")">Регистрация</a>
-        </div>
-        @Scripts.Render("~/bundles/jqueryval")
+        @Html.PasswordFor(x => x.Password, new { @placeholder = "Введите пароль" })
+        @Html.ValidationMessageFor(x => x.Password)
+        <br />
+        <input type="submit" value="Вход" />
+    }
+    @using (Html.BeginForm("Logout", "Account", FormMethod.Post))
+    {
+        <input type="submit" value="Выход" />
+    }
+    <br />
+    <a href="@Url.Action("Registration", "Account")">Регистрация</a> 
+</div>
+
+@Scripts.Render("~/bundles/jqueryval")

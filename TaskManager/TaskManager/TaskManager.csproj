@@ -169,7 +169,21 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Account.css" />
+    <Content Include="Content\Account.css">
+      <DependentUpon>Account.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Account.min.css">
+      <DependentUpon>Account.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Images\back.png" />
+    <Content Include="Content\Images\Fon-Auth.png" />
+    <Content Include="Content\Images\lines.png" />
+    <Content Include="Content\Manager.css">
+      <DependentUpon>Manager.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Manager.min.css">
+      <DependentUpon>Manager.css</DependentUpon>
+    </Content>
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -184,20 +198,65 @@
     <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery-ui.min.css">
+      <DependentUpon>jquery-ui.css</DependentUpon>
+    </Content>
     <Content Include="Content\themes\base\jquery.ui.accordion.css" />
+    <Content Include="Content\themes\base\jquery.ui.accordion.min.css">
+      <DependentUpon>jquery.ui.accordion.css</DependentUpon>
+    </Content>
     <Content Include="Content\themes\base\jquery.ui.all.css" />
+    <Content Include="Content\themes\base\jquery.ui.all.min.css">
+      <DependentUpon>jquery.ui.all.css</DependentUpon>
+    </Content>
     <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
+    <Content Include="Content\themes\base\jquery.ui.autocomplete.min.css">
+      <DependentUpon>jquery.ui.autocomplete.css</DependentUpon>
+    </Content>
     <Content Include="Content\themes\base\jquery.ui.base.css" />
+    <Content Include="Content\themes\base\jquery.ui.base.min.css">
+      <DependentUpon>jquery.ui.base.css</DependentUpon>
+    </Content>
     <Content Include="Content\themes\base\jquery.ui.button.css" />
+    <Content Include="Content\themes\base\jquery.ui.button.min.css">
+      <DependentUpon>jquery.ui.button.css</DependentUpon>
+    </Content>
     <Content Include="Content\themes\base\jquery.ui.core.css" />
+    <Content Include="Content\themes\base\jquery.ui.core.min.css">
+      <DependentUpon>jquery.ui.core.css</DependentUpon>
+    </Content>
     <Content Include="Content\themes\base\jquery.ui.datepicker.css" />
+    <Content Include="Content\themes\base\jquery.ui.datepicker.min.css">
+      <DependentUpon>jquery.ui.datepicker.css</DependentUpon>
+    </Content>
     <Content Include="Content\themes\base\jquery.ui.dialog.css" />
+    <Content Include="Content\themes\base\jquery.ui.dialog.min.css">
+      <DependentUpon>jquery.ui.dialog.css</DependentUpon>
+    </Content>
     <Content Include="Content\themes\base\jquery.ui.progressbar.css" />
+    <Content Include="Content\themes\base\jquery.ui.progressbar.min.css">
+      <DependentUpon>jquery.ui.progressbar.css</DependentUpon>
+    </Content>
     <Content Include="Content\themes\base\jquery.ui.resizable.css" />
+    <Content Include="Content\themes\base\jquery.ui.resizable.min.css">
+      <DependentUpon>jquery.ui.resizable.css</DependentUpon>
+    </Content>
     <Content Include="Content\themes\base\jquery.ui.selectable.css" />
+    <Content Include="Content\themes\base\jquery.ui.selectable.min.css">
+      <DependentUpon>jquery.ui.selectable.css</DependentUpon>
+    </Content>
     <Content Include="Content\themes\base\jquery.ui.slider.css" />
+    <Content Include="Content\themes\base\jquery.ui.slider.min.css">
+      <DependentUpon>jquery.ui.slider.css</DependentUpon>
+    </Content>
     <Content Include="Content\themes\base\jquery.ui.tabs.css" />
+    <Content Include="Content\themes\base\jquery.ui.tabs.min.css">
+      <DependentUpon>jquery.ui.tabs.css</DependentUpon>
+    </Content>
     <Content Include="Content\themes\base\jquery.ui.theme.css" />
+    <Content Include="Content\themes\base\jquery.ui.theme.min.css">
+      <DependentUpon>jquery.ui.theme.css</DependentUpon>
+    </Content>
     <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -225,7 +284,6 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Manager.css" />
     <EntityDeploy Include="Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model.Designer.cs</LastGenOutput>
@@ -243,6 +301,14 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
+    <Content Include="Content\Manager.less" />
+    <Content Include="Content\Manager.css.map">
+      <DependentUpon>Manager.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Account.less" />
+    <Content Include="Content\Account.css.map">
+      <DependentUpon>Account.css</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\angular-route.js" />
     <Content Include="Scripts\angular.js" />
@@ -259,6 +325,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
+    <Content Include="Scripts\less.min.js" />
     <Content Include="Scripts\managerScripts.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\TagScript.js" />
