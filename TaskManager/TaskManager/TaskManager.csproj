@@ -328,7 +328,7 @@
     <Content Include="Scripts\less.min.js" />
     <Content Include="Scripts\managerScripts.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\TagScript.js" />
+    <Content Include="Scripts\AngScripts.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -349,6 +349,7 @@
     <Content Include="Views\Shared\_PartialSelectionTasks.cshtml" />
     <Content Include="Views\Errors\Index.cshtml" />
     <Content Include="Views\Errors\Index.html" />
+    <Content Include="Views\Shared\_PartialTasksOpen.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

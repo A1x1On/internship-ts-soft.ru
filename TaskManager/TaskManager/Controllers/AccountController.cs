@@ -15,6 +15,7 @@ using System.Web.Services.Description;
 using SRVTextToImage;
 using TaskManager.Models;
 using TaskManager.Realizations;
+using WebMatrix.WebData;
 
 namespace TaskManager.Controllers
 {
@@ -37,7 +38,10 @@ namespace TaskManager.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            
+            if (WebSecurity.CurrentUserName != "")
+            {
+                return RedirectToAction("Index", "Manager");
+            }
             return View();
         }
 

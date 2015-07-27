@@ -79,10 +79,6 @@ namespace TaskManager.Controllers
         public JsonResult GetTags(string name)
         {
             var tags = m_Relize.GettingTags(name);
-            foreach (var t in tags)
-            {
-                Debug.WriteLine("КВЕРИ: " + t.TITLETAG); 
-            }
             return new JsonResult { Data = tags, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
@@ -100,6 +96,18 @@ namespace TaskManager.Controllers
                 m_Relize.TaskDelete(Id); 
             }
             return Json(new { result = "Удалил: " + Id }, JsonRequestBehavior.AllowGet);
+        }
+        
+        [Authorize]
+        public JsonResult OpenTask(int TaskId)
+        {
+  
+            Debug.WriteLine("Проверка: " + TaskId);
+            Array task = m_Relize.TaskOpen(TaskId);
+            
+
+
+            return new JsonResult { Data = task, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         

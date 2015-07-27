@@ -81,7 +81,7 @@ body a {
 body header,
 body section,
 body footer {
-  overflow: auto;
+  overflow: visible;
   width: 100%;
 }
 body header {
@@ -98,7 +98,7 @@ body section .auth-block {
   position: relative;
   margin-left: auto;
   margin-right: auto;
-  margin-top: -42px;
+  margin-top: -45px;
   text-align: center;
   border-radius: 0px 0px 7px 7px;
   overflow: visible;
@@ -173,8 +173,7 @@ body section .auth-block input[type=submit] {
   background-color: darkturquoise;
 }
 body section .auth-block input[type=submit]:hover {
-  background-color: brown;
-  color: #AAA;
+  background-color: #E0DCDC;
 }
 body footer {
   height: 4px;

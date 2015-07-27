@@ -70,26 +70,172 @@ td {
 body {
   color: #333;
   font-family: 'Cuprum', sans-serif;
+  height: 100%;
 }
 body a:hover {
   color: brown;
   text-decoration: none;
 }
 body a {
-  color: green;
+  color: #00BDC0;
+}
+body .inputText {
+  width: 200px;
+  height: 28px;
+  text-align: left;
+  padding: 3px;
+  font-size: 13px;
+  background-color: #fbfbfb;
+  border: none;
+}
+body .inputSubmit {
+  width: 210px;
+  height: 39px;
+  margin-bottom: 1px;
+  display: block;
+  border: none;
+  margin-left: -4px;
+  cursor: pointer;
+  background-color: darkturquoise;
+}
+body .inputSubmit:hover {
+  background-color: #E0DCDC;
 }
 body header,
 body section,
 body footer {
-  overflow: auto;
+  overflow: visible;
   width: 100%;
 }
 body header {
   height: 4px;
-  background-color: #333;
+  background-color: darkturquoise;
 }
 body section {
   min-height: 500px;
   padding-bottom: 100px;
+}
+body section .list-tasks {
+  float: left;
+  width: 300px;
+  min-height: 300px;
+  border-radius: 4px;
+  margin-left: 10px;
+}
+body section .list-tasks i {
+  float: left;
+  background-color: #FBFBE8;
+  margin-bottom: 2px;
+  font-style: normal;
+  font-size: 13px;
+  cursor: pointer;
+  display: block;
+  text-decoration: none;
+  width: 96%;
+  padding: 5px;
+}
+body section .list-tasks i:hover {
+  background-color: #E0DCDC;
+  color: #00BDC0;
+}
+body section .list-tasks i div {
+  float: left;
+  width: 100%;
+  line-height: 22px;
+}
+body section .list-tasks i div:first-child {
+  font-size: 20px;
+}
+body section .list-tasks i .d-disc {
+  max-height: 50px;
+  overflow: hidden;
+}
+body section .list-tasks i .d-date {
+  color: #666;
+}
+body section .container {
+  float: left;
+  background-color: #FBFBE8;
+  margin-left: 10px;
+  width: 60%;
+  padding: 15px 10px 15px 10px;
+}
+body section .container .DinamicTag {
+  position: relative;
+}
+body section .container .DinamicTag input[type=text] {
+  width: 200px;
+  height: 28px;
+  text-align: left;
+  padding: 3px;
+  font-size: 13px;
+  background-color: #fbfbfb;
+  border: none;
+  float: left;
+}
+body section .container .DinamicTag .sel-list {
+  padding: 3px 3px 0px 3px;
+  background-color: #fbfbfb;
+  position: absolute;
+  width: 200px;
+  max-height: 100px;
+  overflow: auto;
+  float: left;
+  top: 35px;
+}
+body section .container .DinamicTag .sel-list .optionTag {
+  width: 100%;
+  border-bottom: 1px solid #EEE;
+  display: block;
+  margin-bottom: 1px;
+  cursor: pointer;
+  padding: 2px 0px 2px 0px;
+}
+body section .container .DinamicTag .sel-list .optionTag:hover {
+  background-color: antiquewhite;
+}
+body section .container .DinamicTag .ForTags {
+  float: left;
+}
+body section .container .DinamicTag .ForTags span {
+  display: block;
+  float: left;
+  height: 28px;
+  background-color: darkturquoise;
+  border-radius: 4px;
+  margin-left: 5px;
+  text-align: center;
+  padding: 6px 5px 1px 5px;
+  color: #FBFBFB;
+}
+body section .container .mainTaskInfo input {
+  width: 200px;
+  height: 28px;
+  text-align: left;
+  padding: 3px;
+  font-size: 13px;
+  background-color: #fbfbfb;
+  border: none;
+  margin-bottom: 10px;
+}
+body section .container .saveTask {
+  float: left;
+  width: 210px;
+  height: 39px;
+  margin-bottom: 1px;
+  display: block;
+  border: none;
+  margin-left: -4px;
+  cursor: pointer;
+  background-color: darkturquoise;
+}
+body section .container .saveTask:hover {
+  background-color: #E0DCDC;
+}
+body footer {
+  height: 4px;
+  background-color: darkturquoise;
+  position: absolute;
+  bottom: 0px;
 }
 /*# sourceMappingURL=Manager.css.map */

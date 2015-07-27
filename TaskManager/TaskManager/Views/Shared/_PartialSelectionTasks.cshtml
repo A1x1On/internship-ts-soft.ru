@@ -1,20 +1,14 @@
 ﻿@model IEnumerable<TaskManager.TASKS>
 
 
-<div style="background-color: #846; float: left; height: 200px;">
-    @foreach (var Task in Model.Take(100))
-    {
-        <div>
-            <span>Название: @Task.TITLE | </span>
-            <span>Описангие: @Task.DISCRIPTION | </span>
-            <span>Дата: @Task.TASKTERM | </span>
-            <span>Сnатус: @Task.TASKSTATUS | </span>
-            <span>Теги: @Task.TAGS | </span>
-            <span>User: @Task.USID </span>
-            <a href="@Url.Action("Change", "Manager", new {@Id = @Task.TASKID})">Изменить</a>
-            <span class="RemoveTask" id="@Task.TASKID">Удалить</span>
+@foreach (var Task in Model.Take(100))
+{
+    <i ng-controller="OpenTask" ng-click="ClickedTask(@Task.TASKID)">
+        <div>@Task.TITLE</div><br />
+        <div class="d-disc">@Task.DISCRIPTION</div>
+        <div class="d-date"><b>Дата:</b> @Task.TASKTERM</div>
 
-        </div>
-    }
+        @*<div class="RemoveTask" id="@Task.TASKID">Удалить</div>*@
 
-</div>
+    </i>
+}
