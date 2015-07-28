@@ -97,9 +97,18 @@ body .inputSubmit {
   margin-left: -4px;
   cursor: pointer;
   background-color: darkturquoise;
+  color: #FBFBFB;
+  font-size: 17px;
 }
 body .inputSubmit:hover {
   background-color: #E0DCDC;
+}
+body .transition {
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
 body header,
 body section,
@@ -114,6 +123,12 @@ body header {
 body section {
   min-height: 500px;
   padding-bottom: 100px;
+}
+body section .mainTitle {
+  display: block;
+  margin: 12px 10px 0px 16px;
+  font-size: 20px;
+  text-decoration: none;
 }
 body section .list-tasks {
   float: left;
@@ -183,16 +198,24 @@ body section .container .DinamicTag .sel-list {
   float: left;
   top: 35px;
 }
+body section .container .DinamicTag .sel-list:focus {
+  outline: none;
+}
+body section .container .DinamicTag .sel-list .focus {
+  background-color: #00CED1;
+}
 body section .container .DinamicTag .sel-list .optionTag {
   width: 100%;
   border-bottom: 1px solid #EEE;
   display: block;
-  margin-bottom: 1px;
+  padding: 2px 0px 4px 2px;
   cursor: pointer;
-  padding: 2px 0px 2px 0px;
 }
 body section .container .DinamicTag .sel-list .optionTag:hover {
   background-color: antiquewhite;
+}
+body section .container .DinamicTag .sel-list .optionTag:focus {
+  outline: none;
 }
 body section .container .DinamicTag .ForTags {
   float: left;
@@ -207,6 +230,20 @@ body section .container .DinamicTag .ForTags span {
   text-align: center;
   padding: 6px 5px 1px 5px;
   color: #FBFBFB;
+  margin-top: 2px;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+body section .container .DinamicTag .ForTags span:hover {
+  background-image: url("Images/cross.png");
+  background-size: 35%;
+  background-repeat: no-repeat;
+  transform: rotate(7deg);
+  background-position-x: right;
 }
 body section .container .mainTaskInfo input {
   width: 200px;
@@ -218,8 +255,8 @@ body section .container .mainTaskInfo input {
   border: none;
   margin-bottom: 10px;
 }
-body section .container .saveTask {
-  float: left;
+body section .container .saveTask,
+body section .container .RemoveTask {
   width: 210px;
   height: 39px;
   margin-bottom: 1px;
@@ -228,9 +265,19 @@ body section .container .saveTask {
   margin-left: -4px;
   cursor: pointer;
   background-color: darkturquoise;
+  color: #FBFBFB;
+  font-size: 17px;
+  margin: 10px 0px 10px 0px;
 }
-body section .container .saveTask:hover {
+body section .container .saveTask:hover,
+body section .container .RemoveTask:hover {
   background-color: #E0DCDC;
+}
+body section .container .RemoveTask {
+  display: none;
+}
+body section .container .saveTasksub {
+  display: none;
 }
 body footer {
   height: 4px;

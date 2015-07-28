@@ -42,7 +42,11 @@ namespace TaskManager.Controllers
             {
                 return RedirectToAction("Index", "Manager");
             }
-            return View();
+            else
+            {
+                return View();
+            }
+            
         }
 
         /// <summary>

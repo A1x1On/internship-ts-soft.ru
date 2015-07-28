@@ -3,12 +3,9 @@
 
 @foreach (var Task in Model.Take(100))
 {
-    <i ng-controller="OpenTask" ng-click="ClickedTask(@Task.TASKID)">
+    <i ng-controller="OpenTask" ng-click="ClickedTask(@Task.TASKID)" id="@Task.TASKID">
         <div>@Task.TITLE</div><br />
         <div class="d-disc">@Task.DISCRIPTION</div>
         <div class="d-date"><b>Дата:</b> @Task.TASKTERM</div>
-
-        @*<div class="RemoveTask" id="@Task.TASKID">Удалить</div>*@
-
     </i>
 }

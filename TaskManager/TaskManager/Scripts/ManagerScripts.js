@@ -20,18 +20,44 @@
 
     var i = 1;
     var y = 1;
-    $(".optionTag").live("click", function() {
+    var wholeTags = "";
+    var tagId = 0;
 
-        $(this).css("color", "blue");
-    }
-);
+
+
+   
+ 
+    var idtag = 0;
+    var title = "";
+    var arrayOfTags = [];
+    var tag = function () {
+        this.idtag = idtag;
+        this.title = title;
+        return this;
+    };
+
+
+    $(".optionTag").live("click", function() {
+        idtag = $(this).attr("tabindex");
+        title = $(this).html();
+        $(".ForTags").append("<span class='tag' id=" + idtag + ">" + title + "</span>");
+
+        arrayOfTags.push(new tag());
+     
+
+        wholeTags = wholeTags + ", " + title;
+        $(".inputTag").focus().val("");
+    });
+    $("body").click(function () {
+        $(".optionTag").fadeOut(100);  
+    });
+
     $(".inputTag").keyup(function (event) {
         if (event.keyCode == 40) {
             $(".sel-list").focus();
             setTimeout(function () {
                 $(".optionTag:nth-child(" + y + ")").removeClass("focus");
                 $(".optionTag:nth-child(1)").focus();
-                $(".optionTag:nth-child(1)").css("color", "red");
                 $(".optionTag:nth-child(" + i + ")").addClass("focus");
             }, 50); 
         }
@@ -42,11 +68,8 @@
             i++;
             y = i - 1;
             if ($(".optionTag:nth-child(" + i + ")").html() != undefined) {
-                $("#er").html("down: " + i);
-                $(".optionTag:nth-child(" + y + ")").css("color", "#333");
                 $(".optionTag:nth-child(" + y + ")").removeClass("focus");
                 $(".optionTag:nth-child(" + i + ")").focus();
-                $(".optionTag:nth-child(" + i + ")").css("color", "red");
                 $(".optionTag:nth-child(" + i + ")").addClass("focus");
             }
             else
@@ -55,31 +78,75 @@
                 y = i + 1;  
             }
         }
-        if (event.keyCode == 38) {
+        if (event.keyCode === 38) {
             i--;
             y = i + 1;
             if ($(".optionTag:nth-child(" + i + ")").html() != undefined) {
-                $("#er").html("up: " + i);
-                $(".optionTag:nth-child(" + y + ")").css("color", "#333");
                 $(".optionTag:nth-child(" + y + ")").removeClass("focus");
                 $(".optionTag:nth-child(" + i + ")").focus();
-                $(".optionTag:nth-child(" + i + ")").css("color", "red");
                 $(".optionTag:nth-child(" + i + ")").addClass("focus");
             }
             else
             {
                 $(".inputTag").focus();
+                $(".optionTag:nth-child(" + y + ")").removeClass("focus");
+                i = 1;
+                y = 1;
             }
         }
-        if (event.keyCode == 13 && $(".focus")) {
+        if (event.keyCode === 13 && $(".focus")) {
+
+            idtag = $(".focus").attr("tabindex");
+            title = $(".focus").html();
             
-            $(".ForTags").append('<span>' + $(".focus").html() + '</span>');
+            $(".ForTags").append("<span class='tag' id=" + idtag + ">" + title + "</span>");
+
+            arrayOfTags.push(new tag());
+            console.log(arrayOfTags);
+
             $(".optionTag").fadeOut(100);
+            wholeTags = wholeTags + ", " + title;
+            $(".inputTag").focus().val("");
         }
 
 
     });
 
+    //Добавление задачи submit
+    $(".saveTask").click(function () {
+        var str_tags = "";
+        for (var c = 0; arrayOfTags.length !== c; c++) {
+            str_tags = str_tags + ", " + arrayOfTags[c].title;
+        }
+        str_tags = str_tags.substring(2, str_tags.length);
+        $(".HIDDDENTAGS").val(str_tags);
+
+        var that = $(this);
+        setTimeout(function () {
+            that.parent("form").submit();
+        }, 1000);
+
+    });
+
+
+    //Удаление тега
+    $(".tag").live("click", function () {
+
+        alert($(this).attr("id"));
+
+        $(this).fadeOut(300);
+        var that = $(this);
+        setTimeout(function() {
+            that.remove();
+        }, 1000);
+        
+
+
+
+    });
+
+
+    
 
 });
 

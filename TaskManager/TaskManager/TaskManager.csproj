@@ -176,6 +176,7 @@
       <DependentUpon>Account.css</DependentUpon>
     </Content>
     <Content Include="Content\Images\back.png" />
+    <Content Include="Content\Images\cross.png" />
     <Content Include="Content\Images\Fon-Auth.png" />
     <Content Include="Content\Images\lines.png" />
     <Content Include="Content\Manager.css">

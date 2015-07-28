@@ -35,20 +35,7 @@ namespace TaskManager.Controllers
             return View();
         }
 
-        /// <summary>
-        /// Changing task
-        /// </summary>
-        /// <param name="Id"></param>
-        /// <returns></returns>
-        public ActionResult Change(int Id)
-        {
-            int @id = Convert.ToInt32(m_Relize.CurrentUser(WebSecurity.CurrentUserName));
-            @ViewBag.CurId = m_Relize.CurrentUser(WebSecurity.CurrentUserName).ToString();
-            @ViewBag.CurStatus = "Активный";
-            ViewData["Query"] = m_Relize.TaskSelect(@id);
-            return View("Index", m_Relize.TaskChange(Id));
-        }
-
+   
         /// <summary>
         /// Adding tasks into the data base
         /// </summary>
@@ -69,6 +56,44 @@ namespace TaskManager.Controllers
             }
             return RedirectToAction("Index", "Manager", new { m_ResultMassage });
         }
+
+
+
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult AddChange(TASKS model)
+        {
+            if (model.TASKID == 0)
+            {
+                try
+                {
+                    m_Relize.TaskAdd(model);
+                    m_ResultMassage = "Задача сохранена";
+                }
+                catch (Exception)
+                {
+                    m_ResultMassage = "Ошиба сохранения";
+                }
+            }
+            else
+            {
+                try
+                {
+                    m_Relize.TaskChange(model);
+                    m_ResultMassage = "Задача изменена";
+                }
+                catch (Exception)
+                {
+                    m_ResultMassage = "Ошибка изминения задачи";
+                }
+               
+
+            }
+            return RedirectToAction("Index", "Manager", new { m_ResultMassage });
+        }
+
+
 
         /// <summary>
         /// Getting list of Tags with inputed Keyword [AJAX]
