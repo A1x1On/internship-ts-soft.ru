@@ -4,53 +4,59 @@
     Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
 
-<h2>Список моих дел</h2>
+<a href="@Url.Action("Index","Manager")" class="mainTitle">Список всех задач</a>
 @Request.QueryString["m_ResultMassage"]
 <br/>
 
 
 
-
-
-<div>
-    @using (Html.BeginForm("Add", "Manager", FormMethod.Post))
+<div class="list-tasks" >
+    @Html.Partial("_PartialSelectionTasks", ViewData["Query"])
+</div>
+<div class="container">
+    @using (Html.BeginForm("AddChange", "Manager", FormMethod.Post)) // addChange
     {
         @Html.ValidationSummary(true)
         @Html.AntiForgeryToken()
-        @Html.TextBoxFor(x => x.TITLE, new { @placeholder = "Введите название" })<br />
-        @Html.ValidationMessageFor(x => x.TITLE)
-        <br />
-        <br />
-        @Html.TextBoxFor(x => x.DISCRIPTION, new { @placeholder = "Описание задачи" })<br />
-        @Html.ValidationMessageFor(x => x.DISCRIPTION)
-        <br />
-        <br />
-        <input type="date" runat="server" id="myDate" name="sel_date" />
-        @Html.ValidationMessageFor(x => x.TASKTERM)
-        <br />
-        <br/>
-        <div ng-controller="DinamicTag">
+        <div class="mainTaskInfo">
 
-            <input type="text" ng-model="name" ng-keyup="TagListToDOM(name)" />
-            {{mad}}
-            <div class="sel-list" style="height: 400px;">
-                <span class="option" ng-repeat="t in Tags | filter:query"> {{t.TITLETAG}}</span>
-            </div>
+            @Html.TextBoxFor(x => x.TITLE, new {@Class = "t-title", @placeholder = "Введите название"})<br/>
+            @Html.ValidationMessageFor(x => x.TITLE)
 
+            @Html.TextBoxFor(x => x.DISCRIPTION, new {@Class = "t-disc", @placeholder = "Описание задачи"})<br/>
+            @Html.ValidationMessageFor(x => x.DISCRIPTION)
+            <input type="date" runat="server" id="myDate" name="sel_date"/>
+            @Html.ValidationMessageFor(x => x.TASKTERM)
         </div>
-        @Html.TextBoxFor(x => x.TAGS, new { @placeholder = "Введите теги" })
-        @Html.ValidationMessageFor(x => x.TAGS)
 
-        @Html.HiddenFor(x => x.TASKSTATUS, new { @Value = @ViewBag.CurStatus })<br />
-        @Html.HiddenFor(x => x.TASKTERM, new { @Class = "valDate", @placeholder = "dd-mm-yy" })
-        @Html.HiddenFor(x => x.USID, new { @Value = @ViewBag.CurId })
 
-        <input type="submit" value="Вход" />
-        }
+        <div ng-controller="DinamicTag" class="DinamicTag" onkeyup="return(false)">
+            @Html.ValidationMessageFor(x => x.TAGS)
+            <input type="text" ng-model="name" ng-keyup="TagListToDOM(name)" class="inputTag" placeholder="Введите тег"/>
+            <div class="sel-list" onkeydown="return(false)" tabindex="0">
+                <div class="optionTag" ng-repeat="(i, u) in Tags | filter:query" tabindex='{{i+1}}'>{{u.TITLETAG}}</div>
+            </div>
+            <div class="ForTags"></div>
+        </div>
 
-    </div>
-@Html.Partial("_PartialSelectionTasks", ViewData["Query"])
+        @Html.HiddenFor(x => x.TAGS, new {@Class = "HIDDDENTAGS", @placeholder = "Введите теги"})
+        @Html.HiddenFor(x => x.TASKSTATUS, new {@Class = "TASKSTATUS", @Value = @ViewBag.CurStatus})<br/>
+        @Html.HiddenFor(x => x.TASKTERM, new {@Class = "valDate", @placeholder = "dd-mm-yy"})
+        @Html.HiddenFor(x => x.USID, new {@Value = @ViewBag.CurId})
+        @Html.HiddenFor(x => x.TASKID, new {@Class = "TASKID"})
+        <br/><br/>
+        <input type="button" value="Добавить" class="saveTask"/>
+        <input type="submit" value="submit" class="saveTasksub"/>
+        <input type="button" class="RemoveTask" id="" value="Удалить">
+    }
+</div>
+<div class="eddd">save</div>
 
+
+@using (Html.BeginForm("Logout", "Account", FormMethod.Post))
+{
+    <input type="submit" value="Выход" />
+}
 
 
 

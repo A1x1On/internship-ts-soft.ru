@@ -1,0 +1,196 @@
+﻿/* =Reset default browser CSS. Based on work by Eric Meyer: http://meyerweb.com/eric/tools/css/reset/index.html-------------------------------------------------------------- */
+html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p,
+blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, font, 
+img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,
+dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td {
+	background: transparent;
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+/************************************************/
+
+
+
+body {
+    
+
+    color: #333; 
+    font-family: 'Cuprum', sans-serif;
+  
+    height: 100%;
+    a:hover{ color: brown; text-decoration: none; }
+    a { color: #00BDC0; }
+
+    .inputText{
+        width: 200px;
+        height: 28px;
+        text-align: left;
+        padding: 3px;
+        font-size: 13px;
+        background-color: #fbfbfb;
+        border: none;
+    }
+    .inputSubmit{
+        &:hover{ background-color: #E0DCDC; }
+        width: 210px;
+        height: 39px;
+        margin-bottom: 1px;
+        display: block;
+        border: none;
+        margin-left: -4px;
+        cursor: pointer;
+        background-color: darkturquoise;
+        color: #FBFBFB;
+        font-size: 17px;
+
+    }
+    .transition{
+        -webkit-transition: all 0.3s ease;
+        -moz-transition: all 0.3s ease;
+        -o-transition: all 0.3s ease;
+        -ms-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+    }
+
+    header, section, footer {
+        overflow: visible;
+        width: 100%;
+    }
+    header {
+        height: 4px;
+        background-color: darkturquoise;
+    }
+    section {
+        min-height: 500px;
+        padding-bottom: 100px;
+        .mainTitle{
+            display: block;
+            margin: 12px 10px 0px 16px;
+            font-size: 20px;
+            text-decoration: none;
+        }
+        .list-tasks{
+            float: left;
+            width: 300px;
+            min-height: 300px;
+            border-radius: 4px;
+            margin-left: 10px;
+            i{
+                &:hover{ background-color: #E0DCDC; color: #00BDC0; }
+                float: left;
+                background-color: #FBFBE8;
+                margin-bottom: 2px;
+                font-style: normal;
+                font-size: 13px;
+                cursor: pointer;
+                display: block;
+                text-decoration: none; 
+                width: 96%;
+                padding: 5px;
+                div{
+                    float: left;
+                    width: 100%;
+                    line-height: 22px;
+                }
+                div:first-child{
+                    font-size: 20px;
+                }
+                .d-disc{
+                    max-height: 50px;
+                    overflow: hidden;
+
+                }
+                .d-date{
+                    color: #666;
+                }
+            }
+        }
+        .container{
+            float: left;
+            background-color: #FBFBE8;
+            margin-left: 10px;
+                width: 60%;
+                 padding: 15px 10px 15px 10px;
+            .DinamicTag{
+               position: relative;
+                
+                input[type=text]{ .inputText; float: left; }
+                .sel-list{
+                    &:focus { outline: none; }
+                    padding: 3px 3px 0px 3px;
+                    background-color: #fbfbfb;
+                    position: absolute;
+                    width: 200px;
+                    max-height: 100px;
+                    overflow: auto;
+                    float: left;
+                    top: 35px;  
+                    .focus{
+                        background-color: #00CED1;
+                    }                  
+                    .optionTag{
+                        &:hover{ background-color: antiquewhite; }
+                        &:focus { outline: none; }
+                        width: 100%;
+                        border-bottom: 1px solid #EEE;
+                        display: block;
+                        padding: 2px 0px 4px 2px;
+                        cursor: pointer;
+                    }  
+                }
+                .ForTags{
+                    float: left;
+                    span{
+                        display: block;
+                        float:left;
+                        height: 28px;
+                        background-color: darkturquoise;
+                        border-radius: 4px;
+                        margin-left: 5px;
+                        text-align: center;
+                        padding: 6px 5px 1px 5px;
+                        color: #FBFBFB;
+                        margin-top: 2px;
+                        .transition;
+                        cursor: pointer;
+                        &:hover{ 
+                            background-image: url("Images/cross.png");
+                            background-size: 35%;
+                            background-repeat: no-repeat;
+                            transform: rotate(7deg);
+                            background-position-x: right;
+                       }
+                    }
+                }
+               
+            }
+            .mainTaskInfo{
+              
+                input{
+                    .inputText;
+                    margin-bottom: 10px;
+
+                }
+
+            }
+             .saveTask, .RemoveTask{
+                    .inputSubmit;
+                    margin: 10px 0px 10px 0px;
+                }
+             .RemoveTask{ display: none; }
+             .saveTasksub{ display: none; }
+             
+
+
+
+
+        }
+    }
+    footer {
+        height: 4px;
+        background-color: darkturquoise;
+        position: absolute;
+        bottom: 0px;
+    }
+}

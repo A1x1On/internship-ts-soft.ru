@@ -30,6 +30,7 @@ namespace TaskManager
         [Display(Name = "Фамилия")]
         public string LAST_NAME { get; set; }
         [RegularExpression(@"^([0-9a-zA-Z]([\+\-_\.][0-9a-zA-Z]+)*)+@(([0-9a-zA-Z][-\w]*[0-9a-zA-Z]*\.)+[a-zA-Z0-9]{2,3})$", ErrorMessage = "Введенный Email не коректен")]
+        [Required(ErrorMessage = "Пожалуйста введите Email", AllowEmptyStrings = false)]
         [Display(Name = "Email")]
         public string EMAIL { get; set; }
         [Required(ErrorMessage = "Пожалуйста введите Логин", AllowEmptyStrings = false)]

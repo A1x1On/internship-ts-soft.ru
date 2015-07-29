@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
 
     // Init module for actions of tags
     var ModuleTag = angular.module("AngularManager", ["ngRoute"]);
@@ -30,5 +30,4 @@
     });
 
 })();
-
 

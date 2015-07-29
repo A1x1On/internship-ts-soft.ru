@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
@@ -15,7 +16,8 @@ namespace TaskManager.Realizations
         void TaskAdd(TASKS model);
         Array TaskSelect(int CurId);
         void TaskDelete(int TaskId);
-        TASKS TaskChange(int TaskId);
+        void TaskChange(TASKS model);
+        Array TaskOpen(int TaskId);
         string TagsAdd(string TagRow);
         IEnumerable<TAGS> GettingTags(string TagKeyword);
     }
@@ -29,10 +31,24 @@ namespace TaskManager.Realizations
 
 
 
-        
 
 
 
+        public Array TaskOpen(int TaskId)
+        {
+            string[] setPropertyTask = new string[6];
+
+            var value = m_db.TASKS.FirstOrDefault(c => c.TASKID == TaskId);
+
+            setPropertyTask[0] = value.TITLE;
+            setPropertyTask[1] = value.DISCRIPTION;
+            setPropertyTask[2] = value.TASKTERM;
+            setPropertyTask[3] = value.TASKSTATUS;
+            setPropertyTask[4] = value.TAGS;
+            setPropertyTask[5] = value.TASKID.ToString();
+
+            return setPropertyTask;
+        }
 
 
         /// <summary>
@@ -40,10 +56,24 @@ namespace TaskManager.Realizations
         /// </summary>
         /// <param name="TaskId"></param>
         /// <returns></returns>
-        public TASKS TaskChange(int TaskId)
+        public void TaskChange(TASKS model)
         {
-            var value = m_db.TASKS.FirstOrDefault(c => c.TASKID == TaskId);
-            return value;
+            var value = m_db.TASKS.FirstOrDefault(c => c.TASKID == model.TASKID);
+            if (value != null)
+            {
+                TASKS TheTask = new TASKS()
+                {
+                    TASKID = model.TASKID,
+                    TITLE = model.TITLE,
+                    DISCRIPTION = model.DISCRIPTION,
+                    TASKTERM = model.TASKTERM,
+                    USID = model.USID,
+                    TASKSTATUS = model.TASKSTATUS,
+                    TAGS = TagsAdd(model.TAGS)
+                };
+                m_db.TASKS.AddOrUpdate(TheTask);
+                m_db.SaveChanges();
+            }
         }
 
         /// <summary>
