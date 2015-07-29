@@ -111,11 +111,11 @@ body {
             float: left;
             background-color: #FBFBE8;
             margin-left: 10px;
-                width: 60%;
-                 padding: 15px 10px 15px 10px;
+            width: 60%;
+            padding: 15px 10px 15px 10px;
+            position: relative;
             .DinamicTag{
-               position: relative;
-                
+                position: relative;
                 input[type=text]{ .inputText; float: left; }
                 .sel-list{
                     &:focus { outline: none; }
@@ -147,7 +147,6 @@ body {
                         float:left;
                         height: 28px;
                         background-color: darkturquoise;
-                        border-radius: 4px;
                         margin-left: 5px;
                         text-align: center;
                         padding: 6px 5px 1px 5px;
@@ -167,48 +166,49 @@ body {
                
             }
             .mainTaskInfo{
-              
-                input{
-                    .inputText;
-                    margin-bottom: 10px;
-
-                }
-
+                input{ .inputText; margin-bottom: 10px; }
             }
-             .saveTask, .RemoveTask, .finishtag{
-                    .inputSubmit;
-                    margin: 10px 0px 10px 0px;
-                }
-             .RemoveTask{ display: none; }
-             .finishtag{ display: none; }
-             .saveTasksub{ display: none; }
-             .logOut{
-                 
+            .saveTask, .RemoveTask, .finishtag{
                 .inputSubmit;
+                margin: 10px 0px 10px 0px;
+            }
+            .RemoveTask, .finishtag,
+            .saveTasksub{ display: none; }
+            .HIDDDENTAGS{ visibility: hidden; }
+            .field-validation-error{
+                display: block;
                 position: absolute;
-                background-color: red;
-                top: 0px;
-                right: 40px;
-                width: 100px;
-                height: 24px;
-                box-shadow: 0px 0px 1px #666;
-                &:hover{ background-color: #FF6969; }
-             }
-             .login{
-                position: absolute;
-                background-color: #00CED1;
-                padding: 0px 10px 0px 10px;
-                color: #FFF;
-                top: 0px;
-                right: 165px;
-                height: 24px;
-                box-shadow: 0px 0px 1px #666;
-                }
+                top: 65px;
+                left: 245px;
+            }
+            .field-validation-error:first-of-type{ top: 23px; }
+            .field-validation-error:last-of-type{ top: 188px; left: 12px; }
              
 
 
 
 
+        }
+        .logOut{ 
+            .inputSubmit;
+            position: absolute;
+            background-color: red;
+            top: 0px;
+            right: 40px;
+            width: 100px;
+            height: 24px;
+            box-shadow: 0px 0px 1px #666;
+            &:hover{ background-color: #FF6969; }
+        }
+        .login{
+            position: absolute;
+            background-color: #00CED1;
+            padding: 0px 10px 0px 10px;
+            color: #FFF;
+            top: 0px;
+            right: 165px;
+            height: 24px;
+            box-shadow: 0px 0px 1px #666;
         }
     }
     footer {

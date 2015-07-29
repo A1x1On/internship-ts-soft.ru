@@ -175,6 +175,7 @@ body section .container {
   margin-left: 10px;
   width: 60%;
   padding: 15px 10px 15px 10px;
+  position: relative;
 }
 body section .container .DinamicTag {
   position: relative;
@@ -226,7 +227,6 @@ body section .container .DinamicTag .ForTags span {
   float: left;
   height: 28px;
   background-color: darkturquoise;
-  border-radius: 4px;
   margin-left: 5px;
   text-align: center;
   padding: 6px 5px 1px 5px;
@@ -276,16 +276,28 @@ body section .container .RemoveTask:hover,
 body section .container .finishtag:hover {
   background-color: #E0DCDC;
 }
-body section .container .RemoveTask {
-  display: none;
-}
-body section .container .finishtag {
-  display: none;
-}
+body section .container .RemoveTask,
+body section .container .finishtag,
 body section .container .saveTasksub {
   display: none;
 }
-body section .container .logOut {
+body section .container .HIDDDENTAGS {
+  visibility: hidden;
+}
+body section .container .field-validation-error {
+  display: block;
+  position: absolute;
+  top: 65px;
+  left: 245px;
+}
+body section .container .field-validation-error:first-of-type {
+  top: 23px;
+}
+body section .container .field-validation-error:last-of-type {
+  top: 188px;
+  left: 12px;
+}
+body section .logOut {
   width: 210px;
   height: 39px;
   margin-bottom: 1px;
@@ -304,13 +316,13 @@ body section .container .logOut {
   height: 24px;
   box-shadow: 0px 0px 1px #666;
 }
-body section .container .logOut:hover {
+body section .logOut:hover {
   background-color: #E0DCDC;
 }
-body section .container .logOut:hover {
+body section .logOut:hover {
   background-color: #FF6969;
 }
-body section .container .login {
+body section .login {
   position: absolute;
   background-color: #00CED1;
   padding: 0px 10px 0px 10px;

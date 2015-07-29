@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace TaskManager
 {
     using System;
@@ -15,10 +17,14 @@ namespace TaskManager
     public partial class TASKS
     {
         public int TASKID { get; set; }
+        [Required(ErrorMessage = "Пожалуйста заполните поле 'Название'", AllowEmptyStrings = false)]
         public string TITLE { get; set; }
         public string TASKSTATUS { get; set; }
+        [Required(ErrorMessage = "Пожалуйста укажите 'deadline'", AllowEmptyStrings = false)]
         public string TASKTERM { get; set; }
+        [Required(ErrorMessage = "Пожалуйста укажите хотя бы один 'тег'", AllowEmptyStrings = false)]
         public string TAGS { get; set; }
+        [Required(ErrorMessage = "Пожалуйста заполните поле 'Описание'", AllowEmptyStrings = false)]
         public string DISCRIPTION { get; set; }
         public Nullable<int> USID { get; set; }
     

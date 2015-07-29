@@ -10,6 +10,7 @@
 
 
 
+
 <div class="list-tasks">
     @Html.Partial("_PartialSelectionTasks", ViewData["Query"])
 </div>
@@ -29,9 +30,9 @@
             @Html.ValidationMessageFor(x => x.TASKTERM)
         </div>
 
-
+    @Html.ValidationMessageFor(x => x.TAGS)
         <div ng-controller="DinamicTag" class="DinamicTag" onkeyup="return(false)">
-            @Html.ValidationMessageFor(x => x.TAGS)
+            
             <input type="text" ng-model="name" ng-keyup="TagListToDOM(name)" class="inputTag" placeholder="Введите тег" />
             <div class="sel-list" onkeydown="return(false)" tabindex="0">
                 <div class="optionTag" ng-repeat="(i, u) in Tags | filter:query" tabindex='{{i+1}}'>{{u.TITLETAG}}</div>
@@ -39,7 +40,7 @@
             <div class="ForTags"></div>
         </div>
 
-        @Html.HiddenFor(x => x.TAGS, new { @Class = "HIDDDENTAGS", @placeholder = "Введите теги" })
+        @Html.TextBoxFor(x => x.TAGS, new { @Class = "HIDDDENTAGS", @placeholder = "Введите теги" })
         @Html.HiddenFor(x => x.TASKSTATUS, new { @Class = "TASKSTATUS", @Value = @ViewBag.CurStatus })<br />
         @Html.HiddenFor(x => x.TASKTERM, new { @Class = "valDate", @placeholder = "dd-mm-yy" })
         @Html.HiddenFor(x => x.USID, new { @Value = @ViewBag.CurId })
@@ -52,20 +53,16 @@
 
     @using (Html.BeginForm("Finish", "Manager", FormMethod.Post))
     {
-
         <input type="hidden" name="TaskFromFinish" value="" class="finishFromTask" />
         <input type="submit" name="TaskFromFinish" value="Завершить задачу" class="finishtag" />
-
-    }
-
-    @using (Html.BeginForm("Logout", "Account", FormMethod.Post))
-    {
-        <div class="login">@ViewBag.CurLogin</div>
-        <input type="submit" class="logOut" value="Выход" />
     }
 </div>
 
-
+@using (Html.BeginForm("Logout", "Account", FormMethod.Post))
+{
+    <div class="login">@ViewBag.CurLogin</div>
+    <input type="submit" class="logOut" value="Выход" />
+}
 
 
 

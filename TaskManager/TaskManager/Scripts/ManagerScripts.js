@@ -1,7 +1,9 @@
-﻿$(document).ready(function() {
+﻿$(document).ready(function () {
 
+
+    
     // Change the value of TASKTERM(@Class = "valDate") to the value of <input type="date" id="myDate"
-    $("#myDate").change(function() {
+    $("#myDate").change(function () {
         var val = $(this).val();
         $(".valDate").val(val);
     });
@@ -18,135 +20,31 @@
     $(".valDate").val(today);
 
 
-    var i = 1;
-    var y = 1;
-    var wholeTags = "";
-    var tagId = 0;
 
+    ///////////////////////////////
+    // Including of tags prototype 
+    $.getScript("Scripts/ArrayOfTags.js");
 
-
-   
+    // Including of Tags script
+    $.getScript("Scripts/Tags.js");
  
-    var idtag = 0;
-    var title = "";
-    var arrayOfTags = [];
-    var tag = function () {
-        this.idtag = idtag;
-        this.title = title;
-        return this;
-    };
-
-
-    $(".optionTag").live("click", function() {
-        idtag = $(this).attr("tabindex");
-        title = $(this).html();
-        $(".ForTags").append("<span class='tag' id=" + idtag + ">" + title + "</span>");
-
-        arrayOfTags.push(new tag());
-     
-
-        wholeTags = wholeTags + ", " + title;
-        $(".inputTag").focus().val("");
-    });
-    $("body").click(function () {
-        $(".optionTag").fadeOut(100);  
-    });
-
-    $(".inputTag").keyup(function (event) {
-        if (event.keyCode == 40) {
-            $(".sel-list").focus();
-            setTimeout(function () {
-                $(".optionTag:nth-child(" + y + ")").removeClass("focus");
-                $(".optionTag:nth-child(1)").focus();
-                $(".optionTag:nth-child(" + i + ")").addClass("focus");
-            }, 50); 
-        }
-    });
-   
-    $(".sel-list").live("keyup", function (event) {
-        if (event.keyCode == 40) {
-            i++;
-            y = i - 1;
-            if ($(".optionTag:nth-child(" + i + ")").html() != undefined) {
-                $(".optionTag:nth-child(" + y + ")").removeClass("focus");
-                $(".optionTag:nth-child(" + i + ")").focus();
-                $(".optionTag:nth-child(" + i + ")").addClass("focus");
-            }
-            else
-            {
-                i = i - 1;
-                y = i + 1;  
-            }
-        }
-        if (event.keyCode === 38) {
-            i--;
-            y = i + 1;
-            if ($(".optionTag:nth-child(" + i + ")").html() != undefined) {
-                $(".optionTag:nth-child(" + y + ")").removeClass("focus");
-                $(".optionTag:nth-child(" + i + ")").focus();
-                $(".optionTag:nth-child(" + i + ")").addClass("focus");
-            }
-            else
-            {
-                $(".inputTag").focus();
-                $(".optionTag:nth-child(" + y + ")").removeClass("focus");
-                i = 1;
-                y = 1;
-            }
-        }
-        if (event.keyCode === 13 && $(".focus")) {
-
-            idtag = $(".focus").attr("tabindex");
-            title = $(".focus").html();
-            
-            $(".ForTags").append("<span class='tag' id=" + idtag + ">" + title + "</span>");
-
-            arrayOfTags.push(new tag());
-            console.log(arrayOfTags);
-
-            $(".optionTag").fadeOut(100);
-            wholeTags = wholeTags + ", " + title;
-            $(".inputTag").focus().val("");
-        }
-
-
-    });
-
-    //Добавление задачи submit
+    // Getting tags from prototype, .inputTag control in one .HIDDDENTAGS and Submit form
     $(".saveTask").click(function () {
         var str_tags = "";
+        var comma = "";
         for (var c = 0; arrayOfTags.length !== c; c++) {
             str_tags = str_tags + ", " + arrayOfTags[c].title;
         }
         str_tags = str_tags.substring(2, str_tags.length);
-        $(".HIDDDENTAGS").val(str_tags);
-
+        if (str_tags+$(".inputTag").val()) {
+            comma = ", ";
+        }
+        $(".HIDDDENTAGS").val(str_tags + comma + $(".inputTag").val());
         var that = $(this);
         setTimeout(function () {
             that.parent("form").submit();
         }, 1000);
-
     });
-
-
-    //Удаление тега
-    $(".tag").live("click", function () {
-
-        alert($(this).attr("id"));
-
-        $(this).fadeOut(300);
-        var that = $(this);
-        setTimeout(function() {
-            that.remove();
-        }, 1000);
-        
-
-
-
-    });
-
-
-    
 
 });
 
