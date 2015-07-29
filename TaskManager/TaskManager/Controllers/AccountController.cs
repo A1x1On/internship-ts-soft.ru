@@ -151,7 +151,5 @@ namespace TaskManager.Controllers
             Response.Cookies.Add(cookie);
             return RedirectToAction("Index", "Account");
         }
-
-        // ДОБАВИТЬ СПИСОК ДЕЛ ДОБАВЛЕНИЕ ИТП
     }
 }

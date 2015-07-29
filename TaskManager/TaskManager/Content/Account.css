@@ -76,7 +76,7 @@ body a:hover {
   text-decoration: none;
 }
 body a {
-  color: green;
+  color: #00CED1;
 }
 body header,
 body section,
@@ -94,7 +94,7 @@ body section {
 }
 body section .auth-block {
   width: 485px;
-  min-height: 345px;
+  min-height: 320px;
   position: relative;
   margin-left: auto;
   margin-right: auto;
@@ -107,6 +107,9 @@ body section .auth-block {
   background: -moz-repeating-linear-gradient(top, #fbfbfb, #fbfbfb 38px, #81cbbc 40px);
   background: repeating-linear-gradient(top, #fbfbfb, #fbfbfb 38px, #81cbbc 40px);
   -webkit-background-size: 100% 40px;
+}
+body section .auth-block .LinkReg {
+  line-height: 35px;
 }
 body section .auth-block .backToAuth {
   background-image: url("Images/back.png");
@@ -168,6 +171,8 @@ body section .auth-block input[type=submit] {
   height: 39px;
   margin-bottom: 1px;
   border: none;
+  color: #FFF;
+  font-size: 16px;
   margin-left: -4px;
   cursor: pointer;
   background-color: darkturquoise;

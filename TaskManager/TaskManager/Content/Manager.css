@@ -129,6 +129,7 @@ body section .mainTitle {
   margin: 12px 10px 0px 16px;
   font-size: 20px;
   text-decoration: none;
+  max-width: 250px;
 }
 body section .list-tasks {
   float: left;
@@ -256,7 +257,8 @@ body section .container .mainTaskInfo input {
   margin-bottom: 10px;
 }
 body section .container .saveTask,
-body section .container .RemoveTask {
+body section .container .RemoveTask,
+body section .container .finishtag {
   width: 210px;
   height: 39px;
   margin-bottom: 1px;
@@ -270,14 +272,53 @@ body section .container .RemoveTask {
   margin: 10px 0px 10px 0px;
 }
 body section .container .saveTask:hover,
-body section .container .RemoveTask:hover {
+body section .container .RemoveTask:hover,
+body section .container .finishtag:hover {
   background-color: #E0DCDC;
 }
 body section .container .RemoveTask {
   display: none;
 }
+body section .container .finishtag {
+  display: none;
+}
 body section .container .saveTasksub {
   display: none;
+}
+body section .container .logOut {
+  width: 210px;
+  height: 39px;
+  margin-bottom: 1px;
+  display: block;
+  border: none;
+  margin-left: -4px;
+  cursor: pointer;
+  background-color: darkturquoise;
+  color: #FBFBFB;
+  font-size: 17px;
+  position: absolute;
+  background-color: red;
+  top: 0px;
+  right: 40px;
+  width: 100px;
+  height: 24px;
+  box-shadow: 0px 0px 1px #666;
+}
+body section .container .logOut:hover {
+  background-color: #E0DCDC;
+}
+body section .container .logOut:hover {
+  background-color: #FF6969;
+}
+body section .container .login {
+  position: absolute;
+  background-color: #00CED1;
+  padding: 0px 10px 0px 10px;
+  color: #FFF;
+  top: 0px;
+  right: 165px;
+  height: 24px;
+  box-shadow: 0px 0px 1px #666;
 }
 body footer {
   height: 4px;

@@ -44,6 +44,7 @@
             key = TaskId;
             
             $(".RemoveTask").fadeIn();
+            $(".finishtag").fadeIn();
             $(".saveTask").val("Сохранить");
            
            
@@ -54,6 +55,7 @@
 
                 $(".t-title").val($scope.Task[0]);
                 $(".TASKID").val($scope.Task[5]);
+                $(".finishFromTask").val($scope.Task[5]);
                 $(".RemoveTask").attr("id", $scope.Task[5]);
                 $(".t-disc").val($scope.Task[1]);
                 $(".valDate").val($scope.Task[2]);

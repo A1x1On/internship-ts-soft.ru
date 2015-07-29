@@ -20,14 +20,9 @@
         @Html.PasswordFor(x => x.Password, new { @placeholder = "Введите пароль" })
         @Html.ValidationMessageFor(x => x.Password)
         <br />
-        <input type="submit" value="Вход" />
+        <input type="submit" value="ВХОД" />
     }
-    @using (Html.BeginForm("Logout", "Account", FormMethod.Post))
-    {
-        <input type="submit" value="Выход" />
-    }
-    <br />
-    <a href="@Url.Action("Registration", "Account")">Регистрация</a> 
+    <a href="@Url.Action("Registration", "Account")" class="LinkReg">Регистрация</a> 
 </div>
 
 @Scripts.Render("~/bundles/jqueryval")

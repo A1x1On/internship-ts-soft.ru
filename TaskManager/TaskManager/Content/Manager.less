@@ -69,6 +69,7 @@ body {
             margin: 12px 10px 0px 16px;
             font-size: 20px;
             text-decoration: none;
+            max-width: 250px;
         }
         .list-tasks{
             float: left;
@@ -174,12 +175,35 @@ body {
                 }
 
             }
-             .saveTask, .RemoveTask{
+             .saveTask, .RemoveTask, .finishtag{
                     .inputSubmit;
                     margin: 10px 0px 10px 0px;
                 }
              .RemoveTask{ display: none; }
+             .finishtag{ display: none; }
              .saveTasksub{ display: none; }
+             .logOut{
+                 
+                .inputSubmit;
+                position: absolute;
+                background-color: red;
+                top: 0px;
+                right: 40px;
+                width: 100px;
+                height: 24px;
+                box-shadow: 0px 0px 1px #666;
+                &:hover{ background-color: #FF6969; }
+             }
+             .login{
+                position: absolute;
+                background-color: #00CED1;
+                padding: 0px 10px 0px 10px;
+                color: #FFF;
+                top: 0px;
+                right: 165px;
+                height: 24px;
+                box-shadow: 0px 0px 1px #666;
+                }
              
 
 

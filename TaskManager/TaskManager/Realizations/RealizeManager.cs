@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Security;
 
@@ -20,6 +21,8 @@ namespace TaskManager.Realizations
         Array TaskOpen(int TaskId);
         string TagsAdd(string TagRow);
         IEnumerable<TAGS> GettingTags(string TagKeyword);
+        void CommonUpdateStatus();
+        void TaskStatusFin(int TaskFromFinish);
     }
 
     public class RealizeManager : IManager
@@ -30,8 +33,71 @@ namespace TaskManager.Realizations
         private TaskManagerEntities m_db = new TaskManagerEntities();
 
 
+        public void TaskStatusFin(int TaskFromFinish)
+        {
+            
+            var value = m_db.TASKS.Where(x => x.TASKID.Equals(TaskFromFinish)).FirstOrDefault();
+
+            value.TASKSTATUS = "Завершен";
+  
+
+            m_db.TASKS.AddOrUpdate(value);
+            m_db.SaveChanges();
+
+        }
+
+        /// <summary>
+        /// Auto-Updating all user's tasks that is updating statuses of the evrey task
+        /// </summary>
+        public void CommonUpdateStatus()
+        {
+            DateTime curDate = DateTime.Now;
+            string m_StrDYear = "";
+            string m_StrMonth = "";
+            string m_StrDay = "";
+            string m_DateTask = "";
+            string m_DateCurrent = "";
+            string m_Val = "";
+            foreach (TASKS t in m_db.TASKS)
+            {
+                if (t.TASKSTATUS != "Завершен")
+                {
+                    m_StrDYear = t.TASKTERM.Substring(0, 4);
+                    m_StrMonth = t.TASKTERM.Substring(5, 2);
+                    m_StrDay = t.TASKTERM.Substring(8, 2);
 
 
+                    m_DateTask = m_StrDYear + "." + m_StrMonth + "." + m_StrDay;
+                    m_DateCurrent = curDate.Year + "." + curDate.Month + "." + curDate.Day;
+                    if (Convert.ToDateTime(m_DateTask) < Convert.ToDateTime(m_DateCurrent))
+                    {
+                        m_Val = "Потрачено";
+                    }
+                    if (Convert.ToDateTime(m_DateTask) == Convert.ToDateTime(m_DateCurrent))
+                    {
+                        m_Val = "Сегодня последний день";
+                    }
+
+                    if (m_Val != "")
+                    {
+                        TASKS tup = new TASKS()
+                        {
+                            TASKSTATUS = m_Val,
+                            USID = t.USID,
+                            TASKID = t.TASKID,
+                            DISCRIPTION = t.DISCRIPTION,
+                            TAGS = t.TAGS,
+                            TITLE = t.TITLE,
+                            TASKTERM = t.TASKTERM,
+                            USERS = t.USERS
+                        };
+                        m_db.TASKS.AddOrUpdate(tup);
+                        m_Val = "";
+                    }
+                }
+            }
+            m_db.SaveChanges();
+        }
 
 
         public Array TaskOpen(int TaskId)
