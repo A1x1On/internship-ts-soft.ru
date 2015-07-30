@@ -13,49 +13,38 @@ using TaskManager.Models;
 
 namespace TaskManager.Realizations
 {
-
-
+    /// <summary>
+    /// public interface IAccount
+    /// </summary>
     public interface IAccount
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="u"></param>
-        /// <returns></returns>
         string UserToDb(USERS u);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Code"></param>
-        /// <returns></returns>
         string UserConfirm(string Code);
-
         string[] UserAuthorisation(LogIn model);
     }
 
-
-
-
+    /// <summary>
+    /// public class RealizeAccount : IAccount
+    /// </summary>
     public class RealizeAccount : IAccount
     {
         /// <summary>
-        /// 
+        /// Instance EntitieDatabase is
         /// </summary>
         private TaskManagerEntities m_db = new TaskManagerEntities();
         
-
         /// <summary>
-        /// 
+        /// Varible contains mask of password's Crypting
         /// </summary>
-        private string m_Message = "";
-
         private string m_Alph = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZйцукенгшщзхъфывапролдячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЯЧСМИТЬБЮёЁ1234567890";
 
+        /// <summary>
+        /// Varible contains key of Crypting
+        /// </summary>
         private string m_Key = "xmck";
 
         /// <summary>
-        /// 
+        /// Adding of User to DataBase
         /// </summary>
         /// <param name="u"></param>
         /// <returns></returns>
@@ -81,14 +70,12 @@ namespace TaskManager.Realizations
         }
 
         /// <summary>
-        /// 
+        /// Confirming of user via own Email
         /// </summary>
         /// <param name="Code"></param>
         /// <returns></returns>
         public string UserConfirm(string Code)
         {
-            //var CryptIn = new Crypt(m_Alph);
-            //string Decrypt = CryptIn.CryptDecrypt(Code, m_Key, false);
             var value = m_db.USERS.FirstOrDefault(c => c.PASS.Contains(Code));
             if (value != null && value.CONFIRM != "confirmed")
             {
@@ -106,7 +93,7 @@ namespace TaskManager.Realizations
         }
 
         /// <summary>
-        /// 
+        /// Sending of Email to confirm registred Account
         /// </summary>
         /// <param name="email"></param>
         /// <param name="FIRST_NAME"></param>
@@ -114,8 +101,7 @@ namespace TaskManager.Realizations
         /// <param name="resCrypt"></param>
         /// <param name="LOGIN"></param>
         /// <param name="PASS"></param>
-        public void SetLetter(string email, string FIRST_NAME, string LAST_NAME, string resCrypt, string LOGIN,
-            string PASS)
+        public void SetLetter(string email, string FIRST_NAME, string LAST_NAME, string resCrypt, string LOGIN, string PASS)
         {
             SmtpClient Smtp = new SmtpClient("smtp.yandex.ru", 25);
             Smtp.Credentials = new NetworkCredential("A1x1On@yandex.ru", "2engine2");
@@ -128,21 +114,23 @@ namespace TaskManager.Realizations
             message.Body =
                 "<html><body><br><img src=\"http://drunkendial.us/files/2008/09/Ubuntu-Logo-square-170x170.png\" alt=\"Super Game!\">" +
                 @" 
-            <br>Здравствуйте уважаемый(я) " + FIRST_NAME + " " + LAST_NAME + @" !
-            <br>Вы получили это письмо, потому что вы зарегистрировались на http://www.HranilisheDocumentov.РФ.
-            <br>Высылаем Вам секретный код для активации вашего профиля.
-            <br>                                                                                              
-            <br>Код активации:       <b>" + resCrypt + @"</b>
-            <br>Ваш логин: " + LOGIN + "<br>Ваш пароль: " + PASS +
+                <br>Здравствуйте уважаемый(я) " + FIRST_NAME + " " + LAST_NAME + @" !
+                <br>Вы получили это письмо, потому что вы зарегистрировались на http://www.HranilisheDocumentov.РФ.
+                <br>Высылаем Вам секретный код для активации вашего профиля.
+                <br>                                                                                              
+                <br>Код активации:       <b>" + resCrypt + @"</b>
+                <br>Ваш логин: " + LOGIN + "<br>Ваш пароль: " + PASS +
                 "<br> Пройдите по ссылке для подтверждения: <a href='http://localhost:54723//Account/ConfirMail/?code=" +
                 resCrypt +
                 "'>Клик</a><br><br>Мы будем рады видеть Вас на нашем сайте и желаем Вам удачного дня!</body></html>";
             Smtp.Send(message);
         }
 
-
-
-
+        /// <summary>
+        /// Conditions for failed attempt to authorize
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public string[] UserAuthorisation(LogIn model)
         {
             string[] dataAuth = new string[2];
@@ -169,7 +157,6 @@ namespace TaskManager.Realizations
                     else
                     {
                         dataAuth[0] = "Введен неверный пароль";
-
                     }
                 }
             }
@@ -179,11 +166,5 @@ namespace TaskManager.Realizations
             }
             return dataAuth;
         }
-
-
-
-
-
-
     }
 }

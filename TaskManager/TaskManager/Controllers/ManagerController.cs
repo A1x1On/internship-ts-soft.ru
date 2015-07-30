@@ -1,27 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Security;
+﻿using System.Web.Mvc;
 using TaskManager.Realizations;
 using WebMatrix.WebData;
 
 
 namespace TaskManager.Controllers
 {
+    /// <summary>
+    /// public class ManagerController : Controller
+    /// </summary>
     public class ManagerController : Controller
     {
-
-        private string m_ResultMassage = "Пусто";
-        private string m_Login = WebSecurity.CurrentUserName;
-
+        /// <summary>
+        /// Instance RealizeManager : IManager is
+        /// </summary>
         private readonly IManager m_Relize = new RealizeManager();
 
+        /// <summary>
+        /// Variable is for User errors on Views
+        /// </summary>
+        private string m_ResultMassage = "Пусто";
 
+        /// <summary>
+        /// Varible is login Authorized user
+        /// </summary>
+        private string m_Login = WebSecurity.CurrentUserName;
 
+        /// <summary>
+        /// Varible is Task Status like "Active status"
+        /// </summary>
+        private string m_StatusActive = "Активный";
+        
         /// <summary>
         /// View of Review list of Tasks, way adding of task
         /// </summary>
@@ -29,18 +37,18 @@ namespace TaskManager.Controllers
         [Authorize]
         public ActionResult Index()
         {
-
-            //Auto-Updating all user's tasks that is updating of statuses of the evrey task
+            // Auto-Updating all user's tasks that is updating of statuses of the evrey task
             m_Relize.CommonUpdateStatus();
 
-            int @id = Convert.ToInt32(m_Relize.CurrentUser(m_Login));
-            @ViewBag.CurId = m_Relize.CurrentUser(m_Login).ToString();
+            // Some info for current View
+            @ViewBag.CurId = m_Relize.CurrentUser(m_Login).USERID;
             @ViewBag.CurLogin = m_Login;
-            @ViewBag.CurStatus = "Активный";
-            ViewData["Query"] = m_Relize.TaskSelect(@id);
+            @ViewBag.CurStatus = m_StatusActive;
+
+            // Getting USERID for his Tasks to display
+            ViewData["Query"] = m_Relize.TaskSelect(m_Relize.CurrentUser(m_Login).USERID);
             return View();
         }
-
 
         /// <summary>
         /// Finishing of task
@@ -51,13 +59,8 @@ namespace TaskManager.Controllers
         [HttpPost]
         public ActionResult Finish(int TaskFromFinish)
         {
-            Debug.WriteLine(TaskFromFinish);
-            m_Relize.TaskStatusFin(TaskFromFinish);
-            m_ResultMassage = "Задача завершина";
-
-            return RedirectToAction("Index", "Manager", new { m_ResultMassage });
+            return RedirectToAction("Index", "Manager", new { m_ResultMassage = m_Relize.TaskStatusFin(TaskFromFinish) });
         }
-
 
         /// <summary>
         /// Adding and Changing of tasks
@@ -70,32 +73,14 @@ namespace TaskManager.Controllers
         {
             if (model.TASKID == 0)
             {
-                try
-                {
-                    m_Relize.TaskAdd(model);
-                    m_ResultMassage = "Задача сохранена";
-                }
-                catch (Exception)
-                {
-                    m_ResultMassage = "Ошиба сохранения";
-                }
+                m_ResultMassage = m_Relize.TaskAdd(model);
             }
             else
             {
-                try
-                {
-                    m_Relize.TaskChange(model);
-                    m_ResultMassage = "Задача изменена";
-                }
-                catch (Exception)
-                {
-                    m_ResultMassage = "Ошибка изминения задачи";
-                }
+                m_ResultMassage = m_Relize.TaskChange(model);
             }
             return RedirectToAction("Index", "Manager", new { m_ResultMassage });
         }
-
-
 
         /// <summary>
         /// Getting list of Tags with inputed Keyword [AJAX]
@@ -105,10 +90,8 @@ namespace TaskManager.Controllers
         [Authorize]
         public JsonResult GetTags(string name)
         {
-            var tags = m_Relize.GettingTags(name);
-            return new JsonResult { Data = tags, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            return new JsonResult { Data = m_Relize.GettingTags(name), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
-
 
         /// <summary>
         /// Removing of tasks [HttpPost] [Ajax]
@@ -120,11 +103,11 @@ namespace TaskManager.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                m_Relize.TaskDelete(Id); 
+                m_Relize.TaskDelete(Id);
             }
             return Json(new { result = "Удалил: " + Id }, JsonRequestBehavior.AllowGet);
         }
-        
+
         /// <summary>
         /// Dinamic opening of detail task on the Index page
         /// </summary>
@@ -133,12 +116,7 @@ namespace TaskManager.Controllers
         [Authorize]
         public JsonResult OpenTask(int TaskId)
         {
-            Array task = m_Relize.TaskOpen(TaskId);
-            return new JsonResult { Data = task, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            return new JsonResult { Data = m_Relize.TaskOpen(TaskId), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
-
-        
-        
-
     }
 }

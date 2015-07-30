@@ -25,3 +25,4 @@ D:\Internship\TaskManager\TaskManager\obj\Debug\TaskManager.csprojResolveAssembl
 D:\Internship\TaskManager\TaskManager\obj\Debug\TaskManager.dll
 D:\Internship\TaskManager\TaskManager\obj\Debug\TaskManager.pdb
 D:\Internship\TaskManager\TaskManager\bin\SRVTextToImage.dll
+D:\Internship\TaskManager\TaskManager\bin\TaskManager.XML

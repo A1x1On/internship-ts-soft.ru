@@ -134,9 +134,10 @@ body section .mainTitle {
 body section .list-tasks {
   float: left;
   width: 300px;
-  min-height: 300px;
+  height: 700px;
   border-radius: 4px;
   margin-left: 10px;
+  overflow: auto;
 }
 body section .list-tasks i {
   float: left;

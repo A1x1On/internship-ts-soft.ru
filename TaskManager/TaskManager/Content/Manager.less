@@ -10,18 +10,12 @@ dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoo
 }
 /************************************************/
 
-
-
 body {
-    
-
     color: #333; 
     font-family: 'Cuprum', sans-serif;
-  
     height: 100%;
     a:hover{ color: brown; text-decoration: none; }
     a { color: #00BDC0; }
-
     .inputText{
         width: 200px;
         height: 28px;
@@ -43,7 +37,6 @@ body {
         background-color: darkturquoise;
         color: #FBFBFB;
         font-size: 17px;
-
     }
     .transition{
         -webkit-transition: all 0.3s ease;
@@ -52,15 +45,8 @@ body {
         -ms-transition: all 0.3s ease;
         transition: all 0.3s ease;
     }
-
-    header, section, footer {
-        overflow: visible;
-        width: 100%;
-    }
-    header {
-        height: 4px;
-        background-color: darkturquoise;
-    }
+    header, section, footer { overflow: visible; width: 100%; }
+    header { height: 4px; background-color: darkturquoise; }
     section {
         min-height: 500px;
         padding-bottom: 100px;
@@ -74,9 +60,10 @@ body {
         .list-tasks{
             float: left;
             width: 300px;
-            min-height: 300px;
+            height: 700px;
             border-radius: 4px;
             margin-left: 10px;
+            overflow: auto;
             i{
                 &:hover{ background-color: #E0DCDC; color: #00BDC0; }
                 float: left;
@@ -89,22 +76,10 @@ body {
                 text-decoration: none; 
                 width: 96%;
                 padding: 5px;
-                div{
-                    float: left;
-                    width: 100%;
-                    line-height: 22px;
-                }
-                div:first-child{
-                    font-size: 20px;
-                }
-                .d-disc{
-                    max-height: 50px;
-                    overflow: hidden;
-
-                }
-                .d-date{
-                    color: #666;
-                }
+                div{ float: left; width: 100%; line-height: 22px; }
+                div:first-child{ font-size: 20px; }
+                .d-disc{ max-height: 50px; overflow: hidden; }
+                .d-date{ color: #666; }
             }
         }
         .container{
@@ -127,9 +102,7 @@ body {
                     overflow: auto;
                     float: left;
                     top: 35px;  
-                    .focus{
-                        background-color: #00CED1;
-                    }                  
+                    .focus{ background-color: #00CED1; }                  
                     .optionTag{
                         &:hover{ background-color: antiquewhite; }
                         &:focus { outline: none; }
@@ -163,15 +136,11 @@ body {
                        }
                     }
                 }
-               
             }
             .mainTaskInfo{
                 input{ .inputText; margin-bottom: 10px; }
             }
-            .saveTask, .RemoveTask, .finishtag{
-                .inputSubmit;
-                margin: 10px 0px 10px 0px;
-            }
+            .saveTask, .RemoveTask, .finishtag{ .inputSubmit; margin: 10px 0px 10px 0px; }
             .RemoveTask, .finishtag,
             .saveTasksub{ display: none; }
             .HIDDDENTAGS{ visibility: hidden; }
@@ -183,11 +152,6 @@ body {
             }
             .field-validation-error:first-of-type{ top: 23px; }
             .field-validation-error:last-of-type{ top: 188px; left: 12px; }
-             
-
-
-
-
         }
         .logOut{ 
             .inputSubmit;

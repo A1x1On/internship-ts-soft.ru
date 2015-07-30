@@ -19,23 +19,25 @@ using WebMatrix.WebData;
 
 namespace TaskManager.Controllers
 {
+    /// <summary>
+    /// public class AccountController : Controller
+    /// </summary>
     public class AccountController : Controller
     {
-        
         /// <summary>
-        /// 
+        /// Message: Error Capcha
         /// </summary>
         private string m_ResultMassage = "Капча введена неверно";
 
         /// <summary>
-        /// 
+        /// Instance RealizeAccount : IAccount is
         /// </summary>
         private readonly IAccount m_Relize = new RealizeAccount();
 
         /// <summary>
-        /// 
+        /// Checking of Authorized User
         /// </summary>
-        /// <returns></returns>
+        /// <returns>View Index/Manager or View Index/Account</returns>
         public ActionResult Index()
         {
             if (WebSecurity.CurrentUserName != "")
@@ -50,7 +52,7 @@ namespace TaskManager.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Registration View
         /// </summary>
         /// <returns></returns>
         public ActionResult Registration()
@@ -62,7 +64,7 @@ namespace TaskManager.Controllers
         /// Registration of User [HttpPost]
         /// </summary>
         /// <param name="u">Object of data register</param>
-        /// <returns>Redirect to Index of Manager controller having string m_ResultMassage parametre containing result of UserToDb(u) method</returns>
+        /// <returns>View Index/Manager having string m_ResultMassage</returns>
         [HttpPost]
         public ActionResult Registration(USERS u)
         {
@@ -82,7 +84,7 @@ namespace TaskManager.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Confirming of Account via own Email
         /// </summary>
         /// <param name="Code"></param>
         /// <returns></returns>
@@ -90,14 +92,13 @@ namespace TaskManager.Controllers
         {
             if (Code != null)
             {
-                m_ResultMassage = m_Relize.UserConfirm(Code);
-                return RedirectToAction("Index", "Manager", new { m_ResultMassage });
+                return RedirectToAction("Index", "Manager", new { m_ResultMassage = m_Relize.UserConfirm(Code) });
             }
             return View(); 
         }
 
         /// <summary>
-        /// 
+        /// Drawing of Capcha
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -114,7 +115,7 @@ namespace TaskManager.Controllers
         }
 
         /// <summary>
-        /// Login View POST
+        /// Login View [HttpPost]
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
@@ -141,7 +142,7 @@ namespace TaskManager.Controllers
         }
 
         /// <summary>
-        /// Logout View POST
+        /// Logout View [HttpPost]
         /// </summary>
         /// <returns></returns>
         [HttpPost]
