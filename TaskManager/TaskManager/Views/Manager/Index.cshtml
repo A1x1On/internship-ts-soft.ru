@@ -14,7 +14,7 @@
 <div class="list-tasks">
     @Html.Partial("_PartialSelectionTasks", ViewData["Query"])
 </div>
-<div class="container">
+<div class="container" ng-controller="TaskFrom">
     @using (Html.BeginForm("AddChange", "Manager", FormMethod.Post)) // addChange
     {
         @Html.ValidationSummary(true)
@@ -30,16 +30,16 @@
             @Html.ValidationMessageFor(x => x.TASKTERM)
         </div>
 
-    @Html.ValidationMessageFor(x => x.TAGS)
-        <div ng-controller="DinamicTag" class="DinamicTag" onkeyup="return(false)">
-            
+        @Html.ValidationMessageFor(x => x.TAGS)
+        <div class="DinamicTag" onkeyup="return(false)">
+
             <input type="text" ng-model="name" ng-keyup="TagListToDOM(name)" class="inputTag" placeholder="Введите тег" />
             <div class="sel-list" onkeydown="return(false)" tabindex="0">
                 <div class="optionTag" ng-repeat="(i, u) in Tags | filter:query" tabindex='{{i+1}}'>{{u.TITLETAG}}</div>
             </div>
             <div class="ForTags"></div>
         </div>
-
+        
         @Html.TextBoxFor(x => x.TAGS, new { @Class = "HIDDDENTAGS", @placeholder = "Введите теги" })
         @Html.HiddenFor(x => x.TASKSTATUS, new { @Class = "TASKSTATUS", @Value = @ViewBag.CurStatus })<br />
         @Html.HiddenFor(x => x.TASKTERM, new { @Class = "valDate", @placeholder = "dd-mm-yy" })
@@ -48,7 +48,7 @@
         <br /><br />
         <input type="button" value="Добавить" class="saveTask" />
         <input type="submit" value="submit" class="saveTasksub" />
-        <input type="button" class="RemoveTask" id="" value="Удалить">
+    <input type="button" class="RemoveTask" id="" value="Удалить" ng-model="valut" data-ng-click="DeleteTask($event)">
     }
 
     @using (Html.BeginForm("Finish", "Manager", FormMethod.Post))

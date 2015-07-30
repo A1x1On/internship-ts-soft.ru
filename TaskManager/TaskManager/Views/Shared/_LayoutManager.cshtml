@@ -20,26 +20,6 @@
     </section>
     <footer></footer>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-
-
-           
-
-
-            $(".RemoveTask").click(function () {
-
-                var id = $(this).attr("id");
-
-                if (id != "") {
-                    $("i#" + id).fadeOut();
-                    $.post("@Url.Action("Delete", "Manager")", { Id: id }, function (data) {
-                        $("header").html(data.result);
-                    });
-                }
-            });
-        });
-    </script>
 
 
 

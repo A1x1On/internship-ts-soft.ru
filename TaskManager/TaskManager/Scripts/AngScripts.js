@@ -7,19 +7,36 @@
     // Initialazing of module AngularManager
     var ModuleManager = angular.module("AngularManager", ["ngRoute"]);
 
+    // id of task
+    var idTask;
+ 
     /////////////////////////////////////////////////////////////////
-    // Initialazing of controller DinamicTag and factory TagService
-    ModuleManager.controller("DinamicTag", function ($scope, TagService) {
+    // Initialazing of controller DinamicTag and factory TService
+    ModuleManager.controller("TaskFrom", function ($scope, TService) {
 
+        // Deleting of task
+        $scope.DeleteTask = function (obj) {
+            idTask = obj.currentTarget.id;
+            if (idTask != 0) {
+                $("i#" + idTask).fadeOut();
+                // Use TService for Deleting of task
+                TService.DeleteTask().then(function (d) {
+                    $("header").html(d.data);
+                }, function () {
+                    alert("Fail of deleting task");
+                });
+            }
+        }
+
+        // Getting of tags
         $scope.TagListToDOM = function (name) {
-            // Name is value of tag
             key = name;
             if (name != "") {
-                // Use TagService for getting data tags
-                TagService.GetTags().then(function (d) {
+                // Use TService for getting data tags
+                TService.GetTags().then(function (d) {
                     $scope.Tags = d.data;
                 }, function () {
-                    alert("Failed");
+                    alert("Fail of getting tags");
                 });
             }
             else {
@@ -28,15 +45,17 @@
         }
     });
 
-    ModuleManager.factory("TagService", function ($http) {
+    ModuleManager.factory("TService", function ($http) {
         var fac = {};
         fac.GetTags = function () {
             return $http({ method: "GET", url: "/Manager/GetTags/", params: { "name": key } });
         }
+        fac.DeleteTask = function () {
+            return $http({ method: "GET", url: "/Manager/Delete/", params: { 'idTask': idTask } });
+        }
         return fac;
 
     });
-
 
     ////////////////////////////////////////////////////////////////
     // Initialazing of controller OpenTask and factory OpenTaskService
@@ -48,24 +67,20 @@
             key = TaskId;
             // forming of interface for selected task
             $(".RemoveTask").fadeIn();
-            
             $(".saveTask").val("Сохранить");
 
             // Use TagService for getting data tags from current task without reloaded page
             OpenTaskService.GetTask().then(function (t) {
                 $scope.Task = t.data;
-
                 if ($scope.Task[3] !== "Завершен") {
                     $(".finishtag").fadeIn();
                 } else {
                     $(".finishtag").fadeOut();
                 }
-
                 $(".t-title").val($scope.Task[0]);
                 $(".TASKID").val($scope.Task[5]);
                 $(".finishFromTask").val($scope.Task[5]);
                 $(".RemoveTask").attr("id", $scope.Task[5]);
-
                 $(".t-disc").val($scope.Task[1]);
                 $(".valDate").val($scope.Task[2]);
                 $("#myDate").attr("value", $scope.Task[2]);
@@ -90,9 +105,8 @@
                     // Pushing to The prototype
                     arrayOfTags.push(new tag());
                 });
-                //console.log(arrayOfTags);
             }, function () {
-                alert('Failed');
+                alert('Fail of forming tags');
             });
         }
     });

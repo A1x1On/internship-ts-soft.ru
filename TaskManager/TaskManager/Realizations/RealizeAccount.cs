@@ -13,9 +13,6 @@ using TaskManager.Models;
 
 namespace TaskManager.Realizations
 {
-    /// <summary>
-    /// public interface IAccount
-    /// </summary>
     public interface IAccount
     {
         string UserToDb(USERS u);
@@ -23,9 +20,6 @@ namespace TaskManager.Realizations
         string[] UserAuthorisation(LogIn model);
     }
 
-    /// <summary>
-    /// public class RealizeAccount : IAccount
-    /// </summary>
     public class RealizeAccount : IAccount
     {
         /// <summary>

@@ -6,9 +6,6 @@ using System.Text.RegularExpressions;
 
 namespace TaskManager.Realizations
 {
-    /// <summary>
-    /// public interface IManager
-    /// </summary>
     public interface IManager
     {
         USERS CurrentUser(string SafetyLogin);
@@ -23,9 +20,6 @@ namespace TaskManager.Realizations
         string TaskStatusFin(int TaskFromFinish);
     }
 
-    /// <summary>
-    /// public class RealizeManager : IManager
-    /// </summary>
     public class RealizeManager : IManager
     {
         /// <summary>

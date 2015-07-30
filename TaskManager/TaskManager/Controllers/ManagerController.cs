@@ -5,9 +5,6 @@ using WebMatrix.WebData;
 
 namespace TaskManager.Controllers
 {
-    /// <summary>
-    /// public class ManagerController : Controller
-    /// </summary>
     public class ManagerController : Controller
     {
         /// <summary>
@@ -98,14 +95,11 @@ namespace TaskManager.Controllers
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        [HttpPost]
-        public ActionResult Delete(int Id = 0)
+        [Authorize]
+        public JsonResult Delete(int idTask)
         {
-            if (Request.IsAjaxRequest())
-            {
-                m_Relize.TaskDelete(Id);
-            }
-            return Json(new { result = "Удалил: " + Id }, JsonRequestBehavior.AllowGet);
+            m_Relize.TaskDelete(idTask);
+            return new JsonResult { Data = "Удалил: " + idTask, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         /// <summary>

@@ -4,11 +4,6 @@
         <name>TaskManager</name>
     </assembly>
     <members>
-        <member name="T:TaskManager.Controllers.AccountController">
-            <summary>
-            public class AccountController : Controller
-            </summary>
-        </member>
         <member name="F:TaskManager.Controllers.AccountController.m_ResultMassage">
             <summary>
             Message: Error Capcha
@@ -63,11 +58,6 @@
             Logout View [HttpPost]
             </summary>
             <returns></returns>
-        </member>
-        <member name="T:TaskManager.Controllers.ManagerController">
-            <summary>
-            public class ManagerController : Controller
-            </summary>
         </member>
         <member name="F:TaskManager.Controllers.ManagerController.m_Relize">
             <summary>
@@ -130,16 +120,6 @@
             <param name="TaskId"></param>
             <returns></returns>
         </member>
-        <member name="T:TaskManager.Realizations.IAccount">
-            <summary>
-            public interface IAccount
-            </summary>
-        </member>
-        <member name="T:TaskManager.Realizations.RealizeAccount">
-            <summary>
-            public class RealizeAccount : IAccount
-            </summary>
-        </member>
         <member name="F:TaskManager.Realizations.RealizeAccount.m_db">
             <summary>
             Instance EntitieDatabase is
@@ -186,16 +166,6 @@
             </summary>
             <param name="model"></param>
             <returns></returns>
-        </member>
-        <member name="T:TaskManager.Realizations.IManager">
-            <summary>
-            public interface IManager
-            </summary>
-        </member>
-        <member name="T:TaskManager.Realizations.RealizeManager">
-            <summary>
-            public class RealizeManager : IManager
-            </summary>
         </member>
         <member name="F:TaskManager.Realizations.RealizeManager.m_db">
             <summary>

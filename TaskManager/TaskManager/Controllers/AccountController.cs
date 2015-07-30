@@ -19,9 +19,6 @@ using WebMatrix.WebData;
 
 namespace TaskManager.Controllers
 {
-    /// <summary>
-    /// public class AccountController : Controller
-    /// </summary>
     public class AccountController : Controller
     {
         /// <summary>

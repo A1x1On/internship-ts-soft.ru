@@ -354,7 +354,6 @@
     <Content Include="Views\Shared\_PartialSelectionTasks.cshtml" />
     <Content Include="Views\Errors\Index.cshtml" />
     <Content Include="Views\Errors\Index.html" />
-    <Content Include="Views\Shared\_PartialTasksOpen.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
