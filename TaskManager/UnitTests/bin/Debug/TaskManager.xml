@@ -1,0 +1,279 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TaskManager</name>
+    </assembly>
+    <members>
+        <member name="T:TaskManager.App_Start.UnityConfig">
+            <summary>
+            Specifies the Unity configuration for the main container.
+            </summary>
+        </member>
+        <member name="M:TaskManager.App_Start.UnityConfig.GetConfiguredContainer">
+            <summary>
+            Gets the configured Unity container.
+            </summary>
+        </member>
+        <member name="M:TaskManager.App_Start.UnityConfig.RegisterTypes(Microsoft.Practices.Unity.IUnityContainer)">
+            <summary>Registers the type mappings with the Unity container.</summary>
+            <param name="container">The unity container to configure.</param>
+            <remarks>There is no need to register concrete types such as controllers or API controllers (unless you want to 
+            change the defaults), as Unity allows resolving a concrete type even if it was not previously registered.</remarks>
+        </member>
+        <member name="T:TaskManager.App_Start.UnityWebActivator">
+            <summary>Provides the bootstrapping for integrating Unity with ASP.NET MVC.</summary>
+        </member>
+        <member name="M:TaskManager.App_Start.UnityWebActivator.Start">
+            <summary>Integrates Unity when the application starts.</summary>
+        </member>
+        <member name="M:TaskManager.App_Start.UnityWebActivator.Shutdown">
+            <summary>Disposes the Unity container when the application is shut down.</summary>
+        </member>
+        <member name="F:TaskManager.Controllers.AccountController.m_ResultMassage">
+            <summary>
+            Message: Error Capcha
+            </summary>
+        </member>
+        <member name="F:TaskManager.Controllers.AccountController.m_Relize">
+            <summary>
+            Instance RealizeAccount : IAccount is
+            </summary>
+        </member>
+        <member name="M:TaskManager.Controllers.AccountController.Index">
+            <summary>
+            Checking of Authorized User
+            </summary>
+            <returns>View Index/Manager or View Index/Account</returns>
+        </member>
+        <member name="M:TaskManager.Controllers.AccountController.Registration">
+            <summary>
+            Registration View
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TaskManager.Controllers.AccountController.Registration(TaskManager.USERS)">
+            <summary>
+            Registration of User [HttpPost]
+            </summary>
+            <param name="u">Object of data register</param>
+            <returns>View Index/Manager having string m_ResultMassage</returns>
+        </member>
+        <member name="M:TaskManager.Controllers.AccountController.ConfirMail(System.String)">
+            <summary>
+            Confirming of Account via own Email
+            </summary>
+            <param name="Code"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaskManager.Controllers.AccountController.GetCapthcaImage">
+            <summary>
+            Drawing of Capcha
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TaskManager.Controllers.AccountController.Login(TaskManager.Models.LogIn)">
+            <summary>
+            Login View [HttpPost]
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaskManager.Controllers.AccountController.Logout">
+            <summary>
+            Logout View [HttpPost]
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:TaskManager.Controllers.ManagerController.m_Relize">
+            <summary>
+            Instance RealizeManager : IManager is
+            </summary>
+        </member>
+        <member name="F:TaskManager.Controllers.ManagerController.m_ResultMassage">
+            <summary>
+            Variable is for User errors on Views
+            </summary>
+        </member>
+        <member name="F:TaskManager.Controllers.ManagerController.m_Login">
+            <summary>
+            Varible is login Authorized user
+            </summary>
+        </member>
+        <member name="F:TaskManager.Controllers.ManagerController.m_StatusActive">
+            <summary>
+            Varible is Task Status like "Active status"
+            </summary>
+        </member>
+        <member name="M:TaskManager.Controllers.ManagerController.Index">
+            <summary>
+            View of Review list of Tasks, way adding of task
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TaskManager.Controllers.ManagerController.Finish(System.Int32)">
+            <summary>
+            Finishing of task
+            </summary>
+            <param name="TaskFromFinish"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaskManager.Controllers.ManagerController.AddChange(TaskManager.TASKS)">
+            <summary>
+            Adding and Changing of tasks
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaskManager.Controllers.ManagerController.GetTags(System.String)">
+            <summary>
+            Getting list of Tags with inputed Keyword [AJAX]
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaskManager.Controllers.ManagerController.Delete(System.Int32)">
+            <summary>
+            Removing of tasks [HttpPost] [Ajax]
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaskManager.Controllers.ManagerController.OpenTask(System.Int32)">
+            <summary>
+            Dinamic opening of detail task on the Index page
+            </summary>
+            <param name="TaskId"></param>
+            <returns></returns>
+        </member>
+        <member name="F:TaskManager.Realizations.RealizeAccount.m_db">
+            <summary>
+            Instance EntitieDatabase is
+            </summary>
+        </member>
+        <member name="F:TaskManager.Realizations.RealizeAccount.m_Alph">
+            <summary>
+            Varible contains mask of password's Crypting
+            </summary>
+        </member>
+        <member name="F:TaskManager.Realizations.RealizeAccount.m_Key">
+            <summary>
+            Varible contains key of Crypting
+            </summary>
+        </member>
+        <member name="M:TaskManager.Realizations.RealizeAccount.UserToDb(TaskManager.USERS)">
+            <summary>
+            Adding of User to DataBase
+            </summary>
+            <param name="u"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaskManager.Realizations.RealizeAccount.UserConfirm(System.String)">
+            <summary>
+            Confirming of user via own Email
+            </summary>
+            <param name="Code"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaskManager.Realizations.RealizeAccount.SetLetter(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Sending of Email to confirm registred Account
+            </summary>
+            <param name="email"></param>
+            <param name="FIRST_NAME"></param>
+            <param name="LAST_NAME"></param>
+            <param name="resCrypt"></param>
+            <param name="LOGIN"></param>
+            <param name="PASS"></param>
+        </member>
+        <member name="M:TaskManager.Realizations.RealizeAccount.UserAuthorisation(TaskManager.Models.LogIn)">
+            <summary>
+            Conditions for failed attempt to authorize
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="F:TaskManager.Realizations.RealizeManager.m_db">
+            <summary>
+            Instance EntitieDatabase is
+            </summary>
+        </member>
+        <member name="F:TaskManager.Realizations.RealizeManager.m_CountTag">
+            <summary>
+            Amount of string
+            </summary>
+        </member>
+        <member name="M:TaskManager.Realizations.RealizeManager.TaskStatusFin(System.Int32)">
+            <summary>
+            Finishing of task
+            </summary>
+            <param name="TaskFromFinish"></param>
+        </member>
+        <member name="M:TaskManager.Realizations.RealizeManager.CommonUpdateStatus">
+            <summary>
+            Auto-Updating all user's tasks that is updating statuses of the evrey task
+            </summary>
+        </member>
+        <member name="M:TaskManager.Realizations.RealizeManager.TaskOpen(System.Int32)">
+            <summary>
+            Opening of task on page or the other words review of task's Detail info 
+            </summary>
+            <param name="TaskId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaskManager.Realizations.RealizeManager.TaskAdd(TaskManager.TASKS)">
+            <summary>
+            Adding a task into the data base
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaskManager.Realizations.RealizeManager.TaskChange(TaskManager.TASKS)">
+            <summary>
+            Getting task with TaskId for forward Changing task
+            </summary>
+            <param name="TaskId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaskManager.Realizations.RealizeManager.TaskDelete(System.Int32)">
+            <summary>
+            Removing task
+            </summary>
+            <param name="TaskId"></param>
+        </member>
+        <member name="M:TaskManager.Realizations.RealizeManager.TaskSelect(System.Int32)">
+            <summary>
+            Getting list of tasks
+            </summary>
+            <param name="CurId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaskManager.Realizations.RealizeManager.TagsAdd(System.String)">
+            <summary>
+            Adding of tags to DB or not
+            </summary>
+            <param name="TagRow"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaskManager.Realizations.RealizeManager.GettingTags(System.String)">
+            <summary>
+            Getting list of Tags with inputed Keyword 
+            </summary>
+            <param name="TagKeyword"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaskManager.Realizations.RealizeManager.CurrentUser(System.String)">
+            <summary>
+            Getting User id
+            </summary>
+            <param name="SafetyLogin"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaskManager.Realizations.RealizeManager.FromingStatus(System.String)">
+            <summary>
+            Froming of Status
+            </summary>
+            <param name="Userdate"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

@@ -10,7 +10,11 @@ namespace TaskManager.Controllers
         /// <summary>
         /// Instance RealizeManager : IManager is
         /// </summary>
-        private readonly IManager m_Relize = new RealizeManager();
+        private readonly IManager m_Relize;
+        public ManagerController(IManager value)
+        {
+            m_Relize = value;
+        }
 
         /// <summary>
         /// Variable is for User errors on Views

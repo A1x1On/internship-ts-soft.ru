@@ -13,13 +13,6 @@ using TaskManager.Models;
 
 namespace TaskManager.Realizations
 {
-    public interface IAccount
-    {
-        string UserToDb(USERS u);
-        string UserConfirm(string Code);
-        string[] UserAuthorisation(LogIn model);
-    }
-
     public class RealizeAccount : IAccount
     {
         /// <summary>

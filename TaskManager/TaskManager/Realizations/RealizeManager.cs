@@ -6,20 +6,6 @@ using System.Text.RegularExpressions;
 
 namespace TaskManager.Realizations
 {
-    public interface IManager
-    {
-        USERS CurrentUser(string SafetyLogin);
-        string TaskAdd(TASKS model);
-        Array TaskSelect(int CurId);
-        void TaskDelete(int TaskId);
-        string TaskChange(TASKS model);
-        Array TaskOpen(int TaskId);
-        //string TagsAdd(string TagRow);
-        IEnumerable<TAGS> GettingTags(string TagKeyword);
-        void CommonUpdateStatus();
-        string TaskStatusFin(int TaskFromFinish);
-    }
-
     public class RealizeManager : IManager
     {
         /// <summary>

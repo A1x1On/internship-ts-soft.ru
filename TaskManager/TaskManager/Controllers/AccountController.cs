@@ -29,7 +29,11 @@ namespace TaskManager.Controllers
         /// <summary>
         /// Instance RealizeAccount : IAccount is
         /// </summary>
-        private readonly IAccount m_Relize = new RealizeAccount();
+        private readonly IAccount m_Relize;
+        public AccountController(IAccount value)
+        {
+            m_Relize = value;
+        }
 
         /// <summary>
         /// Checking of Authorized User

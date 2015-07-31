@@ -9,9 +9,6 @@
 
 namespace TaskManager
 {
-    using System;
-    using System.Collections.Generic;
-    
     public partial class TAGS
     {
         public int ID { get; set; }

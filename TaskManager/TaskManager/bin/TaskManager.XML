@@ -4,6 +4,31 @@
         <name>TaskManager</name>
     </assembly>
     <members>
+        <member name="T:TaskManager.App_Start.UnityConfig">
+            <summary>
+            Specifies the Unity configuration for the main container.
+            </summary>
+        </member>
+        <member name="M:TaskManager.App_Start.UnityConfig.GetConfiguredContainer">
+            <summary>
+            Gets the configured Unity container.
+            </summary>
+        </member>
+        <member name="M:TaskManager.App_Start.UnityConfig.RegisterTypes(Microsoft.Practices.Unity.IUnityContainer)">
+            <summary>Registers the type mappings with the Unity container.</summary>
+            <param name="container">The unity container to configure.</param>
+            <remarks>There is no need to register concrete types such as controllers or API controllers (unless you want to 
+            change the defaults), as Unity allows resolving a concrete type even if it was not previously registered.</remarks>
+        </member>
+        <member name="T:TaskManager.App_Start.UnityWebActivator">
+            <summary>Provides the bootstrapping for integrating Unity with ASP.NET MVC.</summary>
+        </member>
+        <member name="M:TaskManager.App_Start.UnityWebActivator.Start">
+            <summary>Integrates Unity when the application starts.</summary>
+        </member>
+        <member name="M:TaskManager.App_Start.UnityWebActivator.Shutdown">
+            <summary>Disposes the Unity container when the application is shut down.</summary>
+        </member>
         <member name="F:TaskManager.Controllers.AccountController.m_ResultMassage">
             <summary>
             Message: Error Capcha
@@ -249,6 +274,11 @@
             </summary>
             <param name="Userdate"></param>
             <returns></returns>
+        </member>
+        <member name="M:TaskManager.UnitTests.TestsManager.TesTaskFinihed">
+            <summary>
+            Testing for finishing task
+            </summary>
         </member>
     </members>
 </doc>

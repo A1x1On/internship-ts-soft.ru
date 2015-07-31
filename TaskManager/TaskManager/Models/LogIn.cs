@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace TaskManager.Models
 {
@@ -13,7 +9,7 @@ namespace TaskManager.Models
         public string Login { get; set; }
         [Required(ErrorMessage = "Пожалуйста введите пароль", AllowEmptyStrings = false)]
         [StringLength(25, MinimumLength = 5, ErrorMessage = "Пароль должен быть состоять как минимум из 3-х символов!")]
-        [DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
         
 

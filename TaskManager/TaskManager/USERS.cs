@@ -7,13 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace TaskManager
 {
-    using System;
-    using System.Collections.Generic;
-
     public partial class USERS
     {
         public USERS()
@@ -38,13 +36,13 @@ namespace TaskManager
         [Display(Name = "Логин")]
         public string LOGIN_NAME { get; set; }
         [Required(ErrorMessage = "Пожалуйста введите Пароль", AllowEmptyStrings = false)]
-        [DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
+        [DataType(DataType.Password)]
         [StringLength(70, MinimumLength = 3, ErrorMessage = "Пароль должен состоять как минимум из 3-х символов")]
         [Display(Name = "Пароль")]
         public string PASS { get; set; }
         [Required(ErrorMessage = "Пожалуйста введите Подтверждение пароля", AllowEmptyStrings = false)]
         [Compare("PASS", ErrorMessage = "Пароль не совподает")]
-        [DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
+        [DataType(DataType.Password)]
         [Display(Name = "Подтверждение")]
         public string PASSConfirm { get; set; }
         public string CONFIRM { get; set; }

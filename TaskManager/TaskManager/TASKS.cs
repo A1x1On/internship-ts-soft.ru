@@ -7,13 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace TaskManager
 {
-    using System;
-    using System.Collections.Generic;
-    
     public partial class TASKS
     {
         public int TASKID { get; set; }
