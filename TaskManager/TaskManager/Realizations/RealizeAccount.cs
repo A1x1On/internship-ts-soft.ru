@@ -33,8 +33,8 @@ namespace TaskManager.Realizations
         /// <summary>
         /// Adding of User to DataBase
         /// </summary>
-        /// <param name="u"></param>
-        /// <returns></returns>
+        /// <param name="Person">Object User</param>
+        /// <returns>Massege of success for m_ResultMassage</returns>
         public string UserToDb(USERS Person)
         {
             var PersonExist = m_db.USERS.Where(x => x.LOGIN_NAME.Equals(Person.LOGIN_NAME)).FirstOrDefault();
@@ -59,15 +59,17 @@ namespace TaskManager.Realizations
         /// <summary>
         /// Confirming of user via own Email
         /// </summary>
-        /// <param name="Code"></param>
-        /// <returns></returns>
-        public string UserConfirm(string Code)
+        /// <param name="code">Crypt password from user's email</param>
+        /// <param name="l">Login of User</param>
+        /// <returns>Massege of success for m_ResultMassage</returns>
+        public string UserConfirm(string code, string l)
         {
-            var value = m_db.USERS.FirstOrDefault(c => c.PASS.Contains(Code));
+            var value = m_db.USERS.Where(x => x.LOGIN_NAME == l).FirstOrDefault();
             if (value != null && value.CONFIRM != "confirmed")
             {
-                value.PASS = Code;
-                value.PASSConfirm = Code;
+                FormsAuthentication.SetAuthCookie(value.LOGIN_NAME, true);
+                value.PASS = code;
+                value.PASSConfirm = code;
                 value.CAPCHA = "00000";
                 value.CONFIRM = "confirmed";
                 m_db.SaveChanges();
@@ -75,49 +77,21 @@ namespace TaskManager.Realizations
             }
             else
             {
-                return "Ваш профиль уже подтвержден";
+                if (value.PASS == code)
+                {
+                    FormsAuthentication.SetAuthCookie(value.LOGIN_NAME, true);
+                    return "Ваш профиль уже подтвержден";
+                }
+                return "Ошибка подтверждения";
+                
             }
         }
 
         /// <summary>
-        /// Sending of Email to confirm registred Account
+        /// Conditions are for failed attempt to authorize
         /// </summary>
-        /// <param name="email"></param>
-        /// <param name="FIRST_NAME"></param>
-        /// <param name="LAST_NAME"></param>
-        /// <param name="resCrypt"></param>
-        /// <param name="LOGIN"></param>
-        /// <param name="PASS"></param>
-        public void SetLetter(string email, string FIRST_NAME, string LAST_NAME, string resCrypt, string LOGIN, string PASS)
-        {
-            SmtpClient Smtp = new SmtpClient("smtp.yandex.ru", 25);
-            Smtp.Credentials = new NetworkCredential("A1x1On@yandex.ru", "2engine2");
-            Smtp.EnableSsl = true;
-            MailMessage message = new MailMessage();
-            message.From = new MailAddress("A1x1On@yandex.ru");
-            message.To.Add(new MailAddress(email));
-            message.IsBodyHtml = true;
-            message.Subject = "Подтверждение паролья | Хранилище документов";
-            message.Body =
-                "<html><body><br><img src=\"http://drunkendial.us/files/2008/09/Ubuntu-Logo-square-170x170.png\" alt=\"Super Game!\">" +
-                @" 
-                <br>Здравствуйте уважаемый(я) " + FIRST_NAME + " " + LAST_NAME + @" !
-                <br>Вы получили это письмо, потому что вы зарегистрировались на http://www.HranilisheDocumentov.РФ.
-                <br>Высылаем Вам секретный код для активации вашего профиля.
-                <br>                                                                                              
-                <br>Код активации:       <b>" + resCrypt + @"</b>
-                <br>Ваш логин: " + LOGIN + "<br>Ваш пароль: " + PASS +
-                "<br> Пройдите по ссылке для подтверждения: <a href='http://localhost:54723//Account/ConfirMail/?code=" +
-                resCrypt +
-                "'>Клик</a><br><br>Мы будем рады видеть Вас на нашем сайте и желаем Вам удачного дня!</body></html>";
-            Smtp.Send(message);
-        }
-
-        /// <summary>
-        /// Conditions for failed attempt to authorize
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
+        /// <param name="model">Model of project for authorize on the site</param>
+        /// <returns>Massege of Conditions for m_ResultMassage</returns>
         public string[] UserAuthorisation(LogIn model)
         {
             string[] dataAuth = new string[2];
@@ -152,6 +126,42 @@ namespace TaskManager.Realizations
                 dataAuth[0] = "Такого пользователя не существует!";
             }
             return dataAuth;
+        }
+
+        ///The others Methods///
+       
+        /// <summary>
+        /// Forming and Sending of Email to confirm registred Account
+        /// </summary>
+        /// <param name="email">Inputed user's email</param>
+        /// <param name="FIRST_NAME">Inputed user's first name</param>
+        /// <param name="LAST_NAME">Inputed user's last name</param>
+        /// <param name="resCrypt">Crypted user's pass</param>
+        /// <param name="LOGIN">Inputed user's login</param>
+        /// <param name="PASS">Inputed user's password</param>
+        public void SetLetter(string email, string FIRST_NAME, string LAST_NAME, string resCrypt, string LOGIN, string PASS)
+        {
+            SmtpClient Smtp = new SmtpClient("smtp.yandex.ru", 25);
+            Smtp.Credentials = new NetworkCredential("A1x1On@yandex.ru", "2engine2");
+            Smtp.EnableSsl = true;
+            MailMessage message = new MailMessage();
+            message.From = new MailAddress("A1x1On@yandex.ru");
+            message.To.Add(new MailAddress(email));
+            message.IsBodyHtml = true;
+            message.Subject = "Подтверждение паролья | Хранилище документов";
+            message.Body =
+                "<html><body><br><img src=\"http://drunkendial.us/files/2008/09/Ubuntu-Logo-square-170x170.png\" alt=\"Super Game!\">" +
+                @" 
+                <br>Здравствуйте уважаемый(я) " + FIRST_NAME + " " + LAST_NAME + @" !
+                <br>Вы получили это письмо, потому что вы зарегистрировались на http://www.HranilisheDocumentov.РФ.
+                <br>Высылаем Вам секретный код для активации вашего профиля.
+                <br>                                                                                              
+                <br>Код активации:       <b>" + resCrypt + @"</b>
+                <br>Ваш логин: " + LOGIN + "<br>Ваш пароль: " + PASS +
+                "<br> Пройдите по ссылке для подтверждения: <a href='http://localhost:54723//Account/ConfirMail/?l="+LOGIN+"&code=" +
+                resCrypt +
+                "'>Клик</a><br><br>Мы будем рады видеть Вас на нашем сайте и желаем Вам удачного дня!</body></html>";
+            Smtp.Send(message);
         }
     }
 }

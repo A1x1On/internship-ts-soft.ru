@@ -1,7 +1,5 @@
 ﻿$(document).ready(function () {
 
-
-    
     // Change the value of TASKTERM(@Class = "valDate") to the value of <input type="date" id="myDate"
     $("#myDate").change(function () {
         var val = $(this).val();
@@ -19,9 +17,6 @@
     $("#myDate").attr("value", today);
     $(".valDate").val(today);
 
-
-
-    ///////////////////////////////
     // Including of tags prototype 
     $.getScript("Scripts/ArrayOfTags.js");
 

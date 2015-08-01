@@ -2,7 +2,6 @@
 using TaskManager.Realizations;
 using WebMatrix.WebData;
 
-
 namespace TaskManager.Controllers
 {
     public class ManagerController : Controller
@@ -34,7 +33,7 @@ namespace TaskManager.Controllers
         /// <summary>
         /// View of Review list of Tasks, way adding of task
         /// </summary>
-        /// <returns></returns>
+        /// <returns>View Index/Account</returns>
         [Authorize]
         public ActionResult Index()
         {
@@ -54,8 +53,8 @@ namespace TaskManager.Controllers
         /// <summary>
         /// Finishing of task
         /// </summary>
-        /// <param name="TaskFromFinish"></param>
-        /// <returns></returns>
+        /// <param name="TaskFromFinish">ID of task</param>
+        /// <returns>View Index/Manager</returns>
         [Authorize]
         [HttpPost]
         public ActionResult Finish(int TaskFromFinish)
@@ -66,8 +65,8 @@ namespace TaskManager.Controllers
         /// <summary>
         /// Adding and Changing of tasks
         /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
+        /// <param name="model">Object of task who ready to add database</param>
+        /// <returns>View Index/Manage</returns>
         [Authorize]
         [HttpPost]
         public ActionResult AddChange(TASKS model)
@@ -86,8 +85,8 @@ namespace TaskManager.Controllers
         /// <summary>
         /// Getting list of Tags with inputed Keyword [AJAX]
         /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
+        /// <param name="name">Key word from (text input of class="inputTag")</param>
+        /// <returns>list of received tags</returns>
         [Authorize]
         public JsonResult GetTags(string name)
         {
@@ -97,8 +96,8 @@ namespace TaskManager.Controllers
         /// <summary>
         /// Removing of tasks [HttpPost] [Ajax]
         /// </summary>
-        /// <param name="Id"></param>
-        /// <returns></returns>
+        /// <param name="idTask">Id of task</param>
+        /// <returns>Massage of id task on page</returns>
         [Authorize]
         public JsonResult Delete(int idTask)
         {
@@ -110,7 +109,7 @@ namespace TaskManager.Controllers
         /// Dinamic opening of detail task on the Index page
         /// </summary>
         /// <param name="TaskId"></param>
-        /// <returns></returns>
+        /// <returns>Set of property for Angular act</returns>
         [Authorize]
         public JsonResult OpenTask(int TaskId)
         {

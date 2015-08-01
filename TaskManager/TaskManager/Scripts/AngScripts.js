@@ -3,14 +3,12 @@
     // Including of tags prototype 
     $.getScript("Scripts/ArrayOfTags.js");
 
-    //////////////////////////////////////
     // Initialazing of module AngularManager
     var ModuleManager = angular.module("AngularManager", ["ngRoute"]);
 
     // id of task
     var idTask;
  
-    /////////////////////////////////////////////////////////////////
     // Initialazing of controller DinamicTag and factory TService
     ModuleManager.controller("TaskFrom", function ($scope, TService) {
 
@@ -57,7 +55,6 @@
 
     });
 
-    ////////////////////////////////////////////////////////////////
     // Initialazing of controller OpenTask and factory OpenTaskService
     ModuleManager.controller("OpenTask", function ($scope, OpenTaskService) {
 

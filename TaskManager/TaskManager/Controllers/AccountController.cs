@@ -55,7 +55,7 @@ namespace TaskManager.Controllers
         /// <summary>
         /// Registration View
         /// </summary>
-        /// <returns></returns>
+        /// <returns>View Registration/Account</returns>
         public ActionResult Registration()
         {
             return View();
@@ -64,16 +64,16 @@ namespace TaskManager.Controllers
         /// <summary>
         /// Registration of User [HttpPost]
         /// </summary>
-        /// <param name="u">Object of data register</param>
-        /// <returns>View Index/Manager having string m_ResultMassage</returns>
+        /// <param name="Person">Object of data register</param>
+        /// <returns>View Index/Manager</returns>
         [HttpPost]
-        public ActionResult Registration(USERS u)
+        public ActionResult Registration(USERS Person)
         {
-             if (this.Session["CapthaImageText"].ToString() == u.CAPCHA)
+             if (this.Session["CapthaImageText"].ToString() == Person.CAPCHA)
              {
                  if (ModelState.IsValid)
                  {
-                     m_ResultMassage = m_Relize.UserToDb(u);
+                     m_ResultMassage = m_Relize.UserToDb(Person);
                      ModelState.Clear();
                  }
                  else
@@ -87,21 +87,18 @@ namespace TaskManager.Controllers
         /// <summary>
         /// Confirming of Account via own Email
         /// </summary>
-        /// <param name="Code"></param>
-        /// <returns></returns>
-        public ActionResult ConfirMail(string Code)
+        /// <param name="code">Crypt password from user's email</param>
+        /// <param name="l">Login of User</param>
+        /// <returns>View Index/Manager</returns>
+        public ActionResult ConfirMail(string code, string l)
         {
-            if (Code != null)
-            {
-                return RedirectToAction("Index", "Manager", new { m_ResultMassage = m_Relize.UserConfirm(Code) });
-            }
-            return View(); 
+            return RedirectToAction("Index", "Manager", new { m_ResultMassage = m_Relize.UserConfirm(code, l)});
         }
 
         /// <summary>
         /// Drawing of Capcha
         /// </summary>
-        /// <returns></returns>
+        /// <returns>image of capcha</returns>
         [HttpGet]
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "none")]
         public FileResult GetCapthcaImage()
@@ -118,8 +115,8 @@ namespace TaskManager.Controllers
         /// <summary>
         /// Login View [HttpPost]
         /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
+        /// <param name="model">Model of project for authorize on the site</param>
+        /// <returns>View Index/Manager or View Index/Account</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(LogIn model)
@@ -145,7 +142,7 @@ namespace TaskManager.Controllers
         /// <summary>
         /// Logout View [HttpPost]
         /// </summary>
-        /// <returns></returns>
+        /// <returns>View Index/Account</returns>
         [HttpPost]
         public ActionResult Logout()
         {

@@ -170,6 +170,9 @@ body section .list-tasks i .d-disc {
 body section .list-tasks i .d-date {
   color: #666;
 }
+body section .list-tasks i .d-status {
+  color: darkturquoise;
+}
 body section .container {
   float: left;
   background-color: #FBFBE8;

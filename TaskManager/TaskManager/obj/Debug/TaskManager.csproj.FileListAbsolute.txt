@@ -38,3 +38,5 @@ D:\Internship\TaskManager\TaskManager\bin\Microsoft.Practices.Unity.Configuratio
 D:\Internship\TaskManager\TaskManager\bin\Microsoft.Practices.Unity.Mvc.xml
 D:\Internship\TaskManager\TaskManager\bin\Microsoft.Practices.Unity.RegistrationByConvention.xml
 D:\Internship\TaskManager\TaskManager\bin\Unit.dll
+D:\Internship\TaskManager\TaskManager\bin\Moq.dll
+D:\Internship\TaskManager\TaskManager\bin\Moq.xml

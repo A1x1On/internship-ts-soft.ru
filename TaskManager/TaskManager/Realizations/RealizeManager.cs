@@ -21,7 +21,7 @@ namespace TaskManager.Realizations
         /// <summary>
         /// Finishing of task
         /// </summary>
-        /// <param name="TaskFromFinish"></param>
+        /// <param name="TaskFromFinish">ID of task</param>
         public string TaskStatusFin(int TaskFromFinish)
         {
             try
@@ -67,8 +67,8 @@ namespace TaskManager.Realizations
         /// <summary>
         /// Opening of task on page or the other words review of task's Detail info 
         /// </summary>
-        /// <param name="TaskId"></param>
-        /// <returns></returns>
+        /// <param name="TaskId">ID of task</param>
+        /// <returns>Set of property for Angular act</returns>
         public Array TaskOpen(int TaskId)
         {
             string[] setPropertyTask = new string[6];
@@ -85,8 +85,8 @@ namespace TaskManager.Realizations
         /// <summary>
         /// Adding a task into the data base
         /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
+        /// <param name="model">Object of task who ready to add database</param>
+        /// <returns>Result to m_ResultMassage in controller</returns>
         public string TaskAdd(TASKS model)
         {
             try
@@ -110,11 +110,12 @@ namespace TaskManager.Realizations
             }
         }
 
+        
         /// <summary>
-        /// Getting task with TaskId for forward Changing task
+        /// Changing of task
         /// </summary>
-        /// <param name="TaskId"></param>
-        /// <returns></returns>
+        /// <param name="model">Object of task who ready to change from database</param>
+        /// <returns>Result to m_ResultMassage in controller</returns>
         public string TaskChange(TASKS model)
         {
             try
@@ -144,9 +145,9 @@ namespace TaskManager.Realizations
         }
 
         /// <summary>
-        /// Removing task
+        /// Removing of task
         /// </summary>
-        /// <param name="TaskId"></param>
+        /// <param name="TaskId">Id of task</param>
         public void TaskDelete(int TaskId)
         {
             var value = m_db.TASKS.FirstOrDefault(c => c.TASKID == TaskId);
@@ -158,10 +159,10 @@ namespace TaskManager.Realizations
         }
 
         /// <summary>
-        /// Getting list of tasks
+        /// Getting of tasks' list
         /// </summary>
-        /// <param name="CurId"></param>
-        /// <returns></returns>
+        /// <param name="CurId">Authoeized user</param>
+        /// <returns>List of tasks for _PartialSelectionTasks.cshtml</returns>
         public Array TaskSelect(int CurId)
         {
             var Query = from SelectionTasks in m_db.TASKS
@@ -172,10 +173,26 @@ namespace TaskManager.Realizations
         }
 
         /// <summary>
+        /// Getting of Tags with inputed Keyword and angular service if such tag exists in DB
+        /// </summary>
+        /// <param name="TagKeyword">Key word from (text input of class="inputTag")</param>
+        /// <returns>list of received tags</returns>
+        public IEnumerable<TAGS> GettingTags(string TagKeyword)
+        {
+            IEnumerable<TAGS> QueryTags = from t in m_db.TAGS
+                where t.TITLETAG.Contains(TagKeyword)
+                orderby t.ID
+                select t;
+            return QueryTags.ToArray();
+        }
+
+        ///The others Methods///
+
+        /// <summary>
         /// Adding of tags to DB or not
         /// </summary>
-        /// <param name="TagRow"></param>
-        /// <returns></returns>
+        /// <param name="TagRow">Got string from (text input of class="inputTag")</param>
+        /// <returns>String of formed tags</returns>
         public string TagsAdd(string TagRow)
         {
             string @FinalTag = "";
@@ -204,27 +221,10 @@ namespace TaskManager.Realizations
         }
 
         /// <summary>
-        /// Getting list of Tags with inputed Keyword 
+        /// Getting of User id
         /// </summary>
-        /// <param name="TagKeyword"></param>
-        /// <returns></returns>
-        public IEnumerable<TAGS> GettingTags(string TagKeyword)
-        {
-            IEnumerable<TAGS> QueryTags = from t in m_db.TAGS
-                where t.TITLETAG.Contains(TagKeyword)
-                orderby t.ID
-                select t;
-            return QueryTags.ToArray();
-        }
-
-
-        ///Others Methods
-
-        /// <summary>
-        /// Getting User id
-        /// </summary>
-        /// <param name="SafetyLogin"></param>
-        /// <returns></returns>
+        /// <param name="SafetyLogin">WebSecurity.CurrentUserName</param>
+        /// <returns>Object USER</returns>
         public USERS CurrentUser(string SafetyLogin)
         {
             return m_db.USERS.Where(x => x.LOGIN_NAME.Equals(SafetyLogin)).FirstOrDefault();
@@ -233,8 +233,8 @@ namespace TaskManager.Realizations
         /// <summary>
         /// Froming of Status
         /// </summary>
-        /// <param name="Userdate"></param>
-        /// <returns></returns>
+        /// <param name="Userdate">Own user of date from DataBase</param>
+        /// <returns>Status of task</returns>
         public string FromingStatus(string Userdate)
         {
             DateTime curDate = DateTime.Now;

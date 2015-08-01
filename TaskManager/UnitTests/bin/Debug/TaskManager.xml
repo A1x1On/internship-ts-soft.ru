@@ -55,7 +55,7 @@
             <summary>
             Registration of User [HttpPost]
             </summary>
-            <param name="u">Object of data register</param>
+            <param name="Person">Object of data register</param>
             <returns>View Index/Manager having string m_ResultMassage</returns>
         </member>
         <member name="M:TaskManager.Controllers.AccountController.ConfirMail(System.String)">
@@ -145,6 +145,86 @@
             <param name="TaskId"></param>
             <returns></returns>
         </member>
+        <member name="M:TaskManager.Realizations.IAccount.UserToDb(TaskManager.USERS)">
+            <summary>
+            Adding of User to DataBase
+            </summary>
+            <param name="Person">Object User</param>
+            <returns>Massege of success for m_ResultMassage</returns>
+        </member>
+        <member name="M:TaskManager.Realizations.IAccount.UserConfirm(System.String)">
+            <summary>
+            Confirming of user via own Email
+            </summary>
+            <param name="Code">Crypt password from user's email</param>
+            <returns>Massege of success for m_ResultMassage</returns>
+        </member>
+        <member name="M:TaskManager.Realizations.IAccount.UserAuthorisation(TaskManager.Models.LogIn)">
+            <summary>
+            Conditions are for failed attempt to authorize
+            </summary>
+            <param name="model">Model of project for authorize on the site</param>
+            <returns>Massege of Conditions for m_ResultMassage</returns>
+        </member>
+        <member name="M:TaskManager.Realizations.IManager.TaskStatusFin(System.Int32)">
+            <summary>
+            Finishing of task
+            </summary>
+            <param name="TaskFromFinish">ID of task</param>
+        </member>
+        <member name="M:TaskManager.Realizations.IManager.CommonUpdateStatus">
+            <summary>
+            Auto-Updating all user's tasks that is updating statuses of the evrey task
+            </summary>
+        </member>
+        <member name="M:TaskManager.Realizations.IManager.TaskOpen(System.Int32)">
+            <summary>
+            Opening of task on page or the other words review of task's Detail info 
+            </summary>
+            <param name="TaskId">ID of task</param>
+            <returns>Set of property for Angular act</returns>
+        </member>
+        <member name="M:TaskManager.Realizations.IManager.TaskAdd(TaskManager.TASKS)">
+            <summary>
+            Adding a task into the data base
+            </summary>
+            <param name="model">Object of task who ready to add database</param>
+            <returns>Result to m_ResultMassage in controller</returns>
+        </member>
+        <member name="M:TaskManager.Realizations.IManager.TaskChange(TaskManager.TASKS)">
+            <summary>
+            Changing of task
+            </summary>
+            <param name="model">Object of task who ready to change from database</param>
+            <returns>Result to m_ResultMassage in controller</returns>
+        </member>
+        <member name="M:TaskManager.Realizations.IManager.TaskDelete(System.Int32)">
+            <summary>
+            Removing of task
+            </summary>
+            <param name="TaskId">Id of task</param>
+        </member>
+        <member name="M:TaskManager.Realizations.IManager.TaskSelect(System.Int32)">
+            <summary>
+            Getting of tasks' list
+            </summary>
+            <param name="CurId">Authoeized user</param>
+            <returns>List of tasks for _PartialSelectionTasks.cshtml</returns>
+        </member>
+        <member name="M:TaskManager.Realizations.IManager.GettingTags(System.String)">
+            <summary>
+            Getting of Tags with inputed Keyword and angular service if such tag exists in DB
+            </summary>
+            <param name="TagKeyword">Key word from (text input of class="inputTag")</param>
+            <returns>list of received tags</returns>
+        </member>
+        <member name="M:TaskManager.Realizations.IManager.CurrentUser(System.String)">
+            <summary>
+            Getting of User id
+            </summary>
+            <param name="SafetyLogin">WebSecurity.CurrentUserName</param>
+            <returns>Object USER</returns>
+        </member>
         <member name="F:TaskManager.Realizations.RealizeAccount.m_db">
             <summary>
             Instance EntitieDatabase is
@@ -164,33 +244,33 @@
             <summary>
             Adding of User to DataBase
             </summary>
-            <param name="u"></param>
-            <returns></returns>
+            <param name="Person">Object User</param>
+            <returns>Massege of success for m_ResultMassage</returns>
         </member>
         <member name="M:TaskManager.Realizations.RealizeAccount.UserConfirm(System.String)">
             <summary>
             Confirming of user via own Email
             </summary>
-            <param name="Code"></param>
-            <returns></returns>
-        </member>
-        <member name="M:TaskManager.Realizations.RealizeAccount.SetLetter(System.String,System.String,System.String,System.String,System.String,System.String)">
-            <summary>
-            Sending of Email to confirm registred Account
-            </summary>
-            <param name="email"></param>
-            <param name="FIRST_NAME"></param>
-            <param name="LAST_NAME"></param>
-            <param name="resCrypt"></param>
-            <param name="LOGIN"></param>
-            <param name="PASS"></param>
+            <param name="Code">Crypt password from user's email</param>
+            <returns>Massege of success for m_ResultMassage</returns>
         </member>
         <member name="M:TaskManager.Realizations.RealizeAccount.UserAuthorisation(TaskManager.Models.LogIn)">
             <summary>
-            Conditions for failed attempt to authorize
+            Conditions are for failed attempt to authorize
             </summary>
-            <param name="model"></param>
-            <returns></returns>
+            <param name="model">Model of project for authorize on the site</param>
+            <returns>Massege of Conditions for m_ResultMassage</returns>
+        </member>
+        <member name="M:TaskManager.Realizations.RealizeAccount.SetLetter(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Forming and Sending of Email to confirm registred Account
+            </summary>
+            <param name="email">Inputed user's email</param>
+            <param name="FIRST_NAME">Inputed user's first name</param>
+            <param name="LAST_NAME">Inputed user's last name</param>
+            <param name="resCrypt">Crypted user's pass</param>
+            <param name="LOGIN">Inputed user's login</param>
+            <param name="PASS">Inputed user's password</param>
         </member>
         <member name="F:TaskManager.Realizations.RealizeManager.m_db">
             <summary>
@@ -206,7 +286,7 @@
             <summary>
             Finishing of task
             </summary>
-            <param name="TaskFromFinish"></param>
+            <param name="TaskFromFinish">ID of task</param>
         </member>
         <member name="M:TaskManager.Realizations.RealizeManager.CommonUpdateStatus">
             <summary>
@@ -217,63 +297,63 @@
             <summary>
             Opening of task on page or the other words review of task's Detail info 
             </summary>
-            <param name="TaskId"></param>
-            <returns></returns>
+            <param name="TaskId">ID of task</param>
+            <returns>Set of property for Angular act</returns>
         </member>
         <member name="M:TaskManager.Realizations.RealizeManager.TaskAdd(TaskManager.TASKS)">
             <summary>
             Adding a task into the data base
             </summary>
-            <param name="model"></param>
-            <returns></returns>
+            <param name="model">Object of task who ready to add database</param>
+            <returns>Result to m_ResultMassage in controller</returns>
         </member>
         <member name="M:TaskManager.Realizations.RealizeManager.TaskChange(TaskManager.TASKS)">
             <summary>
-            Getting task with TaskId for forward Changing task
+            Changing of task
             </summary>
-            <param name="TaskId"></param>
-            <returns></returns>
+            <param name="model">Object of task who ready to change from database</param>
+            <returns>Result to m_ResultMassage in controller</returns>
         </member>
         <member name="M:TaskManager.Realizations.RealizeManager.TaskDelete(System.Int32)">
             <summary>
-            Removing task
+            Removing of task
             </summary>
-            <param name="TaskId"></param>
+            <param name="TaskId">Id of task</param>
         </member>
         <member name="M:TaskManager.Realizations.RealizeManager.TaskSelect(System.Int32)">
             <summary>
-            Getting list of tasks
+            Getting of tasks' list
             </summary>
-            <param name="CurId"></param>
-            <returns></returns>
+            <param name="CurId">Authoeized user</param>
+            <returns>List of tasks for _PartialSelectionTasks.cshtml</returns>
+        </member>
+        <member name="M:TaskManager.Realizations.RealizeManager.GettingTags(System.String)">
+            <summary>
+            Getting of Tags with inputed Keyword and angular service if such tag exists in DB
+            </summary>
+            <param name="TagKeyword">Key word from (text input of class="inputTag")</param>
+            <returns>list of received tags</returns>
         </member>
         <member name="M:TaskManager.Realizations.RealizeManager.TagsAdd(System.String)">
             <summary>
             Adding of tags to DB or not
             </summary>
-            <param name="TagRow"></param>
-            <returns></returns>
-        </member>
-        <member name="M:TaskManager.Realizations.RealizeManager.GettingTags(System.String)">
-            <summary>
-            Getting list of Tags with inputed Keyword 
-            </summary>
-            <param name="TagKeyword"></param>
-            <returns></returns>
+            <param name="TagRow">Got string from (text input of class="inputTag")</param>
+            <returns>String of formed tags</returns>
         </member>
         <member name="M:TaskManager.Realizations.RealizeManager.CurrentUser(System.String)">
             <summary>
-            Getting User id
+            Getting of User id
             </summary>
-            <param name="SafetyLogin"></param>
-            <returns></returns>
+            <param name="SafetyLogin">WebSecurity.CurrentUserName</param>
+            <returns>Object USER</returns>
         </member>
         <member name="M:TaskManager.Realizations.RealizeManager.FromingStatus(System.String)">
             <summary>
             Froming of Status
             </summary>
-            <param name="Userdate"></param>
-            <returns></returns>
+            <param name="Userdate">Own user of date from DataBase</param>
+            <returns>Status of task</returns>
         </member>
     </members>
 </doc>
