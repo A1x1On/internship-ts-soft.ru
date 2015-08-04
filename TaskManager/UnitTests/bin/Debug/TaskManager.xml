@@ -118,7 +118,7 @@
             <param name="TaskFromFinish">ID of task</param>
             <returns>View Index/Manager</returns>
         </member>
-        <member name="M:TaskManager.Controllers.ManagerController.AddChange(TaskManager.TASKS)">
+        <member name="M:TaskManager.Controllers.ManagerController.AddChange(TaskManager.Models.TasksAddChangeSelect)">
             <summary>
             Adding and Changing of tasks
             </summary>
@@ -174,7 +174,7 @@
             </summary>
             <param name="TaskFromFinish">ID of task</param>
         </member>
-        <member name="M:TaskManager.Realizations.IManager.CommonUpdateStatus">
+        <member name="M:TaskManager.Realizations.IManager.CommonUpdateStatus(System.Int32)">
             <summary>
             Auto-Updating all user's tasks that is updating statuses of the evrey task
             </summary>
@@ -291,7 +291,7 @@
             </summary>
             <param name="TaskFromFinish">ID of task</param>
         </member>
-        <member name="M:TaskManager.Realizations.RealizeManager.CommonUpdateStatus">
+        <member name="M:TaskManager.Realizations.RealizeManager.CommonUpdateStatus(System.Int32)">
             <summary>
             Auto-Updating all user's tasks that is updating statuses of the evrey task
             </summary>

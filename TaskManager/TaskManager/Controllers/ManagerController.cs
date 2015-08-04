@@ -41,7 +41,7 @@ namespace TaskManager.Controllers
         public ActionResult Index()
         {
             // Auto-Updating all user's tasks that is updating of statuses of the evrey task
-            m_Relize.CommonUpdateStatus();
+            m_Relize.CommonUpdateStatus(m_Relize.CurrentUser(m_Login).USERID);
 
             // Some info for current View and model TASKS(void) and IEnumerable<TASKS> for _PartialSelectionTasks
             return View(new TasksAddChangeSelect()

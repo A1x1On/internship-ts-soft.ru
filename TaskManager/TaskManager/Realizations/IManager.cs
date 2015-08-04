@@ -19,7 +19,7 @@ namespace TaskManager.Realizations
         /// <summary>
         /// Auto-Updating all user's tasks that is updating statuses of the evrey task
         /// </summary>
-        void CommonUpdateStatus();
+        void CommonUpdateStatus(int parUSID);
 
         /// <summary>
         /// Opening of task on page or the other words review of task's Detail info 

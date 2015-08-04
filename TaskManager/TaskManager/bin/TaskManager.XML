@@ -174,7 +174,7 @@
             </summary>
             <param name="TaskFromFinish">ID of task</param>
         </member>
-        <member name="M:TaskManager.Realizations.IManager.CommonUpdateStatus">
+        <member name="M:TaskManager.Realizations.IManager.CommonUpdateStatus(System.Int32)">
             <summary>
             Auto-Updating all user's tasks that is updating statuses of the evrey task
             </summary>
@@ -291,7 +291,7 @@
             </summary>
             <param name="TaskFromFinish">ID of task</param>
         </member>
-        <member name="M:TaskManager.Realizations.RealizeManager.CommonUpdateStatus">
+        <member name="M:TaskManager.Realizations.RealizeManager.CommonUpdateStatus(System.Int32)">
             <summary>
             Auto-Updating all user's tasks that is updating statuses of the evrey task
             </summary>
@@ -337,19 +337,25 @@
             <param name="TagKeyword">Key word from (text input of class="inputTag")</param>
             <returns>list of received tags</returns>
         </member>
-        <member name="M:TaskManager.Realizations.RealizeManager.TagsAdd(System.String)">
-            <summary>
-            Adding of tags to DB or not
-            </summary>
-            <param name="TagRow">Got string from (text input of class="inputTag")</param>
-            <returns>String of formed tags</returns>
-        </member>
         <member name="M:TaskManager.Realizations.RealizeManager.CurrentUser(System.String)">
             <summary>
             Getting of User id
             </summary>
             <param name="SafetyLogin">WebSecurity.CurrentUserName</param>
             <returns>Object USER</returns>
+        </member>
+        <member name="M:TaskManager.Realizations.RealizeManager.sqlConnection">
+            <summary>
+            Connecting to DataBase with ADO.NET F.
+            </summary>
+            <returns>SqlConnection m_Connection</returns>
+        </member>
+        <member name="M:TaskManager.Realizations.RealizeManager.TagsAdd(System.String)">
+            <summary>
+            Adding of tags to DB or not
+            </summary>
+            <param name="TagRow">Got string from (text input of class="inputTag")</param>
+            <returns>String of formed tags</returns>
         </member>
         <member name="M:TaskManager.Realizations.RealizeManager.FromingStatus(System.String)">
             <summary>
