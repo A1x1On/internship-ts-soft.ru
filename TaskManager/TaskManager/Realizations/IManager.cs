@@ -53,7 +53,7 @@ namespace TaskManager.Realizations
         /// </summary>
         /// <param name="CurId">Authoeized user</param>
         /// <returns>List of tasks for _PartialSelectionTasks.cshtml</returns>
-        Array TaskSelect(int CurId);
+        IEnumerable<TASKS> TaskSelect(int CurId);
 
         /// <summary>
         /// Getting of Tags with inputed Keyword and angular service if such tag exists in DB

@@ -118,7 +118,7 @@
             <param name="TaskFromFinish">ID of task</param>
             <returns>View Index/Manager</returns>
         </member>
-        <member name="M:TaskManager.Controllers.ManagerController.AddChange(TaskManager.TASKS)">
+        <member name="M:TaskManager.Controllers.ManagerController.AddChange(TaskManager.Models.TasksAddChangeSelect)">
             <summary>
             Adding and Changing of tasks
             </summary>

@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text.RegularExpressions;
+using TaskManager.Models;
 
 namespace TaskManager.Realizations
 {
@@ -163,13 +165,15 @@ namespace TaskManager.Realizations
         /// </summary>
         /// <param name="CurId">Authoeized user</param>
         /// <returns>List of tasks for _PartialSelectionTasks.cshtml</returns>
-        public Array TaskSelect(int CurId)
+        public IEnumerable<TASKS> TaskSelect(int CurId)
         {
-            var Query = from SelectionTasks in m_db.TASKS
+           IEnumerable<TASKS> Query = from SelectionTasks in m_db.TASKS
                 where SelectionTasks.USID == CurId
                 orderby SelectionTasks.TASKID
                 select SelectionTasks;
-            return Query.ToArray();
+
+            return Query;
+           
         }
 
         /// <summary>

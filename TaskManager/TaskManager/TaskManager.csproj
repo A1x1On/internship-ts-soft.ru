@@ -183,6 +183,7 @@
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\LogIn.cs" />
+    <Compile Include="Models\TasksAddChangeSelect.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Realizations\Crypt.cs" />
     <Compile Include="Realizations\IAccount.cs" />

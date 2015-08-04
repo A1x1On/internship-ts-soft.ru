@@ -1,4 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
+using TaskManager.Models;
 using TaskManager.Realizations;
 using WebMatrix.WebData;
 
@@ -40,14 +43,14 @@ namespace TaskManager.Controllers
             // Auto-Updating all user's tasks that is updating of statuses of the evrey task
             m_Relize.CommonUpdateStatus();
 
-            // Some info for current View
-            @ViewBag.CurId = m_Relize.CurrentUser(m_Login).USERID;
-            @ViewBag.CurLogin = m_Login;
-            @ViewBag.CurStatus = m_StatusActive;
-
-            // Getting USERID for his Tasks to display
-            ViewData["Query"] = m_Relize.TaskSelect(m_Relize.CurrentUser(m_Login).USERID);
-            return View();
+            // Some info for current View and model TASKS(void) and IEnumerable<TASKS> for _PartialSelectionTasks
+            return View(new TasksAddChangeSelect()
+            {
+                SelecTasks = m_Relize.TaskSelect(m_Relize.CurrentUser(m_Login).USERID),
+                CurStatus = m_StatusActive,
+                CurLogin = m_Login,
+                CurId = m_Relize.CurrentUser(m_Login).USERID
+            });
         }
 
         /// <summary>
@@ -69,15 +72,15 @@ namespace TaskManager.Controllers
         /// <returns>View Index/Manage</returns>
         [Authorize]
         [HttpPost]
-        public ActionResult AddChange(TASKS model)
+        public ActionResult AddChange(TasksAddChangeSelect model)
         {
-            if (model.TASKID == 0)
+            if (model.AddChange.TASKID == 0)
             {
-                m_ResultMassage = m_Relize.TaskAdd(model);
+                m_ResultMassage = m_Relize.TaskAdd(model.AddChange);
             }
             else
             {
-                m_ResultMassage = m_Relize.TaskChange(model);
+                m_ResultMassage = m_Relize.TaskChange(model.AddChange);
             }
             return RedirectToAction("Index", "Manager", new { m_ResultMassage });
         }

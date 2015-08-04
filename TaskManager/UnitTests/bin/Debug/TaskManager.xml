@@ -49,40 +49,41 @@
             <summary>
             Registration View
             </summary>
-            <returns></returns>
+            <returns>View Registration/Account</returns>
         </member>
         <member name="M:TaskManager.Controllers.AccountController.Registration(TaskManager.USERS)">
             <summary>
             Registration of User [HttpPost]
             </summary>
             <param name="Person">Object of data register</param>
-            <returns>View Index/Manager having string m_ResultMassage</returns>
+            <returns>View Index/Manager</returns>
         </member>
-        <member name="M:TaskManager.Controllers.AccountController.ConfirMail(System.String)">
+        <member name="M:TaskManager.Controllers.AccountController.ConfirMail(System.String,System.String)">
             <summary>
             Confirming of Account via own Email
             </summary>
-            <param name="Code"></param>
-            <returns></returns>
+            <param name="code">Crypt password from user's email</param>
+            <param name="l">Login of User</param>
+            <returns>View Index/Manager</returns>
         </member>
         <member name="M:TaskManager.Controllers.AccountController.GetCapthcaImage">
             <summary>
             Drawing of Capcha
             </summary>
-            <returns></returns>
+            <returns>image of capcha</returns>
         </member>
         <member name="M:TaskManager.Controllers.AccountController.Login(TaskManager.Models.LogIn)">
             <summary>
             Login View [HttpPost]
             </summary>
-            <param name="model"></param>
-            <returns></returns>
+            <param name="model">Model of project for authorize on the site</param>
+            <returns>View Index/Manager or View Index/Account</returns>
         </member>
         <member name="M:TaskManager.Controllers.AccountController.Logout">
             <summary>
             Logout View [HttpPost]
             </summary>
-            <returns></returns>
+            <returns>View Index/Account</returns>
         </member>
         <member name="F:TaskManager.Controllers.ManagerController.m_Relize">
             <summary>
@@ -108,42 +109,42 @@
             <summary>
             View of Review list of Tasks, way adding of task
             </summary>
-            <returns></returns>
+            <returns>View Index/Account</returns>
         </member>
         <member name="M:TaskManager.Controllers.ManagerController.Finish(System.Int32)">
             <summary>
             Finishing of task
             </summary>
-            <param name="TaskFromFinish"></param>
-            <returns></returns>
+            <param name="TaskFromFinish">ID of task</param>
+            <returns>View Index/Manager</returns>
         </member>
         <member name="M:TaskManager.Controllers.ManagerController.AddChange(TaskManager.TASKS)">
             <summary>
             Adding and Changing of tasks
             </summary>
-            <param name="model"></param>
-            <returns></returns>
+            <param name="model">Object of task who ready to add database</param>
+            <returns>View Index/Manage</returns>
         </member>
         <member name="M:TaskManager.Controllers.ManagerController.GetTags(System.String)">
             <summary>
             Getting list of Tags with inputed Keyword [AJAX]
             </summary>
-            <param name="name"></param>
-            <returns></returns>
+            <param name="name">Key word from (text input of class="inputTag")</param>
+            <returns>list of received tags</returns>
         </member>
         <member name="M:TaskManager.Controllers.ManagerController.Delete(System.Int32)">
             <summary>
             Removing of tasks [HttpPost] [Ajax]
             </summary>
-            <param name="Id"></param>
-            <returns></returns>
+            <param name="idTask">Id of task</param>
+            <returns>Massage of id task on page</returns>
         </member>
         <member name="M:TaskManager.Controllers.ManagerController.OpenTask(System.Int32)">
             <summary>
             Dinamic opening of detail task on the Index page
             </summary>
             <param name="TaskId"></param>
-            <returns></returns>
+            <returns>Set of property for Angular act</returns>
         </member>
         <member name="M:TaskManager.Realizations.IAccount.UserToDb(TaskManager.USERS)">
             <summary>
@@ -152,11 +153,12 @@
             <param name="Person">Object User</param>
             <returns>Massege of success for m_ResultMassage</returns>
         </member>
-        <member name="M:TaskManager.Realizations.IAccount.UserConfirm(System.String)">
+        <member name="M:TaskManager.Realizations.IAccount.UserConfirm(System.String,System.String)">
             <summary>
             Confirming of user via own Email
             </summary>
-            <param name="Code">Crypt password from user's email</param>
+            <param name="code">Crypt password from user's email</param>
+            <param name="l">Login of User</param>
             <returns>Massege of success for m_ResultMassage</returns>
         </member>
         <member name="M:TaskManager.Realizations.IAccount.UserAuthorisation(TaskManager.Models.LogIn)">
@@ -247,11 +249,12 @@
             <param name="Person">Object User</param>
             <returns>Massege of success for m_ResultMassage</returns>
         </member>
-        <member name="M:TaskManager.Realizations.RealizeAccount.UserConfirm(System.String)">
+        <member name="M:TaskManager.Realizations.RealizeAccount.UserConfirm(System.String,System.String)">
             <summary>
             Confirming of user via own Email
             </summary>
-            <param name="Code">Crypt password from user's email</param>
+            <param name="code">Crypt password from user's email</param>
+            <param name="l">Login of User</param>
             <returns>Massege of success for m_ResultMassage</returns>
         </member>
         <member name="M:TaskManager.Realizations.RealizeAccount.UserAuthorisation(TaskManager.Models.LogIn)">
