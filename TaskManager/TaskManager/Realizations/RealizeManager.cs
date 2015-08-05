@@ -22,7 +22,20 @@ namespace TaskManager.Realizations
         /// </summary>
         private TaskManagerEntities m_db = new TaskManagerEntities();
 
+        /// <summary>
+        /// Varible is for sqlConnection() / connection to db
+        /// </summary>
         private SqlConnection m_Connection;
+
+        /// <summary>
+        /// Varible is for TASKSTATUS column in db
+        /// </summary>
+        private string m_TASKSTATUS = "";
+
+        /// <summary>
+        /// Varible is for TASKID column in db
+        /// </summary>
+        private int m_TASKID;
 
         /// <summary>
         /// Amount of string
@@ -67,62 +80,54 @@ namespace TaskManager.Realizations
             //}
             #endregion
         }
-
-
-       
-
-        private string m_TASKSTATUS = "";
+  
         /// <summary>
         /// Auto-Updating all user's tasks that is updating statuses of the evrey task
         /// </summary>
         public void CommonUpdateStatus(int parUSID)
         {
-
-
             //ADO.NET begin--
-            
-            
-                //Debug.WriteLine("Открыл базу");
-
-
-
-
-
-                //string sqlChange = string.Format("UPDATE TASKS SET TASKSTATUS = '{0}' WHERE USID = '{1}' AND TASKSTATUS != '{2}'", m_TASKSTATUS, parUSID, "Завершен");
-                //string sqlSel = string.Format("SELECT TASKTERM FROM TASKS WHERE USID = '{0}' AND TASKSTATUS != '{1}'", parUSID, "Завершен");
-                //SqlCommand cmdChange = new SqlCommand(sqlChange, sqlConnection());
-                //SqlCommand cmdSel = new SqlCommand(sqlSel, sqlConnection());
-
-                //SqlDataReader reader = cmdSel.ExecuteReader();
-                //while (reader.Read()) // если есть элемент прочитать
-                //{
-                //    m_TASKSTATUS = FromingStatus(reader["TASKTERM"].ToString());
-
-                //    // выполнить для текущего элемента комманду cmdChange
-                //}
-
+            using (var sqlConn = sqlConnection())
+            {
+                string sqlSel = string.Format("SELECT TASKTERM, TASKID FROM TASKS WHERE USID = {0} AND TASKSTATUS != 'Завершен'", parUSID);
+                SqlCommand cmdSel = new SqlCommand(sqlSel, sqlConn);
+                using (SqlDataReader reader = cmdSel.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        using (var sqlConnInner = sqlConnection())
+                        {
+                            m_TASKSTATUS = FromingStatus(reader["TASKTERM"].ToString());
+                            m_TASKID = Convert.ToInt32(reader["TASKID"]);
+                            string sqlChange = string.Format("UPDATE TASKS SET TASKSTATUS = '{0}' WHERE USID = {1} AND TASKSTATUS != 'Завершен'  AND TASKID = {2}", m_TASKSTATUS, parUSID, m_TASKID);
+                            SqlCommand cmdChange = new SqlCommand(sqlChange, sqlConnInner);
+                            cmdChange.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
             //ADO.NET end--
 
             #region EF Ralization
-            foreach (TASKS t in m_db.TASKS)
-            {
-                if (t.TASKSTATUS != "Завершен" && t.USID == parUSID)
-                {
-                    TASKS tup = new TASKS()
-                    {
-                        TASKSTATUS = FromingStatus(t.TASKTERM),
-                        USID = t.USID,
-                        TASKID = t.TASKID,
-                        DISCRIPTION = t.DISCRIPTION,
-                        TAGS = t.TAGS,
-                        TITLE = t.TITLE,
-                        TASKTERM = t.TASKTERM,
-                        USERS = t.USERS
-                    };
-                    m_db.TASKS.AddOrUpdate(tup);
-                }
-            }
-            m_db.SaveChanges();
+            //foreach (TASKS t in m_db.TASKS)
+            //{
+            //    if (t.TASKSTATUS != "Завершен" && t.USID == parUSID)
+            //    {
+            //        TASKS tup = new TASKS()
+            //        {
+            //            TASKSTATUS = FromingStatus(t.TASKTERM),
+            //            USID = t.USID,
+            //            TASKID = t.TASKID,
+            //            DISCRIPTION = t.DISCRIPTION,
+            //            TAGS = t.TAGS,
+            //            TITLE = t.TITLE,
+            //            TASKTERM = t.TASKTERM,
+            //            USERS = t.USERS
+            //        };
+            //        m_db.TASKS.AddOrUpdate(tup);
+            //    }
+            //}
+            //m_db.SaveChanges();
             #endregion
         }
 
@@ -133,8 +138,8 @@ namespace TaskManager.Realizations
         /// <returns>Set of property for Angular act</returns>
         public Array TaskOpen(int TaskId)
         {
+            //ADO.NET begin--
             string[] setPropertyTask = new string[6];
-
             string sqlSel = string.Format("SELECT * FROM TASKS WHERE TASKID = {0}", TaskId);
             SqlCommand cmdSel = new SqlCommand(sqlSel, sqlConnection());
             SqlDataReader reader = cmdSel.ExecuteReader();
@@ -148,6 +153,7 @@ namespace TaskManager.Realizations
                 setPropertyTask[5] = reader["TASKID"].ToString();
             }
             return setPropertyTask;
+            //ADO.NET end--
 
             #region EF Ralization
             //var value = m_db.TASKS.FirstOrDefault(c => c.TASKID == TaskId);
