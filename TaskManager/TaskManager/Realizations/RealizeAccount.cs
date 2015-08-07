@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Web;
-using System.Web.Mvc;
 using System.Web.Security;
 using TaskManager.Models;
 
@@ -21,12 +14,12 @@ namespace TaskManager.Realizations
         private TaskManagerEntities m_db = new TaskManagerEntities();
         
         /// <summary>
-        /// Varible contains mask of password's Crypting
+        /// Variable contains mask of password's encryption
         /// </summary>
         private string m_Alph = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZйцукенгшщзхъфывапролдячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЯЧСМИТЬБЮёЁ1234567890";
 
         /// <summary>
-        /// Varible contains key of Crypting
+        /// Varible contains key of encryption
         /// </summary>
         private string m_Key = "xmck";
 
@@ -34,7 +27,7 @@ namespace TaskManager.Realizations
         /// Adding of User to DataBase
         /// </summary>
         /// <param name="Person">Object User</param>
-        /// <returns>Massege of success for m_ResultMassage</returns>
+        /// <returns>Massage of success for m_ResultMassage</returns>
         public string UserToDb(USERS Person)
         {
             var PersonExist = m_db.USERS.Where(x => x.LOGIN_NAME.Equals(Person.LOGIN_NAME)).FirstOrDefault();
@@ -61,7 +54,7 @@ namespace TaskManager.Realizations
         /// </summary>
         /// <param name="code">Crypt password from user's email</param>
         /// <param name="l">Login of User</param>
-        /// <returns>Massege of success for m_ResultMassage</returns>
+        /// <returns>Massage of success for m_ResultMassage</returns>
         public string UserConfirm(string code, string l)
         {
             var value = m_db.USERS.Where(x => x.LOGIN_NAME == l).FirstOrDefault();
@@ -91,7 +84,7 @@ namespace TaskManager.Realizations
         /// Conditions are for failed attempt to authorize
         /// </summary>
         /// <param name="model">Model of project for authorize on the site</param>
-        /// <returns>Massege of Conditions for m_ResultMassage</returns>
+        /// <returns>Massage of Conditions for m_ResultMassage</returns>
         public string[] UserAuthorisation(LogIn model)
         {
             string[] dataAuth = new string[2];
@@ -106,7 +99,6 @@ namespace TaskManager.Realizations
                     FormsAuthentication.SetAuthCookie(User.LOGIN_NAME, true);
                     dataAuth[1] = "true";
                     dataAuth[0] = "Вы авторизированы!";
-                    Debug.WriteLine("Зареген");
                 }
                 else
                 {
@@ -131,12 +123,12 @@ namespace TaskManager.Realizations
         ///The others Methods///
        
         /// <summary>
-        /// Forming and Sending of Email to confirm registred Account
+        /// Forming and Sending of Email to confirm registered Account
         /// </summary>
-        /// <param name="email">Inputed user's email</param>
-        /// <param name="FIRST_NAME">Inputed user's first name</param>
-        /// <param name="LAST_NAME">Inputed user's last name</param>
-        /// <param name="resCrypt">Crypted user's pass</param>
+        /// <param name="email">Inputted user's email</param>
+        /// <param name="FIRST_NAME">Inputted user's first name</param>
+        /// <param name="LAST_NAME">Inputted user's last name</param>
+        /// <param name="resCrypt">Encrypted user's pass</param>
         /// <param name="LOGIN">Inputed user's login</param>
         /// <param name="PASS">Inputed user's password</param>
         public void SetLetter(string email, string FIRST_NAME, string LAST_NAME, string resCrypt, string LOGIN, string PASS)

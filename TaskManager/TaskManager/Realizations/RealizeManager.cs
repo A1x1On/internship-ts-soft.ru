@@ -1,17 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Common.CommandTrees;
-using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
-using System.Diagnostics;
-using System.Drawing;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Runtime.InteropServices.ComTypes;
 using System.Text.RegularExpressions;
-using TaskManager.Models;
 
 namespace TaskManager.Realizations
 {
@@ -23,17 +14,17 @@ namespace TaskManager.Realizations
         private TaskManagerEntities m_db = new TaskManagerEntities();
 
         /// <summary>
-        /// Varible is for sqlConnection() / connection to db
+        /// Variable is for sqlConnection() / connection to db
         /// </summary>
         private SqlConnection m_Connection;
 
         /// <summary>
-        /// Varible is for TASKSTATUS column in db
+        /// Variable is for TASKSTATUS column in db
         /// </summary>
         private string m_TASKSTATUS = "";
 
         /// <summary>
-        /// Varible is for TASKID column in db
+        /// Variable is for TASKID column in db
         /// </summary>
         private int m_TASKID;
 
@@ -51,11 +42,9 @@ namespace TaskManager.Realizations
             //ADO.NET begin--
             try
             {
-                string sqlUpdate = string.Format("UPDATE TASKS SET " +
-                                                 "TASKSTATUS = '{0}'"+
-                                                 "WHERE TASKID = {1}",
-                                                 "Завершен", TaskFromFinish);
+                string sqlUpdate = "UPDATE TASKS SET TASKSTATUS = 'Завершен' WHERE TASKID = @TaskFromFinish";
                 SqlCommand cmdUpdate = new SqlCommand(sqlUpdate, sqlConnection());
+                cmdUpdate.Parameters.AddWithValue("@TaskFromFinish", TaskFromFinish);
                 cmdUpdate.ExecuteNonQuery();
                 return "Задача завершина";
             }
@@ -82,25 +71,28 @@ namespace TaskManager.Realizations
         }
   
         /// <summary>
-        /// Auto-Updating all user's tasks that is updating statuses of the evrey task
+        /// Auto-Updating all user's tasks that is updating statuses of the every task
         /// </summary>
         public void CommonUpdateStatus(int parUSID)
         {
             //ADO.NET begin--
             using (var sqlConn = sqlConnection())
             {
-                string sqlSel = string.Format("SELECT TASKTERM, TASKID FROM TASKS WHERE USID = {0} AND TASKSTATUS != 'Завершен'", parUSID);
+                string sqlSel = "SELECT TASKTERM, TASKID FROM TASKS WHERE USID = @parUSID AND TASKSTATUS != 'Завершен'";
                 SqlCommand cmdSel = new SqlCommand(sqlSel, sqlConn);
+                cmdSel.Parameters.AddWithValue("@parUSID", parUSID);
                 using (SqlDataReader reader = cmdSel.ExecuteReader())
                 {
                     while (reader.Read())
                     {
                         using (var sqlConnInner = sqlConnection())
                         {
-                            m_TASKSTATUS = FromingStatus(reader["TASKTERM"].ToString());
-                            m_TASKID = Convert.ToInt32(reader["TASKID"]);
-                            string sqlChange = string.Format("UPDATE TASKS SET TASKSTATUS = '{0}' WHERE USID = {1} AND TASKSTATUS != 'Завершен'  AND TASKID = {2}", m_TASKSTATUS, parUSID, m_TASKID);
+                            string sqlChange = "UPDATE TASKS SET TASKSTATUS = @m_TASKSTATUS WHERE USID = @parUSID AND TASKSTATUS != 'Завершен'  AND TASKID = @m_TASKID";
                             SqlCommand cmdChange = new SqlCommand(sqlChange, sqlConnInner);
+                            cmdChange.Parameters.AddWithValue("@m_TASKSTATUS", FromingStatus(reader["TASKTERM"].ToString()));
+                            cmdChange.Parameters.AddWithValue("@parUSID", parUSID);
+                            cmdChange.Parameters.AddWithValue("@m_TASKID", Convert.ToInt32(reader["TASKID"]));
+
                             cmdChange.ExecuteNonQuery();
                         }
                     }
@@ -140,8 +132,10 @@ namespace TaskManager.Realizations
         {
             //ADO.NET begin--
             string[] setPropertyTask = new string[6];
-            string sqlSel = string.Format("SELECT * FROM TASKS WHERE TASKID = {0}", TaskId);
+            string sqlSel = "SELECT * FROM TASKS WHERE TASKID = @TaskId";
             SqlCommand cmdSel = new SqlCommand(sqlSel, sqlConnection());
+            cmdSel.Parameters.AddWithValue("@TaskId", TaskId);
+
             SqlDataReader reader = cmdSel.ExecuteReader();
             while (reader.Read())
             {
@@ -177,16 +171,14 @@ namespace TaskManager.Realizations
             //ADO.NET begin--
             try
             {
-                string sqlAdd =
-                    string.Format(
-                        "INSERT INTO TASKS (TITLE, DISCRIPTION, TASKTERM, USID, TASKSTATUS, TAGS) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}')",
-                        model.TITLE,
-                        model.DISCRIPTION,
-                        model.TASKTERM,
-                        model.USID,
-                        model.TASKSTATUS,
-                        TagsAdd(model.TAGS));
+                string sqlAdd = "INSERT INTO TASKS (TITLE, DISCRIPTION, TASKTERM, USID, TASKSTATUS, TAGS) VALUES (@TITLE, @DISCRIPTION, @TASKTERM, @USID, @TASKSTATUS, @TAGS)";
                 SqlCommand cmdAdd = new SqlCommand(sqlAdd, sqlConnection());
+                cmdAdd.Parameters.AddWithValue("@TITLE", model.TITLE);
+                cmdAdd.Parameters.AddWithValue("@DISCRIPTION", model.DISCRIPTION);
+                cmdAdd.Parameters.AddWithValue("@TASKTERM", model.TASKTERM);
+                cmdAdd.Parameters.AddWithValue("@USID", model.USID);
+                cmdAdd.Parameters.AddWithValue("@TASKSTATUS", model.TASKSTATUS);
+                cmdAdd.Parameters.AddWithValue("@TAGS", TagsAdd(model.TAGS));
 
                 cmdAdd.ExecuteNonQuery();
                 return "Задача сохранена";
@@ -231,22 +223,21 @@ namespace TaskManager.Realizations
             //ADO.NET begin--
             try
             {
-                string sqlUpdate = string.Format("UPDATE TASKS SET " +
-                                                 "DISCRIPTION = '{0}', " +
-                                                 "TASKSTATUS = '{1}', " +
-                                                 "TITLE = '{2}', " +
-                                                 "TAGS = '{3}', " +
-                                                 "TASKTERM = '{4}', " +
-                                                 "USID = {5}" +
-                                                 "WHERE TASKID = {6}",
-                    model.DISCRIPTION,
-                    model.TASKSTATUS,
-                    model.TITLE,
-                    TagsAdd(model.TAGS),
-                    model.TASKTERM,
-                    model.USID,
-                    model.TASKID);
+                string sqlUpdate = "UPDATE TASKS SET DISCRIPTION = @DISCRIPTION, " +
+                                   "TASKSTATUS = @TASKSTATUS, " +
+                                   "TITLE = @TITLE, " +
+                                   "TAGS = @TAGS, " +
+                                   "TASKTERM = @TASKTERM, " +
+                                   "USID = @USID WHERE TASKID = @TASKID";
                 SqlCommand cmdUpdate = new SqlCommand(sqlUpdate, sqlConnection());
+                cmdUpdate.Parameters.AddWithValue("@DISCRIPTION", model.DISCRIPTION);
+                cmdUpdate.Parameters.AddWithValue("@TITLE", model.TITLE);
+                cmdUpdate.Parameters.AddWithValue("@TAGS", TagsAdd(model.TAGS));            
+                cmdUpdate.Parameters.AddWithValue("@TASKTERM", model.TASKTERM);
+                cmdUpdate.Parameters.AddWithValue("@USID", model.USID);
+                cmdUpdate.Parameters.AddWithValue("@TASKSTATUS", model.TASKSTATUS);              
+                cmdUpdate.Parameters.AddWithValue("@TASKID", model.TASKID);
+
                 cmdUpdate.ExecuteNonQuery();
                 return "Задача изменена";
             }
@@ -291,8 +282,10 @@ namespace TaskManager.Realizations
         public void TaskDelete(int TaskId)
         {        
             //ADO.NET begin--
-            string sqlDel = string.Format("DELETE TASKS WHERE TASKID = '{0}'", TaskId);
+            string sqlDel = "DELETE TASKS WHERE TASKID = @TASKID";
             SqlCommand cmdDel = new SqlCommand(sqlDel, sqlConnection());
+            cmdDel.Parameters.AddWithValue("@TASKID", TaskId);
+
             cmdDel.ExecuteNonQuery();
             //ADO.NET end--
 
@@ -309,14 +302,14 @@ namespace TaskManager.Realizations
         /// <summary>
         /// Getting of tasks' list
         /// </summary>
-        /// <param name="CurId">Authoeized user</param>
+        /// <param name="CurId">Authorized user</param>
         /// <returns>List of tasks for _PartialSelectionTasks.cshtml</returns>
         public IEnumerable<TASKS> TaskSelect(int CurId)
         {
-
             //ADO.NET begin--
-            string sqlSel = string.Format("SELECT * FROM TASKS WHERE USID = '{0}'", CurId);
+            string sqlSel = "SELECT * FROM TASKS WHERE USID = @USID";
             SqlCommand cmdSel = new SqlCommand(sqlSel, sqlConnection());
+            cmdSel.Parameters.AddWithValue("@USID", CurId);
 
             List<TASKS> Query = new List<TASKS>();
             SqlDataReader reader = cmdSel.ExecuteReader();
@@ -334,7 +327,7 @@ namespace TaskManager.Realizations
 
                 });
             }
-            return Query as IEnumerable<TASKS>;
+            return Query;
             //ADO.NET end--
 
             #region EF Ralization
@@ -349,17 +342,16 @@ namespace TaskManager.Realizations
         }
 
         /// <summary>
-        /// Getting of Tags with inputed Keyword and angular service if such tag exists in DB
+        /// Getting of Tags with inputted Keyword and angular service if such tag exists in DB
         /// </summary>
         /// <param name="TagKeyword">Key word from (text input of class="inputTag")</param>
         /// <returns>list of received tags</returns>
         public IEnumerable<TAGS> GettingTags(string TagKeyword)
         {
-
             //ADO.NET begin--
-            string sqlSel = string.Format("SELECT * FROM TAGS WHERE TITLETAG like '%{0}%'", TagKeyword);
+            string sqlSel = "SELECT * FROM TAGS WHERE TITLETAG like @TagKeyword";
             SqlCommand cmdSel = new SqlCommand(sqlSel, sqlConnection());
-
+            cmdSel.Parameters.AddWithValue("@TagKeyword", "%" + TagKeyword + "%");
             List<TAGS> Query = new List<TAGS>();
             SqlDataReader reader = cmdSel.ExecuteReader();
             while (reader.Read())
@@ -370,7 +362,7 @@ namespace TaskManager.Realizations
                     ID = Convert.ToInt32(reader["ID"])
                 });
             }
-            return Query as IEnumerable<TAGS>;
+            return Query;
             //ADO.NET end--
 
             #region EF Ralization
@@ -390,8 +382,9 @@ namespace TaskManager.Realizations
         public USERS CurrentUser(string SafetyLogin)
         {
             //ADO.NET begin--
-            string sqlSel = string.Format("SELECT * FROM USERS WHERE LOGIN_NAME = '{0}'", SafetyLogin);
+            string sqlSel = "SELECT * FROM USERS WHERE LOGIN_NAME = @LOGIN_NAME";
             SqlCommand cmdSel = new SqlCommand(sqlSel, sqlConnection());
+            cmdSel.Parameters.AddWithValue("@LOGIN_NAME", SafetyLogin);
 
             List<USERS> Query = new List<USERS>();
             SqlDataReader reader = cmdSel.ExecuteReader();
@@ -425,8 +418,11 @@ namespace TaskManager.Realizations
         /// <returns>SqlConnection m_Connection</returns>
         public SqlConnection sqlConnection()
         {
-            string conStr = @"Data Source=USADOVOY\ROOOOT;initial catalog=TaskManager;persist security info=True;user id=axon;password=sqlengine;MultipleActiveResultSets=True;";
-            SqlConnection m_Connection = new SqlConnection(conStr);
+            System.Configuration.Configuration rootwebconfig = System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("/TaskManager");
+            System.Configuration.ConnectionStringSettings constring;
+            constring = rootwebconfig.ConnectionStrings.ConnectionStrings["TaskManagerADONET"];
+
+            SqlConnection m_Connection = new SqlConnection(constring.ConnectionString);
 
             try
             {
@@ -472,7 +468,7 @@ namespace TaskManager.Realizations
         }
 
         /// <summary>
-        /// Froming of Status
+        /// Forming of Status
         /// </summary>
         /// <param name="Userdate">Own user of date from DataBase</param>
         /// <returns>Status of task</returns>

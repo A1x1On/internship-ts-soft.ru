@@ -3,13 +3,13 @@
     // Including of tags prototype 
     $.getScript("Scripts/ArrayOfTags.js");
 
-    // Initialazing of module AngularManager
+    // Initializing of module AngularManager
     var ModuleManager = angular.module("AngularManager", ["ngRoute"]);
 
     // id of task
     var idTask;
  
-    // Initialazing of controller DinamicTag and factory TService
+    // Initializing of controller DinamicTag and factory TService
     ModuleManager.controller("TaskFrom", function ($scope, TService) {
 
         // Deleting of task
@@ -55,7 +55,7 @@
 
     });
 
-    // Initialazing of controller OpenTask and factory OpenTaskService
+    // Initializing of controller OpenTask and factory OpenTaskService
     ModuleManager.controller("OpenTask", function ($scope, OpenTaskService) {
 
         // Clicking on the task at the left panel
@@ -94,7 +94,7 @@
                 $(".ForTags").html("");
                 str = str.match(re) || [];
                 str.forEach(function (item, i) {
-                    // forming of DOM elemets(tags)
+                    // forming of DOM elements(tags)
                     $(".ForTags").append("<span class='tag' id='" + id100 + "'>" + item);
                     idtag = id100;
                     title = item;

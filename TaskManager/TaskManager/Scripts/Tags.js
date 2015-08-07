@@ -19,12 +19,12 @@ $(".optionTag").live("click", function () {
     $(".inputTag").focus().val("");
 });
 
-// Hidding block of options
+// Hiding block of options
 $("body").click(function () {
     $(".optionTag").fadeOut(100);
 });
 
-// Moving of focus for begining
+// Moving of focus for beginning
 $(".inputTag").keyup(function (event) {
     if (event.keyCode == 40) {
         $(".sel-list").focus();

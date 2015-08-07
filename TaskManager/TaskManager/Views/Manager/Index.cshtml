@@ -1,5 +1,4 @@
-﻿@using System.Activities.Expressions
-@model TaskManager.Models.TasksAddChangeSelect
+﻿@model TaskManager.Models.TasksAddChangeSelect
 
 @{
     ViewBag.Title = "Index";
@@ -7,13 +6,9 @@
     
    
 }
-
 <a href="@Url.Action("Index","Manager")" class="mainTitle">Список всех задач</a>
 @Request.QueryString["m_ResultMassage"]
 <br />
-
-
-
 
 <div class="list-tasks">
     @Html.Partial("_PartialSelectionTasks", Model.SelecTasks)

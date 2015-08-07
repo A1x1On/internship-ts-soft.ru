@@ -31,7 +31,7 @@
         </member>
         <member name="F:TaskManager.Controllers.AccountController.m_ResultMassage">
             <summary>
-            Message: Error Capcha
+            Message: Error Captcha
             </summary>
         </member>
         <member name="F:TaskManager.Controllers.AccountController.m_Relize">
@@ -68,9 +68,9 @@
         </member>
         <member name="M:TaskManager.Controllers.AccountController.GetCapthcaImage">
             <summary>
-            Drawing of Capcha
+            Drawing of Captcha
             </summary>
-            <returns>image of capcha</returns>
+            <returns>image of captcha</returns>
         </member>
         <member name="M:TaskManager.Controllers.AccountController.Login(TaskManager.Models.LogIn)">
             <summary>
@@ -97,12 +97,12 @@
         </member>
         <member name="F:TaskManager.Controllers.ManagerController.m_Login">
             <summary>
-            Varible is login Authorized user
+            Variable is login Authorized user
             </summary>
         </member>
         <member name="F:TaskManager.Controllers.ManagerController.m_StatusActive">
             <summary>
-            Varible is Task Status like "Active status"
+            Variable is Task Status like "Active status"
             </summary>
         </member>
         <member name="M:TaskManager.Controllers.ManagerController.Index">
@@ -127,7 +127,7 @@
         </member>
         <member name="M:TaskManager.Controllers.ManagerController.GetTags(System.String)">
             <summary>
-            Getting list of Tags with inputed Keyword [AJAX]
+            Getting list of Tags with inputted Keyword [AJAX]
             </summary>
             <param name="name">Key word from (text input of class="inputTag")</param>
             <returns>list of received tags</returns>
@@ -141,7 +141,7 @@
         </member>
         <member name="M:TaskManager.Controllers.ManagerController.OpenTask(System.Int32)">
             <summary>
-            Dinamic opening of detail task on the Index page
+            Dynamic opening of detail task on the Index page
             </summary>
             <param name="TaskId"></param>
             <returns>Set of property for Angular act</returns>
@@ -151,7 +151,7 @@
             Adding of User to DataBase
             </summary>
             <param name="Person">Object User</param>
-            <returns>Massege of success for m_ResultMassage</returns>
+            <returns>Massage of success for m_ResultMassage</returns>
         </member>
         <member name="M:TaskManager.Realizations.IAccount.UserConfirm(System.String,System.String)">
             <summary>
@@ -159,14 +159,14 @@
             </summary>
             <param name="code">Crypt password from user's email</param>
             <param name="l">Login of User</param>
-            <returns>Massege of success for m_ResultMassage</returns>
+            <returns>Massage of success for m_ResultMassage</returns>
         </member>
         <member name="M:TaskManager.Realizations.IAccount.UserAuthorisation(TaskManager.Models.LogIn)">
             <summary>
             Conditions are for failed attempt to authorize
             </summary>
             <param name="model">Model of project for authorize on the site</param>
-            <returns>Massege of Conditions for m_ResultMassage</returns>
+            <returns>Massage of Conditions for m_ResultMassage</returns>
         </member>
         <member name="M:TaskManager.Realizations.IManager.TaskStatusFin(System.Int32)">
             <summary>
@@ -234,12 +234,12 @@
         </member>
         <member name="F:TaskManager.Realizations.RealizeAccount.m_Alph">
             <summary>
-            Varible contains mask of password's Crypting
+            Variable contains mask of password's encryption
             </summary>
         </member>
         <member name="F:TaskManager.Realizations.RealizeAccount.m_Key">
             <summary>
-            Varible contains key of Crypting
+            Varible contains key of encryption
             </summary>
         </member>
         <member name="M:TaskManager.Realizations.RealizeAccount.UserToDb(TaskManager.USERS)">
@@ -247,7 +247,7 @@
             Adding of User to DataBase
             </summary>
             <param name="Person">Object User</param>
-            <returns>Massege of success for m_ResultMassage</returns>
+            <returns>Massage of success for m_ResultMassage</returns>
         </member>
         <member name="M:TaskManager.Realizations.RealizeAccount.UserConfirm(System.String,System.String)">
             <summary>
@@ -255,29 +255,44 @@
             </summary>
             <param name="code">Crypt password from user's email</param>
             <param name="l">Login of User</param>
-            <returns>Massege of success for m_ResultMassage</returns>
+            <returns>Massage of success for m_ResultMassage</returns>
         </member>
         <member name="M:TaskManager.Realizations.RealizeAccount.UserAuthorisation(TaskManager.Models.LogIn)">
             <summary>
             Conditions are for failed attempt to authorize
             </summary>
             <param name="model">Model of project for authorize on the site</param>
-            <returns>Massege of Conditions for m_ResultMassage</returns>
+            <returns>Massage of Conditions for m_ResultMassage</returns>
         </member>
         <member name="M:TaskManager.Realizations.RealizeAccount.SetLetter(System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>
-            Forming and Sending of Email to confirm registred Account
+            Forming and Sending of Email to confirm registered Account
             </summary>
-            <param name="email">Inputed user's email</param>
-            <param name="FIRST_NAME">Inputed user's first name</param>
-            <param name="LAST_NAME">Inputed user's last name</param>
-            <param name="resCrypt">Crypted user's pass</param>
+            <param name="email">Inputted user's email</param>
+            <param name="FIRST_NAME">Inputted user's first name</param>
+            <param name="LAST_NAME">Inputted user's last name</param>
+            <param name="resCrypt">Encrypted user's pass</param>
             <param name="LOGIN">Inputed user's login</param>
             <param name="PASS">Inputed user's password</param>
         </member>
         <member name="F:TaskManager.Realizations.RealizeManager.m_db">
             <summary>
             Instance EntitieDatabase is
+            </summary>
+        </member>
+        <member name="F:TaskManager.Realizations.RealizeManager.m_Connection">
+            <summary>
+            Variable is for sqlConnection() / connection to db
+            </summary>
+        </member>
+        <member name="F:TaskManager.Realizations.RealizeManager.m_TASKSTATUS">
+            <summary>
+            Variable is for TASKSTATUS column in db
+            </summary>
+        </member>
+        <member name="F:TaskManager.Realizations.RealizeManager.m_TASKID">
+            <summary>
+            Variable is for TASKID column in db
             </summary>
         </member>
         <member name="F:TaskManager.Realizations.RealizeManager.m_CountTag">
@@ -293,7 +308,7 @@
         </member>
         <member name="M:TaskManager.Realizations.RealizeManager.CommonUpdateStatus(System.Int32)">
             <summary>
-            Auto-Updating all user's tasks that is updating statuses of the evrey task
+            Auto-Updating all user's tasks that is updating statuses of the every task
             </summary>
         </member>
         <member name="M:TaskManager.Realizations.RealizeManager.TaskOpen(System.Int32)">
@@ -327,22 +342,15 @@
             <summary>
             Getting of tasks' list
             </summary>
-            <param name="CurId">Authoeized user</param>
+            <param name="CurId">Authorized user</param>
             <returns>List of tasks for _PartialSelectionTasks.cshtml</returns>
         </member>
         <member name="M:TaskManager.Realizations.RealizeManager.GettingTags(System.String)">
             <summary>
-            Getting of Tags with inputed Keyword and angular service if such tag exists in DB
+            Getting of Tags with inputted Keyword and angular service if such tag exists in DB
             </summary>
             <param name="TagKeyword">Key word from (text input of class="inputTag")</param>
             <returns>list of received tags</returns>
-        </member>
-        <member name="M:TaskManager.Realizations.RealizeManager.TagsAdd(System.String)">
-            <summary>
-            Adding of tags to DB or not
-            </summary>
-            <param name="TagRow">Got string from (text input of class="inputTag")</param>
-            <returns>String of formed tags</returns>
         </member>
         <member name="M:TaskManager.Realizations.RealizeManager.CurrentUser(System.String)">
             <summary>
@@ -351,9 +359,22 @@
             <param name="SafetyLogin">WebSecurity.CurrentUserName</param>
             <returns>Object USER</returns>
         </member>
+        <member name="M:TaskManager.Realizations.RealizeManager.sqlConnection">
+            <summary>
+            Connecting to DataBase with ADO.NET F.
+            </summary>
+            <returns>SqlConnection m_Connection</returns>
+        </member>
+        <member name="M:TaskManager.Realizations.RealizeManager.TagsAdd(System.String)">
+            <summary>
+            Adding of tags to DB or not
+            </summary>
+            <param name="TagRow">Got string from (text input of class="inputTag")</param>
+            <returns>String of formed tags</returns>
+        </member>
         <member name="M:TaskManager.Realizations.RealizeManager.FromingStatus(System.String)">
             <summary>
-            Froming of Status
+            Forming of Status
             </summary>
             <param name="Userdate">Own user of date from DataBase</param>
             <returns>Status of task</returns>

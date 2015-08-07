@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Mail;
-using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using System.Web.Services.Description;
 using SRVTextToImage;
 using TaskManager.Models;
 using TaskManager.Realizations;
@@ -22,7 +14,7 @@ namespace TaskManager.Controllers
     public class AccountController : Controller
     {
         /// <summary>
-        /// Message: Error Capcha
+        /// Message: Error Captcha
         /// </summary>
         private string m_ResultMassage = "Капча введена неверно";
 
@@ -96,9 +88,9 @@ namespace TaskManager.Controllers
         }
 
         /// <summary>
-        /// Drawing of Capcha
+        /// Drawing of Captcha
         /// </summary>
-        /// <returns>image of capcha</returns>
+        /// <returns>image of captcha</returns>
         [HttpGet]
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "none")]
         public FileResult GetCapthcaImage()

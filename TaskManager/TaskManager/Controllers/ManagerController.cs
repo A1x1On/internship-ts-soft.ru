@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using TaskManager.Models;
 using TaskManager.Realizations;
 using WebMatrix.WebData;
@@ -24,12 +22,12 @@ namespace TaskManager.Controllers
         private string m_ResultMassage = "Пусто";
 
         /// <summary>
-        /// Varible is login Authorized user
+        /// Variable is login Authorized user
         /// </summary>
         private string m_Login = WebSecurity.CurrentUserName;
 
         /// <summary>
-        /// Varible is Task Status like "Active status"
+        /// Variable is Task Status like "Active status"
         /// </summary>
         private string m_StatusActive = "Активный";
         
@@ -40,7 +38,7 @@ namespace TaskManager.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            // Auto-Updating all user's tasks that is updating of statuses of the evrey task
+            // Auto-Updating all user's tasks that is updating of statuses of the every task
             m_Relize.CommonUpdateStatus(m_Relize.CurrentUser(m_Login).USERID);
 
             // Some info for current View and model TASKS(void) and IEnumerable<TASKS> for _PartialSelectionTasks
@@ -86,7 +84,7 @@ namespace TaskManager.Controllers
         }
 
         /// <summary>
-        /// Getting list of Tags with inputed Keyword [AJAX]
+        /// Getting list of Tags with inputted Keyword [AJAX]
         /// </summary>
         /// <param name="name">Key word from (text input of class="inputTag")</param>
         /// <returns>list of received tags</returns>
@@ -109,7 +107,7 @@ namespace TaskManager.Controllers
         }
 
         /// <summary>
-        /// Dinamic opening of detail task on the Index page
+        /// Dynamic opening of detail task on the Index page
         /// </summary>
         /// <param name="TaskId"></param>
         /// <returns>Set of property for Angular act</returns>

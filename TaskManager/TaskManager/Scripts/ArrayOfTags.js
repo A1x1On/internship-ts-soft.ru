@@ -1,4 +1,4 @@
-﻿// Initialazing of tags prototype 
+﻿// Initializing of tags prototype 
 var idtag = 0;
 var title = "";
 var arrayOfTags = [];
