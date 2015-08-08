@@ -59,9 +59,9 @@ namespace TaskManager.Controllers
         /// <param name="Person">Object of data register</param>
         /// <returns>View Index/Manager</returns>
         [HttpPost]
-        public ActionResult Registration(USERS Person)
+        public ActionResult Registration(Users Person)
         {
-             if (this.Session["CapthaImageText"].ToString() == Person.CAPCHA)
+             if (this.Session["CapthaImageText"].ToString() == Person.Captcha)
              {
                  if (ModelState.IsValid)
                  {

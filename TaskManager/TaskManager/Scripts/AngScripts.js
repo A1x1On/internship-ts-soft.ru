@@ -15,6 +15,7 @@
         // Deleting of task
         $scope.DeleteTask = function (obj) {
             idTask = obj.currentTarget.id;
+            
             if (idTask != 0) {
                 $("i#" + idTask).fadeOut();
                 // Use TService for Deleting of task
@@ -69,20 +70,25 @@
             // Use TagService for getting data tags from current task without reloaded page
             OpenTaskService.GetTask().then(function (t) {
                 $scope.Task = t.data;
-                if ($scope.Task[3] !== "Завершен") {
+                if ($scope.Task[3] !== "1") {
                     $(".finishtag").fadeIn();
                 } else {
                     $(".finishtag").fadeOut();
                 }
+
                 $(".t-title").val($scope.Task[0]);
                 $(".TASKID").val($scope.Task[5]);
-                $(".finishFromTask").val($scope.Task[5]);
-                $(".RemoveTask").attr("id", $scope.Task[5]);
+                $(".finishFromTask").val($scope.Task[5]);        
                 $(".t-disc").val($scope.Task[1]);
-                $(".valDate").val($scope.Task[2]);
-                $("#myDate").attr("value", $scope.Task[2]);
+                $(".RemoveTask").attr("id", $scope.Task[5]);
                 $(".TASKSTATUS").val($scope.Task[3]);
                 $(".HIDDDENTAGS").val($scope.Task[4]);
+
+                var date = $scope.Task[2].substring(0, 2);
+                date = $scope.Task[2].substring(3, 5) + "-" + date;
+                date = $scope.Task[2].substring(6, 10) + "-" + date;
+                $(".valDate").val(date);
+                $("#myDate").attr("value", date);
 
                 // setting to null for the Prototype
                 arrayOfTags = $.grep(arrayOfTags, function (el) { return null });

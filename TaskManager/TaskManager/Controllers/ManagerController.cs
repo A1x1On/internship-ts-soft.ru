@@ -39,15 +39,15 @@ namespace TaskManager.Controllers
         public ActionResult Index()
         {
             // Auto-Updating all user's tasks that is updating of statuses of the every task
-            m_Relize.CommonUpdateStatus(m_Relize.CurrentUser(m_Login).USERID);
+            m_Relize.CommonUpdateStatus(m_Relize.CurrentUser(m_Login).UserId);
 
             // Some info for current View and model TASKS(void) and IEnumerable<TASKS> for _PartialSelectionTasks
             return View(new TasksAddChangeSelect()
             {
-                SelecTasks = m_Relize.TaskSelect(m_Relize.CurrentUser(m_Login).USERID),
+                SelecTasks = m_Relize.TaskSelect(m_Relize.CurrentUser(m_Login).UserId),
                 CurStatus = m_StatusActive,
                 CurLogin = m_Login,
-                CurId = m_Relize.CurrentUser(m_Login).USERID
+                CurId = m_Relize.CurrentUser(m_Login).UserId
             });
         }
 
@@ -72,7 +72,7 @@ namespace TaskManager.Controllers
         [HttpPost]
         public ActionResult AddChange(TasksAddChangeSelect model)
         {
-            if (model.AddChange.TASKID == 0)
+            if (model.AddChange.TaskId == 0)
             {
                 m_ResultMassage = m_Relize.TaskAdd(model.AddChange);
             }

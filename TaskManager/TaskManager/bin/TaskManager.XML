@@ -51,7 +51,7 @@
             </summary>
             <returns>View Registration/Account</returns>
         </member>
-        <member name="M:TaskManager.Controllers.AccountController.Registration(TaskManager.USERS)">
+        <member name="M:TaskManager.Controllers.AccountController.Registration(TaskManager.Users)">
             <summary>
             Registration of User [HttpPost]
             </summary>
@@ -146,7 +146,7 @@
             <param name="TaskId"></param>
             <returns>Set of property for Angular act</returns>
         </member>
-        <member name="M:TaskManager.Realizations.IAccount.UserToDb(TaskManager.USERS)">
+        <member name="M:TaskManager.Realizations.IAccount.UserToDb(TaskManager.Users)">
             <summary>
             Adding of User to DataBase
             </summary>
@@ -176,7 +176,7 @@
         </member>
         <member name="M:TaskManager.Realizations.IManager.CommonUpdateStatus(System.Int32)">
             <summary>
-            Auto-Updating all user's tasks that is updating statuses of the evrey task
+            Auto-Updating all user's tasks that is updating statuses of the every task
             </summary>
         </member>
         <member name="M:TaskManager.Realizations.IManager.TaskOpen(System.Int32)">
@@ -186,14 +186,14 @@
             <param name="TaskId">ID of task</param>
             <returns>Set of property for Angular act</returns>
         </member>
-        <member name="M:TaskManager.Realizations.IManager.TaskAdd(TaskManager.TASKS)">
+        <member name="M:TaskManager.Realizations.IManager.TaskAdd(TaskManager.Tasks)">
             <summary>
             Adding a task into the data base
             </summary>
             <param name="model">Object of task who ready to add database</param>
             <returns>Result to m_ResultMassage in controller</returns>
         </member>
-        <member name="M:TaskManager.Realizations.IManager.TaskChange(TaskManager.TASKS)">
+        <member name="M:TaskManager.Realizations.IManager.TaskChange(TaskManager.Tasks)">
             <summary>
             Changing of task
             </summary>
@@ -210,12 +210,12 @@
             <summary>
             Getting of tasks' list
             </summary>
-            <param name="CurId">Authoeized user</param>
+            <param name="CurId">Authorized user</param>
             <returns>List of tasks for _PartialSelectionTasks.cshtml</returns>
         </member>
         <member name="M:TaskManager.Realizations.IManager.GettingTags(System.String)">
             <summary>
-            Getting of Tags with inputed Keyword and angular service if such tag exists in DB
+            Getting of Tags with inputted Keyword and angular service if such tag exists in DB
             </summary>
             <param name="TagKeyword">Key word from (text input of class="inputTag")</param>
             <returns>list of received tags</returns>
@@ -239,10 +239,10 @@
         </member>
         <member name="F:TaskManager.Realizations.RealizeAccount.m_Key">
             <summary>
-            Varible contains key of encryption
+            Variable contains key of encryption
             </summary>
         </member>
-        <member name="M:TaskManager.Realizations.RealizeAccount.UserToDb(TaskManager.USERS)">
+        <member name="M:TaskManager.Realizations.RealizeAccount.UserToDb(TaskManager.Users)">
             <summary>
             Adding of User to DataBase
             </summary>
@@ -268,12 +268,12 @@
             <summary>
             Forming and Sending of Email to confirm registered Account
             </summary>
-            <param name="email">Inputted user's email</param>
-            <param name="FIRST_NAME">Inputted user's first name</param>
-            <param name="LAST_NAME">Inputted user's last name</param>
+            <param name="Email">Inputted user's email</param>
+            <param name="FirstName">Inputted user's first name</param>
+            <param name="LastName">Inputted user's last name</param>
             <param name="resCrypt">Encrypted user's pass</param>
-            <param name="LOGIN">Inputed user's login</param>
-            <param name="PASS">Inputed user's password</param>
+            <param name="LOGIN">Inputted user's login</param>
+            <param name="PASS">Inputted user's password</param>
         </member>
         <member name="F:TaskManager.Realizations.RealizeManager.m_db">
             <summary>
@@ -318,14 +318,14 @@
             <param name="TaskId">ID of task</param>
             <returns>Set of property for Angular act</returns>
         </member>
-        <member name="M:TaskManager.Realizations.RealizeManager.TaskAdd(TaskManager.TASKS)">
+        <member name="M:TaskManager.Realizations.RealizeManager.TaskAdd(TaskManager.Tasks)">
             <summary>
             Adding a task into the data base
             </summary>
             <param name="model">Object of task who ready to add database</param>
             <returns>Result to m_ResultMassage in controller</returns>
         </member>
-        <member name="M:TaskManager.Realizations.RealizeManager.TaskChange(TaskManager.TASKS)">
+        <member name="M:TaskManager.Realizations.RealizeManager.TaskChange(TaskManager.Tasks)">
             <summary>
             Changing of task
             </summary>
@@ -358,6 +358,13 @@
             </summary>
             <param name="SafetyLogin">WebSecurity.CurrentUserName</param>
             <returns>Object USER</returns>
+        </member>
+        <member name="M:TaskManager.Realizations.RealizeManager.GetStatusString(System.Int32)">
+            <summary>
+            Getting string status
+            </summary>
+            <param name="parStatusId"></param>
+            <returns>String status</returns>
         </member>
         <member name="M:TaskManager.Realizations.RealizeManager.sqlConnection">
             <summary>

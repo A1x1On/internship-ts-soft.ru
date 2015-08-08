@@ -9,7 +9,7 @@ namespace TaskManager.Realizations
         /// </summary>
         /// <param name="Person">Object User</param>
         /// <returns>Massage of success for m_ResultMassage</returns>
-        string UserToDb(USERS Person);
+        string UserToDb(Users Person);
 
         /// <summary>
         /// Confirming of user via own Email

@@ -7,50 +7,53 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace TaskManager
 {
-    public partial class USERS
+    using System;
+    using System.Collections.Generic;
+    
+    public partial class Users
     {
-        public USERS()
+        public Users()
         {
-            this.TASKS = new HashSet<TASKS>();
+            this.Tasks = new HashSet<Tasks>();
         }
-
-        public int USERID { get; set; }
-
+    
+        public int UserId { get; set; }
         [Required(ErrorMessage = "Пожалуйста введите Имя", AllowEmptyStrings = false)]
         [Display(Name = "Имя")]
-        public string FIRST_NAME { get; set; }
+        public string FirstName { get; set; }
         [Required(ErrorMessage = "Пожалуйста введите Фамилию", AllowEmptyStrings = false)]
         [Display(Name = "Фамилия")]
-        public string LAST_NAME { get; set; }
+        public string LastName { get; set; }
         [RegularExpression(@"^([0-9a-zA-Z]([\+\-_\.][0-9a-zA-Z]+)*)+@(([0-9a-zA-Z][-\w]*[0-9a-zA-Z]*\.)+[a-zA-Z0-9]{2,3})$", ErrorMessage = "Введенный Email не коректен")]
         [Required(ErrorMessage = "Пожалуйста введите Email", AllowEmptyStrings = false)]
         [Display(Name = "Email")]
-        public string EMAIL { get; set; }
+        public string Email { get; set; }
         [Required(ErrorMessage = "Пожалуйста введите Логин", AllowEmptyStrings = false)]
         [StringLength(15, MinimumLength = 4, ErrorMessage = "Логин должен иметь минимум 4 символа")]
         [Display(Name = "Логин")]
-        public string LOGIN_NAME { get; set; }
+        public string LoginName { get; set; }
         [Required(ErrorMessage = "Пожалуйста введите Пароль", AllowEmptyStrings = false)]
         [DataType(DataType.Password)]
         [StringLength(70, MinimumLength = 3, ErrorMessage = "Пароль должен состоять как минимум из 3-х символов")]
         [Display(Name = "Пароль")]
-        public string PASS { get; set; }
+        public string Pass { get; set; }
         [Required(ErrorMessage = "Пожалуйста введите Подтверждение пароля", AllowEmptyStrings = false)]
-        [Compare("PASS", ErrorMessage = "Пароль не совподает")]
+        [Compare("Pass", ErrorMessage = "Пароль не совподает")]
         [DataType(DataType.Password)]
         [Display(Name = "Подтверждение")]
-        public string PASSConfirm { get; set; }
-        public string CONFIRM { get; set; }
+        public string PassConfirmation { get; set; }
+        public int Confirmation { get; set; }
         [Required(ErrorMessage = "Пожалуйста введите Капчу", AllowEmptyStrings = false)]
         [StringLength(15, MinimumLength = 5, ErrorMessage = "Капча должен иметь минимум 5 символов")]
         [Display(Name = "Капча")]
-        public string CAPCHA { get; set; }
-
-        public virtual ICollection<TASKS> TASKS { get; set; }
+        public string Captcha { get; set; }
+    
+        public virtual ICollection<Tasks> Tasks { get; set; }
     }
 }
+
+

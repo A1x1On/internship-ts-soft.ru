@@ -7,25 +7,30 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace TaskManager
 {
-    public partial class TASKS
-    {
-        public int TASKID { get; set; }
-        [Required(ErrorMessage = "Пожалуйста заполните поле 'Название'", AllowEmptyStrings = false)]
-        public string TITLE { get; set; }
-        public string TASKSTATUS { get; set; }
-        [Required(ErrorMessage = "Пожалуйста укажите 'deadline'", AllowEmptyStrings = false)]
-        public string TASKTERM { get; set; }
-        [Required(ErrorMessage = "Пожалуйста укажите хотя бы один 'тег'", AllowEmptyStrings = false)]
-        public string TAGS { get; set; }
-        [Required(ErrorMessage = "Пожалуйста заполните поле 'Описание'", AllowEmptyStrings = false)]
-        public string DISCRIPTION { get; set; }
-        public Nullable<int> USID { get; set; }
+    using System;
+    using System.Collections.Generic;
     
-        public virtual USERS USERS { get; set; }
+    public partial class Tasks
+    {
+        public int TaskId { get; set; }
+        [Required(ErrorMessage = "Пожалуйста заполните поле 'Название'", AllowEmptyStrings = false)]
+        public string Title { get; set; }
+        [Required(ErrorMessage = "Пожалуйста укажите 'deadline'", AllowEmptyStrings = false)]
+        public System.DateTime TaskTerm { get; set; }
+        [Required(ErrorMessage = "Пожалуйста укажите хотя бы один 'тег'", AllowEmptyStrings = false)]
+        public string Tags { get; set; }
+        [Required(ErrorMessage = "Пожалуйста заполните поле 'Описание'", AllowEmptyStrings = false)]
+        public string Description { get; set; }
+        public Nullable<int> UsId { get; set; }
+        public Nullable<int> StatusId { get; set; }
+        public string StatusString { get; set; }
+    
+        public virtual Statuses Statuses { get; set; }
+        public virtual Users Users { get; set; }
     }
 }
+

@@ -14,7 +14,7 @@
     <Property Name="TASKID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="TITLE" Type="varchar(max)" Nullable="false" />
     <Property Name="TASKSTATUS" Type="varchar(max)" Nullable="false" />
-    <Property Name="TASKTERM" Type="varchar(max)" Nullable="false" />
+    <Property Name="TASKTERM" Type="date" Nullable="false" />
     <Property Name="TAGS" Type="varchar(max)" Nullable="false" />
     <Property Name="DISCRIPTION" Type="varchar(max)" Nullable="false" />
     <Property Name="USID" Type="int" />

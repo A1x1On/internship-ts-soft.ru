@@ -2,7 +2,7 @@
     ViewBag.Title = "Registration";
     Layout = "~/Views/Shared/_LayoutAccount.cshtml";
 }
-@model TaskManager.USERS
+@model TaskManager.Users
 <div class="auth-block">
     <h2>Регистрация</h2>
     <a href="@Url.Action("Index","Account")" class="backToAuth"></a>
@@ -11,34 +11,34 @@
     {
         
         <div class="item-block">
-            @Html.TextBoxFor(x => x.FIRST_NAME, new { @placeholder = @Html.DisplayNameFor(model => model.FIRST_NAME) })
-            @Html.ValidationMessageFor(x => x.FIRST_NAME)
+            @Html.TextBoxFor(x => x.FirstName, new { @placeholder = @Html.DisplayNameFor(model => model.FirstName) })
+            @Html.ValidationMessageFor(x => x.FirstName)
         </div>
         <div class="item-block">
-            @Html.TextBoxFor(x => x.LAST_NAME, new { @placeholder = @Html.DisplayNameFor(model => model.LAST_NAME) })
-            @Html.ValidationMessageFor(x => x.LAST_NAME)
+            @Html.TextBoxFor(x => x.LastName, new { @placeholder = @Html.DisplayNameFor(model => model.LastName) })
+            @Html.ValidationMessageFor(x => x.LastName)
         </div>
         <div class="item-block">
-            @Html.TextBoxFor(x => x.LOGIN_NAME, new { @placeholder = @Html.DisplayNameFor(model => model.LOGIN_NAME) })
-            @Html.ValidationMessageFor(x => x.LOGIN_NAME)
+            @Html.TextBoxFor(x => x.LoginName, new { @placeholder = @Html.DisplayNameFor(model => model.LoginName) })
+            @Html.ValidationMessageFor(x => x.LoginName)
         </div>
         <div class="item-block">
-            @Html.TextBoxFor(x => x.EMAIL, new { @placeholder = @Html.DisplayNameFor(model => model.EMAIL) })
-            @Html.ValidationMessageFor(x => x.EMAIL)
+            @Html.TextBoxFor(x => x.Email, new { @placeholder = @Html.DisplayNameFor(model => model.Email) })
+            @Html.ValidationMessageFor(x => x.Email)
         </div>
         <div class="item-block">
-            @Html.PasswordFor(x => x.PASS, new { @placeholder = @Html.DisplayNameFor(model => model.PASS) })
-            @Html.ValidationMessageFor(x => x.PASS)
+            @Html.PasswordFor(x => x.Pass, new { @placeholder = @Html.DisplayNameFor(model => model.Pass) })
+            @Html.ValidationMessageFor(x => x.Pass)
         </div>
         <div class="item-block">
-            @Html.PasswordFor(x => x.PASSConfirm, new { @placeholder = @Html.DisplayNameFor(model => model.PASSConfirm) })
-            @Html.ValidationMessageFor(x => x.PASSConfirm)
+            @Html.PasswordFor(x => x.PassConfirmation, new { @placeholder = @Html.DisplayNameFor(model => model.PassConfirmation) })
+            @Html.ValidationMessageFor(x => x.PassConfirmation)
         </div>
         // CAPCHA
         <img src="@Url.Action("GetCapthcaImage", "Account")" class="Capcha" />
         <div class="item-block">
-            @Html.TextBoxFor(x => x.CAPCHA, new {@placeholder = @Html.DisplayNameFor(model => model.CAPCHA)})<br/>
-            @Html.ValidationMessageFor(x => x.CAPCHA)
+            @Html.TextBoxFor(x => x.Captcha, new { @placeholder = @Html.DisplayNameFor(model => model.Captcha) })<br/>
+            @Html.ValidationMessageFor(x => x.Captcha)
         </div>
         //
         <input type="submit" value="Зарегистрироваться" class="btn-registration" />

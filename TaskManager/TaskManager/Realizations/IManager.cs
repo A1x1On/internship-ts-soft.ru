@@ -12,7 +12,7 @@ namespace TaskManager.Realizations
         string TaskStatusFin(int TaskFromFinish);
 
         /// <summary>
-        /// Auto-Updating all user's tasks that is updating statuses of the evrey task
+        /// Auto-Updating all user's tasks that is updating statuses of the every task
         /// </summary>
         void CommonUpdateStatus(int parUSID);
 
@@ -28,14 +28,14 @@ namespace TaskManager.Realizations
         /// </summary>
         /// <param name="model">Object of task who ready to add database</param>
         /// <returns>Result to m_ResultMassage in controller</returns>
-        string TaskAdd(TASKS model);
+        string TaskAdd(Tasks model);
 
         /// <summary>
         /// Changing of task
         /// </summary>
         /// <param name="model">Object of task who ready to change from database</param>
         /// <returns>Result to m_ResultMassage in controller</returns>
-        string TaskChange(TASKS model);
+        string TaskChange(Tasks model);
 
         /// <summary>
         /// Removing of task
@@ -46,22 +46,22 @@ namespace TaskManager.Realizations
         /// <summary>
         /// Getting of tasks' list
         /// </summary>
-        /// <param name="CurId">Authoeized user</param>
+        /// <param name="CurId">Authorized user</param>
         /// <returns>List of tasks for _PartialSelectionTasks.cshtml</returns>
-        IEnumerable<TASKS> TaskSelect(int CurId);
+        IEnumerable<Tasks> TaskSelect(int CurId);
 
         /// <summary>
-        /// Getting of Tags with inputed Keyword and angular service if such tag exists in DB
+        /// Getting of Tags with inputted Keyword and angular service if such tag exists in DB
         /// </summary>
         /// <param name="TagKeyword">Key word from (text input of class="inputTag")</param>
         /// <returns>list of received tags</returns>
-        IEnumerable<TAGS> GettingTags(string TagKeyword);
+        IEnumerable<Tags> GettingTags(string TagKeyword);
 
         /// <summary>
         /// Getting of User id
         /// </summary>
         /// <param name="SafetyLogin">WebSecurity.CurrentUserName</param>
         /// <returns>Object USER</returns>
-        USERS CurrentUser(string SafetyLogin);
+        Users CurrentUser(string SafetyLogin);
     } 
 }

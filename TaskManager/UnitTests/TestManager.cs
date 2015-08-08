@@ -12,7 +12,7 @@ namespace UnitTests
     [TestClass]
     public class TestManager
     {
-        private readonly TaskManagerEntities m_db = new TaskManagerEntities();
+        private readonly TaskManagerEF m_db = new TaskManagerEF();
         private RealizeManager m_RealizeManager = new RealizeManager();
         private string m_ForIsTrue;
 
@@ -24,7 +24,7 @@ namespace UnitTests
         public void TestTaskStatusFin()
         {
             // BUG
-            var value = m_db.TASKS.Where(x => x.TASKID.Equals(38)).FirstOrDefault();
+            var value = m_db.Tasks.Where(x => x.TaskId.Equals(38)).FirstOrDefault();
             Assert.IsTrue(value != null);
         }
         #endregion
