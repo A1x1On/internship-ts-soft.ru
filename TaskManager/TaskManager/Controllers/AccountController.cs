@@ -56,16 +56,16 @@ namespace TaskManager.Controllers
         /// <summary>
         /// Registration of User [HttpPost]
         /// </summary>
-        /// <param name="Person">Object of data register</param>
+        /// <param name="person">Object of data register</param>
         /// <returns>View Index/Manager</returns>
         [HttpPost]
-        public ActionResult Registration(Users Person)
+        public ActionResult Registration(Users person)
         {
-             if (this.Session["CapthaImageText"].ToString() == Person.Captcha)
+            if (this.Session["CapthaImageText"].ToString() == person.Captcha)
              {
                  if (ModelState.IsValid)
                  {
-                     m_ResultMassage = m_Relize.UserToDb(Person);
+                     m_ResultMassage = m_Relize.UserToDb(person);
                      ModelState.Clear();
                  }
                  else

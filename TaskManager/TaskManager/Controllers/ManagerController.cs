@@ -109,12 +109,12 @@ namespace TaskManager.Controllers
         /// <summary>
         /// Dynamic opening of detail task on the Index page
         /// </summary>
-        /// <param name="TaskId"></param>
+        /// <param name="taskId"></param>
         /// <returns>Set of property for Angular act</returns>
         [Authorize]
-        public JsonResult OpenTask(int TaskId)
+        public JsonResult OpenTask(int taskId)
         {
-            return new JsonResult { Data = m_Relize.TaskOpen(TaskId), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            return new JsonResult { Data = m_Relize.TaskOpen(taskId), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
     }
 }

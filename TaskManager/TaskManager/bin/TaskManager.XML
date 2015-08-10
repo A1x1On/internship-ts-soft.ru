@@ -55,7 +55,7 @@
             <summary>
             Registration of User [HttpPost]
             </summary>
-            <param name="Person">Object of data register</param>
+            <param name="person">Object of data register</param>
             <returns>View Index/Manager</returns>
         </member>
         <member name="M:TaskManager.Controllers.AccountController.ConfirMail(System.String,System.String)">
@@ -143,7 +143,7 @@
             <summary>
             Dynamic opening of detail task on the Index page
             </summary>
-            <param name="TaskId"></param>
+            <param name="taskId"></param>
             <returns>Set of property for Angular act</returns>
         </member>
         <member name="M:TaskManager.Realizations.IAccount.UserToDb(TaskManager.Users)">
@@ -172,7 +172,7 @@
             <summary>
             Finishing of task
             </summary>
-            <param name="TaskFromFinish">ID of task</param>
+            <param name="taskFromFinish">ID of task</param>
         </member>
         <member name="M:TaskManager.Realizations.IManager.CommonUpdateStatus(System.Int32)">
             <summary>
@@ -183,7 +183,7 @@
             <summary>
             Opening of task on page or the other words review of task's Detail info 
             </summary>
-            <param name="TaskId">ID of task</param>
+            <param name="taskId">ID of task</param>
             <returns>Set of property for Angular act</returns>
         </member>
         <member name="M:TaskManager.Realizations.IManager.TaskAdd(TaskManager.Tasks)">
@@ -204,27 +204,27 @@
             <summary>
             Removing of task
             </summary>
-            <param name="TaskId">Id of task</param>
+            <param name="taskId">Id of task</param>
         </member>
         <member name="M:TaskManager.Realizations.IManager.TaskSelect(System.Int32)">
             <summary>
             Getting of tasks' list
             </summary>
-            <param name="CurId">Authorized user</param>
+            <param name="curId">Authorized user</param>
             <returns>List of tasks for _PartialSelectionTasks.cshtml</returns>
         </member>
         <member name="M:TaskManager.Realizations.IManager.GettingTags(System.String)">
             <summary>
             Getting of Tags with inputted Keyword and angular service if such tag exists in DB
             </summary>
-            <param name="TagKeyword">Key word from (text input of class="inputTag")</param>
+            <param name="tagKeyword">Key word from (text input of class="inputTag")</param>
             <returns>list of received tags</returns>
         </member>
         <member name="M:TaskManager.Realizations.IManager.CurrentUser(System.String)">
             <summary>
             Getting of User id
             </summary>
-            <param name="SafetyLogin">WebSecurity.CurrentUserName</param>
+            <param name="safetyLogin">WebSecurity.CurrentUserName</param>
             <returns>Object USER</returns>
         </member>
         <member name="F:TaskManager.Realizations.RealizeAccount.m_db">
@@ -280,42 +280,23 @@
             Instance EntitieDatabase is
             </summary>
         </member>
-        <member name="F:TaskManager.Realizations.RealizeManager.m_Connection">
-            <summary>
-            Variable is for sqlConnection() / connection to db
-            </summary>
-        </member>
-        <member name="F:TaskManager.Realizations.RealizeManager.m_TASKSTATUS">
-            <summary>
-            Variable is for TASKSTATUS column in db
-            </summary>
-        </member>
-        <member name="F:TaskManager.Realizations.RealizeManager.m_TASKID">
-            <summary>
-            Variable is for TASKID column in db
-            </summary>
-        </member>
-        <member name="F:TaskManager.Realizations.RealizeManager.m_CountTag">
-            <summary>
-            Amount of string
-            </summary>
-        </member>
         <member name="M:TaskManager.Realizations.RealizeManager.TaskStatusFin(System.Int32)">
             <summary>
             Finishing of task
             </summary>
-            <param name="TaskFromFinish">ID of task</param>
+            <param name="taskFromFinish">ID of task</param>
         </member>
         <member name="M:TaskManager.Realizations.RealizeManager.CommonUpdateStatus(System.Int32)">
             <summary>
             Auto-Updating all user's tasks that is updating statuses of the every task
             </summary>
+            <param name="usId"></param>
         </member>
         <member name="M:TaskManager.Realizations.RealizeManager.TaskOpen(System.Int32)">
             <summary>
             Opening of task on page or the other words review of task's Detail info 
             </summary>
-            <param name="TaskId">ID of task</param>
+            <param name="taskId">ID of task</param>
             <returns>Set of property for Angular act</returns>
         </member>
         <member name="M:TaskManager.Realizations.RealizeManager.TaskAdd(TaskManager.Tasks)">
@@ -336,7 +317,7 @@
             <summary>
             Removing of task
             </summary>
-            <param name="TaskId">Id of task</param>
+            <param name="taskId">Id of task</param>
         </member>
         <member name="M:TaskManager.Realizations.RealizeManager.TaskSelect(System.Int32)">
             <summary>
@@ -349,22 +330,27 @@
             <summary>
             Getting of Tags with inputted Keyword and angular service if such tag exists in DB
             </summary>
-            <param name="TagKeyword">Key word from (text input of class="inputTag")</param>
+            <param name="tagKeyword">Key word from (text input of class="inputTag")</param>
             <returns>list of received tags</returns>
         </member>
         <member name="M:TaskManager.Realizations.RealizeManager.CurrentUser(System.String)">
             <summary>
             Getting of User id
             </summary>
-            <param name="SafetyLogin">WebSecurity.CurrentUserName</param>
+            <param name="safetyLogin">WebSecurity.CurrentUserName</param>
             <returns>Object USER</returns>
         </member>
         <member name="M:TaskManager.Realizations.RealizeManager.GetStatusString(System.Int32)">
             <summary>
             Getting string status
             </summary>
-            <param name="parStatusId"></param>
+            <param name="statusId"></param>
             <returns>String status</returns>
+        </member>
+        <member name="F:TaskManager.Realizations.RealizeManager.m_Connection">
+            <summary>
+            Variable is for sqlConnection() / connection to db
+            </summary>
         </member>
         <member name="M:TaskManager.Realizations.RealizeManager.sqlConnection">
             <summary>
@@ -372,18 +358,23 @@
             </summary>
             <returns>SqlConnection m_Connection</returns>
         </member>
+        <member name="F:TaskManager.Realizations.RealizeManager.m_CountTag">
+            <summary>
+            Amount of string
+            </summary>
+        </member>
         <member name="M:TaskManager.Realizations.RealizeManager.TagsAdd(System.String)">
             <summary>
             Adding of tags to DB or not
             </summary>
-            <param name="TagRow">Got string from (text input of class="inputTag")</param>
+            <param name="tagRow">Got string from (text input of class="inputTag")</param>
             <returns>String of formed tags</returns>
         </member>
         <member name="M:TaskManager.Realizations.RealizeManager.FromingStatus(System.String)">
             <summary>
             Forming of Status
             </summary>
-            <param name="Userdate">Own user of date from DataBase</param>
+            <param name="userDate">Own user of date from DataBase</param>
             <returns>Status of task</returns>
         </member>
     </members>
