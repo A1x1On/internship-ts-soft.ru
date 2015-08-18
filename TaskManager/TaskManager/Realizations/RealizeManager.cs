@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -206,7 +205,7 @@ namespace TaskManager.Realizations
         {
             var listTagId = m_db.CrossTasksTags.Where(x => x.TaskId == taskId).Select(x => new { x.TagsId }).ToList();
             int resId;
-            CrossTasksTags forDel = null;
+            CrossTasksTags forDel;
             tags = tags.ToLower();
             foreach (Match t in Regex.Matches(tags, @"([\b\w\-\w\b]+)"))
             {
@@ -215,7 +214,6 @@ namespace TaskManager.Realizations
             }
             foreach (var i in listTagId)
             {
-                Debug.WriteLine("Проверка: " + i.TagsId);
                 forDel = m_db.CrossTasksTags.FirstOrDefault(d => d.TagsId == i.TagsId);
                 m_db.Set<CrossTasksTags>().Remove(forDel);
             }
@@ -239,7 +237,6 @@ namespace TaskManager.Realizations
                         cmdCrossDel.ExecuteNonQuery();
                     }
                 }
-
                 using (var sqlConn = ConnectToDb())
                 {
                     string sqlDel = "DELETE Tasks WHERE TaskId = @TaskId";
@@ -447,7 +444,6 @@ namespace TaskManager.Realizations
             System.Configuration.Configuration rootWebConfig = System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("/TaskManager");
             System.Configuration.ConnectionStringSettings constring;
             constring = rootWebConfig.ConnectionStrings.ConnectionStrings["TaskManagerADONET"];
-
             SqlConnection m_Connection = new SqlConnection(constring.ConnectionString);
             m_Connection.Open();
             return m_Connection;   

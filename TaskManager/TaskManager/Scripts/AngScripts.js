@@ -107,7 +107,6 @@
                     id100++;
                     // Pushing to The prototype
                     arrayOfTags.push(new tag());
-                    console.log(arrayOfTags);
                 });
             }, function () {
                 alert('Fail of forming tags');
