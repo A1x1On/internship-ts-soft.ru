@@ -1,5 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="TaskManagerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'TaskManager.dbo.CrossTasksTags' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="CrossTasksTags">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="TaskId" Type="int" />
+    <Property Name="TagsId" Type="int" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="Statuses">
     <Key>
       <PropertyRef Name="Id" />
@@ -38,6 +48,30 @@
     <Property Name="Pass" Type="varchar(max)" Nullable="false" />
     <Property Name="Confirmation" Type="int" Nullable="false" />
   </EntityType>
+  <Association Name="FK__CrossTask__TagsI__4BAC3F29">
+    <End Role="Tags" Type="Self.Tags" Multiplicity="0..1" />
+    <End Role="CrossTasksTags" Type="Self.CrossTasksTags" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tags">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CrossTasksTags">
+        <PropertyRef Name="TagsId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CrossTask__TaskI__4AB81AF0">
+    <End Role="Tasks" Type="Self.Tasks" Multiplicity="0..1" />
+    <End Role="CrossTasksTags" Type="Self.CrossTasksTags" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tasks">
+        <PropertyRef Name="TaskId" />
+      </Principal>
+      <Dependent Role="CrossTasksTags">
+        <PropertyRef Name="TaskId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__Tasks__StatusId__398D8EEE">
     <End Role="Statuses" Type="Self.Statuses" Multiplicity="0..1" />
     <End Role="Tasks" Type="Self.Tasks" Multiplicity="*" />
@@ -67,6 +101,21 @@
     <EntitySet Name="Tags" EntityType="Self.Tags" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tasks" EntityType="Self.Tasks" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CrossTasksTags" EntityType="Self.CrossTasksTags" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+[CrossTasksTags].[TaskId] AS [TaskId], 
+[CrossTasksTags].[TagsId] AS [TagsId], 
+[CrossTasksTags].[UserId] AS [UserId]
+FROM [dbo].[CrossTasksTags] AS [CrossTasksTags]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__CrossTask__TagsI__4BAC3F29" Association="Self.FK__CrossTask__TagsI__4BAC3F29">
+      <End Role="Tags" EntitySet="Tags" />
+      <End Role="CrossTasksTags" EntitySet="CrossTasksTags" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CrossTask__TaskI__4AB81AF0" Association="Self.FK__CrossTask__TaskI__4AB81AF0">
+      <End Role="Tasks" EntitySet="Tasks" />
+      <End Role="CrossTasksTags" EntitySet="CrossTasksTags" />
+    </AssociationSet>
     <AssociationSet Name="FK__Tasks__StatusId__398D8EEE" Association="Self.FK__Tasks__StatusId__398D8EEE">
       <End Role="Statuses" EntitySet="Statuses" />
       <End Role="Tasks" EntitySet="Tasks" />

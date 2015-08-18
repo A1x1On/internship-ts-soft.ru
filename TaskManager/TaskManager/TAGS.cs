@@ -14,7 +14,14 @@ namespace TaskManager
     
     public partial class Tags
     {
+        public Tags()
+        {
+            this.CrossTasksTags = new HashSet<CrossTasksTags>();
+        }
+    
         public int Id { get; set; }
         public string TitleTag { get; set; }
+    
+        public virtual ICollection<CrossTasksTags> CrossTasksTags { get; set; }
     }
 }

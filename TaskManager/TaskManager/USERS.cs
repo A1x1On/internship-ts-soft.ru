@@ -20,7 +20,7 @@ namespace TaskManager
         {
             this.Tasks = new HashSet<Tasks>();
         }
-    
+
         public int UserId { get; set; }
         [Required(ErrorMessage = "Пожалуйста введите Имя", AllowEmptyStrings = false)]
         [Display(Name = "Имя")]
@@ -51,9 +51,10 @@ namespace TaskManager
         [StringLength(15, MinimumLength = 5, ErrorMessage = "Капча должен иметь минимум 5 символов")]
         [Display(Name = "Капча")]
         public string Captcha { get; set; }
-    
+
         public virtual ICollection<Tasks> Tasks { get; set; }
+
     }
+
+
 }
-
-

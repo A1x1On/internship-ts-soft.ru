@@ -113,7 +113,7 @@ body .transition {
 body header,
 body section,
 body footer {
-  overflow: visible;
+  float: left;
   width: 100%;
 }
 body header {
@@ -131,15 +131,20 @@ body section .mainTitle {
   text-decoration: none;
   max-width: 250px;
 }
-body section .list-tasks {
+body section .Left-Panel {
+  float: left;
+  overflow: visible;
+  width: 300px;
+}
+body section .Left-Panel .list-tasks {
   float: left;
   width: 300px;
-  height: 700px;
+  max-height: 700px;
   border-radius: 4px;
   margin-left: 10px;
   overflow: auto;
 }
-body section .list-tasks i {
+body section .Left-Panel .list-tasks .Tasks i {
   float: left;
   background-color: #FBFBE8;
   margin-bottom: 2px;
@@ -151,33 +156,60 @@ body section .list-tasks i {
   width: 96%;
   padding: 5px;
 }
-body section .list-tasks i:hover {
+body section .Left-Panel .list-tasks .Tasks i:hover {
   background-color: #E0DCDC;
   color: #00BDC0;
 }
-body section .list-tasks i div {
+body section .Left-Panel .list-tasks .Tasks i div {
   float: left;
   width: 100%;
   line-height: 22px;
 }
-body section .list-tasks i div:first-child {
+body section .Left-Panel .list-tasks .Tasks i div:first-child {
   font-size: 20px;
 }
-body section .list-tasks i .d-disc {
+body section .Left-Panel .list-tasks .Tasks i .d-disc {
   max-height: 50px;
   overflow: hidden;
 }
-body section .list-tasks i .d-date {
+body section .Left-Panel .list-tasks .Tasks i .d-date {
   color: #666;
 }
-body section .list-tasks i .d-status {
+body section .Left-Panel .list-tasks .Tasks i .d-status {
   color: darkturquoise;
+}
+body section .Left-Panel .Tags,
+body section .Left-Panel .Dates {
+  float: left;
+  width: 300px;
+  border-top: 1px dashed #00BDC0;
+  margin-top: 10px;
+  padding-top: 10px;
+}
+body section .Left-Panel .Tags a,
+body section .Left-Panel .Dates a {
+  height: 20px;
+  display: block;
+  border: none;
+  background-color: darkturquoise;
+  text-decoration: none;
+  float: left;
+  margin-bottom: 2px;
+  font-size: 13px;
+  padding: 5px;
+  color: #FFF;
+  margin: 2px;
+}
+body section .Left-Panel .Tags a:hover,
+body section .Left-Panel .Dates a:hover {
+  background-color: #E0DCDC;
+  color: #00BDC0;
 }
 body section .container {
   float: left;
   background-color: #FBFBE8;
-  margin-left: 10px;
-  width: 60%;
+  margin-left: 2%;
+  width: 50%;
   padding: 15px 10px 15px 10px;
   position: relative;
 }
@@ -339,7 +371,5 @@ body section .login {
 body footer {
   height: 4px;
   background-color: darkturquoise;
-  position: absolute;
-  bottom: 0px;
 }
 /*# sourceMappingURL=Manager.css.map */

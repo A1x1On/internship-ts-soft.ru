@@ -16,15 +16,15 @@ namespace TaskManager.Controllers
         /// <summary>
         /// Message: Error Captcha
         /// </summary>
-        private string m_ResultMassage = "Капча введена неверно";
+        private string m_ResultMessage = "Капча введена неверно";
 
         /// <summary>
         /// Instance RealizeAccount : IAccount is
         /// </summary>
-        private readonly IAccount m_Relize;
+        private readonly IAccount m_Realize;
         public AccountController(IAccount value)
         {
-            m_Relize = value;
+            m_Realize = value;
         }
 
         /// <summary>
@@ -65,15 +65,15 @@ namespace TaskManager.Controllers
              {
                  if (ModelState.IsValid)
                  {
-                     m_ResultMassage = m_Relize.UserToDb(person);
+                     m_ResultMessage = m_Realize.InsertUser(person);
                      ModelState.Clear();
                  }
                  else
                  {
-                     m_ResultMassage = "Капча верна но данные не корректны";
+                     m_ResultMessage = "Капча верна но данные не корректны";
                  } 
              }
-             return RedirectToAction("Index", "Account", new { m_ResultMassage });
+            return RedirectToAction("Index", "Account", new { m_ResultMessage });
         }
 
         /// <summary>
@@ -84,7 +84,8 @@ namespace TaskManager.Controllers
         /// <returns>View Index/Manager</returns>
         public ActionResult ConfirMail(string code, string l)
         {
-            return RedirectToAction("Index", "Manager", new { m_ResultMassage = m_Relize.UserConfirm(code, l)});
+            string state = m_Realize.SetConfirmation(code, l);
+            return RedirectToAction("Index", "Manager", new { m_ResultMassage = state });
         }
 
         /// <summary>
@@ -116,16 +117,16 @@ namespace TaskManager.Controllers
             string[] dataAuth = new string[2];
             if (ModelState.IsValid)
             {
-                dataAuth = m_Relize.UserAuthorisation(model);
+                dataAuth = m_Realize.AuthUser(model);
                 if (dataAuth[1] == "true")
                 {
-                    m_ResultMassage = dataAuth[0];
-                    return RedirectToAction("Index", "Manager", new { m_ResultMassage });
+                    m_ResultMessage = dataAuth[0];
+                    return RedirectToAction("Index", "Manager", new { m_ResultMessage });
                 }
                 else
                 {
-                    m_ResultMassage = dataAuth[0];
-                    return RedirectToAction("Index", "Account", new { m_ResultMassage });
+                    m_ResultMessage = dataAuth[0];
+                    return RedirectToAction("Index", "Account", new { m_ResultMessage });
                 }
             }
             return RedirectToAction("Index", "Account");

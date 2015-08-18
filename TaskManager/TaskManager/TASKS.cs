@@ -7,8 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.ComponentModel.DataAnnotations;
-
 namespace TaskManager
 {
     using System;
@@ -16,21 +14,22 @@ namespace TaskManager
     
     public partial class Tasks
     {
+        public Tasks()
+        {
+            this.CrossTasksTags = new HashSet<CrossTasksTags>();
+        }
+    
         public int TaskId { get; set; }
-        [Required(ErrorMessage = "Пожалуйста заполните поле 'Название'", AllowEmptyStrings = false)]
         public string Title { get; set; }
-        [Required(ErrorMessage = "Пожалуйста укажите 'deadline'", AllowEmptyStrings = false)]
         public System.DateTime TaskTerm { get; set; }
-        [Required(ErrorMessage = "Пожалуйста укажите хотя бы один 'тег'", AllowEmptyStrings = false)]
         public string Tags { get; set; }
-        [Required(ErrorMessage = "Пожалуйста заполните поле 'Описание'", AllowEmptyStrings = false)]
+        public string StatusString { get; set; }
         public string Description { get; set; }
         public Nullable<int> UsId { get; set; }
         public Nullable<int> StatusId { get; set; }
-        public string StatusString { get; set; }
     
         public virtual Statuses Statuses { get; set; }
         public virtual Users Users { get; set; }
+        public virtual ICollection<CrossTasksTags> CrossTasksTags { get; set; }
     }
 }
-

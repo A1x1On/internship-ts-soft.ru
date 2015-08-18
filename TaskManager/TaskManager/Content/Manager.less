@@ -45,7 +45,7 @@ body {
         -ms-transition: all 0.3s ease;
         transition: all 0.3s ease;
     }
-    header, section, footer { overflow: visible; width: 100%; }
+    header, section, footer { float: left; width: 100%; }
     header { height: 4px; background-color: darkturquoise; }
     section {
         min-height: 500px;
@@ -57,37 +57,67 @@ body {
             text-decoration: none;
             max-width: 250px;
         }
-        .list-tasks{
+        .Left-Panel{
             float: left;
+            overflow: visible;
             width: 300px;
-            height: 700px;
-            border-radius: 4px;
-            margin-left: 10px;
-            overflow: auto;
-            i{
-                &:hover{ background-color: #E0DCDC; color: #00BDC0; }
+
+            .list-tasks{
                 float: left;
-                background-color: #FBFBE8;
-                margin-bottom: 2px;
-                font-style: normal;
-                font-size: 13px;
-                cursor: pointer;
-                display: block;
-                text-decoration: none; 
-                width: 96%;
-                padding: 5px;
-                div{ float: left; width: 100%; line-height: 22px; }
-                div:first-child{ font-size: 20px; }
-                .d-disc{ max-height: 50px; overflow: hidden; }
-                .d-date{ color: #666; }
-                .d-status{ color: darkturquoise; }
+                width: 300px;
+                max-height: 700px;
+                border-radius: 4px;
+                margin-left: 10px;
+                overflow: auto;
+                
+                .Tasks{
+                    i{
+                        &:hover{ background-color: #E0DCDC; color: #00BDC0; }
+                        float: left;
+                        background-color: #FBFBE8;
+                        margin-bottom: 2px;
+                        font-style: normal;
+                        font-size: 13px;
+                        cursor: pointer;
+                        display: block;
+                        text-decoration: none; 
+                        width: 96%;
+                        padding: 5px;
+                        div{ float: left; width: 100%; line-height: 22px; }
+                        div:first-child{ font-size: 20px; }
+                        .d-disc{ max-height: 50px; overflow: hidden; }
+                        .d-date{ color: #666; }
+                        .d-status{ color: darkturquoise; }
+                    }
+                }    
             }
+            .Tags, .Dates{
+                    float: left;
+                    width: 300px;
+                    border-top: 1px dashed #00BDC0;
+                    margin-top: 10px;
+                    padding-top: 10px;
+                    a{
+                        &:hover{ background-color: #E0DCDC; color: #00BDC0; }
+                        height: 20px;
+                        display: block;
+                        border: none;
+                        background-color: darkturquoise;
+                        text-decoration: none;
+                        float: left;
+                        margin-bottom: 2px;
+                        font-size: 13px;
+                        padding: 5px;
+                        color: #FFF;
+                        margin: 2px;
+                    }
+                }
         }
         .container{
             float: left;
             background-color: #FBFBE8;
-            margin-left: 10px;
-            width: 60%;
+            margin-left: 2%;
+            width: 50%;
             padding: 15px 10px 15px 10px;
             position: relative;
             .DinamicTag{
@@ -179,7 +209,5 @@ body {
     footer {
         height: 4px;
         background-color: darkturquoise;
-        position: absolute;
-        bottom: 0px;
     }
 }

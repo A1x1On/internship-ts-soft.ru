@@ -11,7 +11,7 @@ namespace TaskManager.Realizations
         /// <summary>
         /// Instance EntitieDatabase is
         /// </summary>
-        private TaskManagerEF m_db = new TaskManagerEF();
+        private TaskManagerEntities m_db = new TaskManagerEntities();
         
         /// <summary>
         /// Variable contains mask of password's encryption
@@ -26,22 +26,22 @@ namespace TaskManager.Realizations
         /// <summary>
         /// Adding of User to DataBase
         /// </summary>
-        /// <param name="Person">Object User</param>
+        /// <param name="person">Object User</param>
         /// <returns>Massage of success for m_ResultMassage</returns>
-        public string UserToDb(Users Person)
+        public string InsertUser(Users person)
         {
-            var PersonExist = m_db.Users.Where(x => x.LoginName.Equals(Person.LoginName)).FirstOrDefault();
-            if (PersonExist == null)
+            var personExist = m_db.Users.Where(x => x.LoginName.Equals(person.LoginName)).FirstOrDefault();
+            if (personExist == null)
             {
-                var m_CryptIn = new Crypt(m_Alph);
-                string m_Encrypt = m_CryptIn.CryptDecrypt(Person.Pass, m_Key, true);
-                string m_RealPass = Person.Pass;
-                Person.Pass = m_Encrypt;
-                Person.Confirmation = 0;
-                Person.PassConfirmation = m_Encrypt;
-                m_db.Users.Add(Person);
+                var cryptIn = new Crypt(m_Alph);
+                string encrypt = cryptIn.CryptDecrypt(person.Pass, m_Key, true);
+                string realPass = person.Pass;
+                person.Pass = encrypt;
+                person.Confirmation = 0;
+                person.PassConfirmation = encrypt;
+                m_db.Users.Add(person);
                 m_db.SaveChanges();
-                SetLetter(Person.Email, Person.FirstName, Person.LastName, m_Encrypt, Person.LoginName, m_RealPass);
+                SendLetter(person.Email, person.FirstName, person.LastName, encrypt, person.LoginName, realPass);
                 return "Пользователь успешно зарегистрирован, для подтверждения перейдите на почту";
             }
             else
@@ -56,7 +56,7 @@ namespace TaskManager.Realizations
         /// <param name="code">Crypt password from user's email</param>
         /// <param name="l">Login of User</param>
         /// <returns>Massage of success for m_ResultMassage</returns>
-        public string UserConfirm(string code, string l)
+        public string SetConfirmation(string code, string l)
         {
             var value = m_db.Users.Where(x => x.LoginName == l).FirstOrDefault();
             if (value != null && value.Confirmation != 1)
@@ -86,16 +86,16 @@ namespace TaskManager.Realizations
         /// </summary>
         /// <param name="model">Model of project for authorize on the site</param>
         /// <returns>Massage of Conditions for m_ResultMassage</returns>
-        public string[] UserAuthorisation(LogIn model)
+        public string[] AuthUser(LogIn model)
         {
             string[] dataAuth = new string[2];
             var User = m_db.Users.Where(a => a.LoginName.Equals(model.Login)).FirstOrDefault();
             if (User != null)
             {
-                var CryptIn = new Crypt(m_Alph);
-                string Decrypt = CryptIn.CryptDecrypt(User.Pass, m_Key, false);
+                var cryptIn = new Crypt(m_Alph);
+                string decrypt = cryptIn.CryptDecrypt(User.Pass, m_Key, false);
 
-                if (model.Password == Decrypt && User.Confirmation == 1)
+                if (model.Password == decrypt && User.Confirmation == 1)
                 {
                     FormsAuthentication.SetAuthCookie(User.LoginName, true);
                     dataAuth[1] = "true";
@@ -126,35 +126,35 @@ namespace TaskManager.Realizations
         /// <summary>
         /// Forming and Sending of Email to confirm registered Account
         /// </summary>
-        /// <param name="Email">Inputted user's email</param>
-        /// <param name="FirstName">Inputted user's first name</param>
-        /// <param name="LastName">Inputted user's last name</param>
+        /// <param name="email">Inputted user's email</param>
+        /// <param name="firstName">Inputted user's first name</param>
+        /// <param name="lastName">Inputted user's last name</param>
         /// <param name="resCrypt">Encrypted user's pass</param>
-        /// <param name="LOGIN">Inputted user's login</param>
-        /// <param name="PASS">Inputted user's password</param>
-        public void SetLetter(string Email, string FirstName, string LastName, string resCrypt, string LOGIN, string PASS)
+        /// <param name="login">Inputted user's login</param>
+        /// <param name="password">Inputted user's password</param>
+        public void SendLetter(string email, string firstName, string lastName, string resCrypt, string login, string password)
         {
-            SmtpClient Smtp = new SmtpClient("smtp.yandex.ru", 25);
-            Smtp.Credentials = new NetworkCredential("A1x1On@yandex.ru", "2engine2");
-            Smtp.EnableSsl = true;
+            SmtpClient smtp = new SmtpClient("smtp.yandex.ru", 25);
+            smtp.Credentials = new NetworkCredential("A1x1On@yandex.ru", "2engine2");
+            smtp.EnableSsl = true;
             MailMessage message = new MailMessage();
             message.From = new MailAddress("A1x1On@yandex.ru");
-            message.To.Add(new MailAddress(Email));
+            message.To.Add(new MailAddress(email));
             message.IsBodyHtml = true;
             message.Subject = "Подтверждение паролья | Хранилище документов";
             message.Body =
                 "<html><body><br><img src=\"http://drunkendial.us/files/2008/09/Ubuntu-Logo-square-170x170.png\" alt=\"Super Game!\">" +
                 @" 
-                <br>Здравствуйте уважаемый(я) " + FirstName + " " + LastName + @" !
-                <br>Вы получили это письмо, потому что вы зарегистрировались на http://www.HranilisheDocumentov.РФ.
+                <br>Здравствуйте уважаемый(я) " + firstName + " " + lastName + @" !
+                <br>Вы получили это письмо, потому что вы зарегистрировались на http://www.TaskManager.РФ.
                 <br>Высылаем Вам секретный код для активации вашего профиля.
                 <br>                                                                                              
                 <br>Код активации:       <b>" + resCrypt + @"</b>
-                <br>Ваш логин: " + LOGIN + "<br>Ваш пароль: " + PASS +
-                "<br> Пройдите по ссылке для подтверждения: <a href='http://localhost:54723//Account/ConfirMail/?l="+LOGIN+"&code=" +
+                <br>Ваш логин: " + login + "<br>Ваш пароль: " + password +
+                "<br> Пройдите по ссылке для подтверждения: <a href='http://localhost:54723//Account/ConfirMail/?l="+login+"&code=" +
                 resCrypt +
                 "'>Клик</a><br><br>Мы будем рады видеть Вас на нашем сайте и желаем Вам удачного дня!</body></html>";
-            Smtp.Send(message);
+            smtp.Send(message);
         }
     }
 }

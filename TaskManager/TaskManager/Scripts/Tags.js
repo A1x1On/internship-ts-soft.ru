@@ -83,6 +83,7 @@ $(".sel-list").live("keyup", function (event) {
 $(".tag").live("click", function () {
     idtag = $(this).attr("id");
     arrayOfTags = $.grep(arrayOfTags, function (el) { return el.idtag != idtag });
+    console.log(arrayOfTags);
 
     //console.log(arrayOfTags);
     $(this).fadeOut(300);

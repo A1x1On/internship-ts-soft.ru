@@ -1,37 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="TaskManagerModelStoreContainer" CdmEntityContainer="TaskManagerEntities">
-    <EntitySetMapping Name="TASKS">
-      <EntityTypeMapping TypeName="TaskManagerModel.TASKS">
-        <MappingFragment StoreEntitySet="TASKS">
-          <ScalarProperty Name="TASKID" ColumnName="TASKID" />
-          <ScalarProperty Name="TITLE" ColumnName="TITLE" />
-          <ScalarProperty Name="TASKSTATUS" ColumnName="TASKSTATUS" />
-          <ScalarProperty Name="TASKTERM" ColumnName="TASKTERM" />
-          <ScalarProperty Name="TAGS" ColumnName="TAGS" />
-          <ScalarProperty Name="DISCRIPTION" ColumnName="DISCRIPTION" />
-          <ScalarProperty Name="USID" ColumnName="USID" />
+  <EntityContainerMapping StorageEntityContainer="TaskManagerModelStoreContainer" CdmEntityContainer="TaskManagerEF">
+    <EntitySetMapping Name="Statuses">
+      <EntityTypeMapping TypeName="TaskManagerModel.Statuses">
+        <MappingFragment StoreEntitySet="Statuses">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="TitleStatus" ColumnName="TitleStatus" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="USERS">
-      <EntityTypeMapping TypeName="TaskManagerModel.USERS">
-        <MappingFragment StoreEntitySet="USERS">
-          <ScalarProperty Name="USERID" ColumnName="USERID" />
-          <ScalarProperty Name="FIRST_NAME" ColumnName="FIRST_NAME" />
-          <ScalarProperty Name="LAST_NAME" ColumnName="LAST_NAME" />
-          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
-          <ScalarProperty Name="LOGIN_NAME" ColumnName="LOGIN_NAME" />
-          <ScalarProperty Name="PASS" ColumnName="PASS" />
-          <ScalarProperty Name="CONFIRM" ColumnName="CONFIRM" />
+    <EntitySetMapping Name="Tags">
+      <EntityTypeMapping TypeName="TaskManagerModel.Tags">
+        <MappingFragment StoreEntitySet="Tags">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="TitleTag" ColumnName="TitleTag" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="TAGS">
-      <EntityTypeMapping TypeName="TaskManagerModel.TAGS">
-        <MappingFragment StoreEntitySet="TAGS">
-          <ScalarProperty Name="TITLETAG" ColumnName="TITLETAG" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
+    <EntitySetMapping Name="Tasks">
+      <EntityTypeMapping TypeName="TaskManagerModel.Tasks">
+        <MappingFragment StoreEntitySet="Tasks">
+          <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="TaskTerm" ColumnName="TaskTerm" />
+          <ScalarProperty Name="Tags" ColumnName="Tags" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="UsId" ColumnName="UsId" />
+          <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="TaskManagerModel.Users">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="LoginName" ColumnName="LoginName" />
+          <ScalarProperty Name="Pass" ColumnName="Pass" />
+          <ScalarProperty Name="Confirmation" ColumnName="Confirmation" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -13,10 +13,10 @@ namespace TaskManager
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class TaskManagerEF : DbContext
+    public partial class TaskManagerEntities : DbContext
     {
-        public TaskManagerEF()
-            : base("name=TaskManagerEF")
+        public TaskManagerEntities()
+            : base("name=TaskManagerEntities")
         {
         }
     
@@ -29,5 +29,6 @@ namespace TaskManager
         public DbSet<Tags> Tags { get; set; }
         public DbSet<Tasks> Tasks { get; set; }
         public DbSet<Users> Users { get; set; }
+        public DbSet<CrossTasksTags> CrossTasksTags { get; set; }
     }
 }

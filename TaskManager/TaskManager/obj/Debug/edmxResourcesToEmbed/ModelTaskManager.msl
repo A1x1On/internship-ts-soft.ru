@@ -43,5 +43,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="CrossTasksTags">
+      <EntityTypeMapping TypeName="TaskManagerModel.CrossTasksTags">
+        <MappingFragment StoreEntitySet="CrossTasksTags">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="TagsId" ColumnName="TagsId" />
+          <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

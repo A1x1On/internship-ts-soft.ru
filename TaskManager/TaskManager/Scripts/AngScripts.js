@@ -107,17 +107,22 @@
                     id100++;
                     // Pushing to The prototype
                     arrayOfTags.push(new tag());
+                    console.log(arrayOfTags);
                 });
             }, function () {
                 alert('Fail of forming tags');
             });
         }
+
     });
 
     ModuleManager.factory("OpenTaskService", function ($http) {
         var fac2 = {};
         fac2.GetTask = function () {
             return $http({ method: 'GET', url: "/Manager/OpenTask/", params: { 'TaskId': key } });
+        }
+        fac2.GetTaskByTag = function () {
+            return $http({ method: 'GET', url: "/Manager/FiltrTasksByTag/", params: { 'Tag': key } });
         }
         return fac2;
     });

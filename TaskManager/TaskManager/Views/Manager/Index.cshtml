@@ -1,18 +1,49 @@
-﻿@model TaskManager.Models.TasksAddChangeSelect
+﻿@using Microsoft.Ajax.Utilities
+@model TaskManager.Models.TasksAddChangeSelect
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutManager.cshtml";
-    
-   
 }
+
 <a href="@Url.Action("Index","Manager")" class="mainTitle">Список всех задач</a>
-@Request.QueryString["m_ResultMassage"]
+@Request.QueryString["m_ResultMessage"]
 <br />
 
-<div class="list-tasks">
-    @Html.Partial("_PartialSelectionTasks", Model.SelecTasks)
+<div class="Left-Panel">
+    <div class="list-tasks">
+        @Html.Partial("_PartialSelectionTasks", Model.SelectTasks)
+    </div>
+
+    @Html.Partial("_PartialSelectionTags", Model.SelectTags)
+
+    <div class="Dates">
+        @{
+            var set = "";
+            var setGet = "";
+            foreach (var d in Model.SelectTasks.DistinctBy(x=>x.TaskTerm))
+            {
+
+                set = @d.TaskTerm.Day + "/" + @d.TaskTerm.Month + "/" + @d.TaskTerm.Year;
+                setGet = @d.TaskTerm.Day + "." + @d.TaskTerm.Month + "." + @d.TaskTerm.Year;
+                <a href="@Url.Action("Index", "Manager", new {@date = @setGet})">@set</a>
+            }
+        }
+
+    </div>
 </div>
+@{
+    string tag = Request.QueryString["tagId"];
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var tag = "@tag";
+        $(".Tags").children("a#" + tag).css("color", "red");
+        $(".Tags").children("a#" + tag).addClass("TActFilter");
+        $(".Tags").children("a#" + tag).attr("href", "/");
+    });
+</script>
+
 <div class="container" ng-controller="TaskFrom">
     @using (Html.BeginForm("AddChange", "Manager", FormMethod.Post)) // addChange
     {
@@ -38,7 +69,7 @@
             </div>
             <div class="ForTags"></div>
         </div>
-        
+
         @Html.TextBoxFor(x => x.AddChange.Tags, new { @Class = "HIDDDENTAGS", @placeholder = "Введите теги" })
         @Html.HiddenFor(x => x.AddChange.StatusId, new { @Class = "TASKSTATUS", @Value = @Model.CurStatus })<br />
         @Html.HiddenFor(x => x.AddChange.TaskTerm, new { @Class = "valDate", @placeholder = "dd-mm-yy" })
@@ -47,7 +78,7 @@
         <br /><br />
         <input type="button" value="Добавить" class="saveTask" />
         <input type="submit" value="submit" class="saveTasksub" />
-    <input type="button" class="RemoveTask" id="" value="Удалить" ng-model="valut" data-ng-click="DeleteTask($event)">
+        <input type="button" class="RemoveTask" id="" value="Удалить" ng-model="valut" data-ng-click="DeleteTask($event)">
     }
 
     @using (Html.BeginForm("Finish", "Manager", FormMethod.Post))

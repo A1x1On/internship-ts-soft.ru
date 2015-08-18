@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
 using TaskManager.Models;
 using TaskManager.Realizations;
 using WebMatrix.WebData;
@@ -10,16 +12,16 @@ namespace TaskManager.Controllers
         /// <summary>
         /// Instance RealizeManager : IManager is
         /// </summary>
-        private readonly IManager m_Relize;
+        private readonly IManager m_Realize;
         public ManagerController(IManager value)
         {
-            m_Relize = value;
+            m_Realize = value;
         }
 
         /// <summary>
         /// Variable is for User errors on Views
         /// </summary>
-        private string m_ResultMassage = "Пусто";
+        private string m_ResultMessage = "Пусто";
 
         /// <summary>
         /// Variable is login Authorized user
@@ -36,19 +38,26 @@ namespace TaskManager.Controllers
         /// </summary>
         /// <returns>View Index/Account</returns>
         [Authorize]
-        public ActionResult Index()
+        public ActionResult Index(int tagId = 0, string date = "")
         {
             // Auto-Updating all user's tasks that is updating of statuses of the every task
-            m_Relize.CommonUpdateStatus(m_Relize.CurrentUser(m_Login).UserId);
-
+            m_Realize.UpdateStatusEachTask(m_Realize.GetCurrentUser(m_Login).UserId);
             // Some info for current View and model TASKS(void) and IEnumerable<TASKS> for _PartialSelectionTasks
             return View(new TasksAddChangeSelect()
             {
-                SelecTasks = m_Relize.TaskSelect(m_Relize.CurrentUser(m_Login).UserId),
+                SelectTasks = m_Realize.GetTasks(m_Realize.GetCurrentUser(m_Login).UserId, tagId, date),
+                SelectTags = m_Realize.GetTags(m_Realize.GetCurrentUser(m_Login).UserId),
                 CurStatus = m_StatusActive,
                 CurLogin = m_Login,
-                CurId = m_Relize.CurrentUser(m_Login).UserId
+                CurId = m_Realize.GetCurrentUser(m_Login).UserId
             });
+        }
+
+        [Authorize]
+        public JsonResult FiltrTasksByTag(int tagId)
+        {
+            IEnumerable<Tasks> tasks = m_Realize.GetTasks(m_Realize.GetCurrentUser(m_Login).UserId, tagId, "");
+            return new JsonResult { Data = tasks, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         /// <summary>
@@ -60,7 +69,8 @@ namespace TaskManager.Controllers
         [HttpPost]
         public ActionResult Finish(int TaskFromFinish)
         {
-            return RedirectToAction("Index", "Manager", new { m_ResultMassage = m_Relize.TaskStatusFin(TaskFromFinish) });
+            string status = m_Realize.EndActTask(TaskFromFinish);
+            return RedirectToAction("Index", "Manager", new { m_ResultMassage = status });
         }
 
         /// <summary>
@@ -74,13 +84,13 @@ namespace TaskManager.Controllers
         {
             if (model.AddChange.TaskId == 0)
             {
-                m_ResultMassage = m_Relize.TaskAdd(model.AddChange);
+                m_ResultMessage = m_Realize.InsertTask(model.AddChange);
             }
             else
             {
-                m_ResultMassage = m_Relize.TaskChange(model.AddChange);
+                m_ResultMessage = m_Realize.UpdateTask(model.AddChange);
             }
-            return RedirectToAction("Index", "Manager", new { m_ResultMassage });
+            return RedirectToAction("Index", "Manager", new { m_ResultMessage });
         }
 
         /// <summary>
@@ -91,7 +101,8 @@ namespace TaskManager.Controllers
         [Authorize]
         public JsonResult GetTags(string name)
         {
-            return new JsonResult { Data = m_Relize.GettingTags(name), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            IEnumerable<Tags> tags = m_Realize.GetTags(name);
+            return new JsonResult { Data = tags, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         /// <summary>
@@ -102,8 +113,12 @@ namespace TaskManager.Controllers
         [Authorize]
         public JsonResult Delete(int idTask)
         {
-            m_Relize.TaskDelete(idTask);
-            return new JsonResult { Data = "Удалил: " + idTask, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            string messageDelete = "Задача удалена";
+            if (m_Realize.DeleteTask(idTask) == false)
+            {
+                messageDelete = "Выберите задачу";
+            }
+            return new JsonResult { Data = messageDelete, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         /// <summary>
@@ -114,7 +129,8 @@ namespace TaskManager.Controllers
         [Authorize]
         public JsonResult OpenTask(int taskId)
         {
-            return new JsonResult { Data = m_Relize.TaskOpen(taskId), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            Array values = m_Realize.GetValuesTask(taskId);
+            return new JsonResult { Data = values, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
     }
 }
