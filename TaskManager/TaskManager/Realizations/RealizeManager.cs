@@ -331,7 +331,6 @@ namespace TaskManager.Realizations
                         readerCrossTags.Close();
                     }
                 }
-
                 string sqlSelTags = "SELECT * FROM Tags WHERE Id = @Id";
                 using (SqlCommand cmdTags = new SqlCommand(sqlSelTags, sqlConn))
                 {
