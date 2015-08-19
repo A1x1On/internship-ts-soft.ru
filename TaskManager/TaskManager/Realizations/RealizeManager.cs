@@ -68,7 +68,7 @@ namespace TaskManager.Realizations
 
                             cmdChange.Parameters.AddWithValue("@StatusId", FormStatus(reader["TaskTerm"].ToString()));
                             cmdChange.Parameters.AddWithValue("@UsId", usId);
-                            cmdChange.Parameters.AddWithValue("@TaskId", reader["TaskId"].ToString());
+                            cmdChange.Parameters.AddWithValue("@TaskId", reader.GetInt32(reader.GetOrdinal("TaskId")));
                             cmdChange.ExecuteNonQuery();
                         }
                     }

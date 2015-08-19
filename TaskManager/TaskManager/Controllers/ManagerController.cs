@@ -42,7 +42,6 @@ namespace TaskManager.Controllers
         {
             // Auto-Updating all user's tasks that is updating of statuses of the every task
             m_Realize.UpdateStatusEachTask(m_Realize.GetCurrentUser(m_Login).UserId);
-            // Some info for current View and model TASKS(void) and IEnumerable<TASKS> for _PartialSelectionTasks
             return View(new TasksAddChangeSelect()
             {
                 SelectTasks = m_Realize.GetTasks(m_Realize.GetCurrentUser(m_Login).UserId, tagId, date),
@@ -113,7 +112,7 @@ namespace TaskManager.Controllers
         [Authorize]
         public JsonResult Delete(int idTask)
         {
-            string messageDelete = "Задача удалена";
+            string messageDelete = "Задача id " + idTask + " удалена";
             if (m_Realize.DeleteTask(idTask) == false)
             {
                 messageDelete = "Выберите задачу";
