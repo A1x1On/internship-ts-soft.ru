@@ -186,7 +186,6 @@ namespace TaskManager.Realizations
 
                     RemoveTags(model.Tags, model.TaskId);
                     InsertTags(model.Tags, model.TaskId, 1);
-
                     return "Задача изменена";
                 }
                 catch (Exception)

@@ -287,6 +287,11 @@
             Instance EntitieDatabase is
             </summary>
         </member>
+        <member name="F:TaskManager.Realizations.RealizeManager.m_IdCurrentTask">
+            <summary>
+            SELECT @@IDENTITY from sql of request
+            </summary>
+        </member>
         <member name="M:TaskManager.Realizations.RealizeManager.EndActTask(System.Int32)">
             <summary>
             Finishing of task
@@ -320,6 +325,13 @@
             <param name="model">Object of task who ready to change from database</param>
             <returns>Result to m_ResultMassage in controller</returns>
         </member>
+        <member name="M:TaskManager.Realizations.RealizeManager.RemoveTags(System.String,System.Int32)">
+            <summary>
+            Removing tag from CrossTasksTags(Association)
+            </summary>
+            <param name="tags"></param>
+            <param name="taskId"></param>
+        </member>
         <member name="M:TaskManager.Realizations.RealizeManager.DeleteTask(System.Int32)">
             <summary>
             Removing of task
@@ -328,10 +340,17 @@
         </member>
         <member name="M:TaskManager.Realizations.RealizeManager.GetTasks(System.Int32,System.Int32,System.String)">
             <summary>
-            Getting of tasks' list
+            Getting of tasks
             </summary>
             <param name="curId">Authorized user</param>
             <returns>List of tasks for _PartialSelectionTasks.cshtml</returns>
+        </member>
+        <member name="M:TaskManager.Realizations.RealizeManager.GetTags(System.Int32)">
+            <summary>
+            Getting of tags
+            </summary>
+            <param name="CurId"></param>
+            <returns></returns>
         </member>
         <member name="M:TaskManager.Realizations.RealizeManager.GetTags(System.String)">
             <summary>
@@ -370,7 +389,7 @@
             Amount of string
             </summary>
         </member>
-        <member name="M:TaskManager.Realizations.RealizeManager.InsertTags(System.String,System.Int32)">
+        <member name="M:TaskManager.Realizations.RealizeManager.InsertTags(System.String,System.Int32,System.Int32)">
             <summary>
             Adding of tags to DB or not
             </summary>
