@@ -6,17 +6,11 @@
     Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
 
-<a href="@Url.Action("Index","Manager")" class="mainTitle">Список всех задач</a>
-@Request.QueryString["m_ResultMessage"]
-<br />
-
 <div class="Left-Panel">
     <div class="list-tasks">
         @Html.Partial("_PartialSelectionTasks", Model.SelectTasks)
     </div>
-
     @Html.Partial("_PartialSelectionTags", Model.SelectTags)
-
     <div class="Dates">
         @{
             var set = "";
@@ -29,10 +23,13 @@
                 <a href="@Url.Action("Index", "Manager", new {@date = @setGet})">@set</a>
             }
         }
-
     </div>
+    <br/><br/>
+    @* System massages *@
+    @Request.QueryString["m_ResultMessage"]
 </div>
-@{
+@{   
+    // For filter by tags
     string tag = Request.QueryString["tagId"];
 }
 <script type="text/javascript">
@@ -86,6 +83,7 @@
         <input type="hidden" name="TaskFromFinish" value="" class="finishFromTask" />
         <input type="submit" name="TaskFromFinish" value="Завершить задачу" class="finishtag" />
     }
+    
 </div>
 
 @using (Html.BeginForm("Logout", "Account", FormMethod.Post))

@@ -2,10 +2,7 @@
 [Tt]humbs.db
 *.DS_Store
 
-
-#test
-*.txt
-
+#test *.txt
 
 #Visual Studio files
 *.[Oo]bj

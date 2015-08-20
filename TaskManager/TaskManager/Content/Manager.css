@@ -117,31 +117,32 @@ body footer {
   width: 100%;
 }
 body header {
-  height: 4px;
-  background-color: darkturquoise;
+  border-top: 4px solid darkturquoise;
+  height: 50px;
 }
-body section {
-  min-height: 500px;
-  padding-bottom: 100px;
-}
-body section .mainTitle {
+body header .mainTitle {
   display: block;
   margin: 12px 10px 0px 16px;
   font-size: 20px;
   text-decoration: none;
   max-width: 250px;
 }
+body section {
+  min-height: 500px;
+  padding-bottom: 100px;
+  display: flex;
+}
 body section .Left-Panel {
   float: left;
   overflow: visible;
   width: 300px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 body section .Left-Panel .list-tasks {
   float: left;
-  width: 300px;
   max-height: 700px;
   border-radius: 4px;
-  margin-left: 10px;
   overflow: auto;
 }
 body section .Left-Panel .list-tasks .Tasks i {
@@ -183,8 +184,8 @@ body section .Left-Panel .Dates {
   float: left;
   width: 300px;
   border-top: 1px dashed #00BDC0;
-  margin-top: 10px;
-  padding-top: 10px;
+  padding-top: 20px;
+  margin-bottom: 20px;
 }
 body section .Left-Panel .Tags a,
 body section .Left-Panel .Dates a {
@@ -208,9 +209,9 @@ body section .Left-Panel .Dates a:hover {
 body section .container {
   float: left;
   background-color: #FBFBE8;
-  margin-left: 2%;
-  width: 50%;
+  width: 100%;
   padding: 15px 10px 15px 10px;
+  margin-right: 10px;
   position: relative;
 }
 body section .container .DinamicTag {
@@ -371,5 +372,7 @@ body section .login {
 body footer {
   height: 4px;
   background-color: darkturquoise;
+  position: fixed;
+  bottom: 0px;
 }
 /*# sourceMappingURL=Manager.css.map */

@@ -46,10 +46,9 @@ body {
         transition: all 0.3s ease;
     }
     header, section, footer { float: left; width: 100%; }
-    header { height: 4px; background-color: darkturquoise; }
-    section {
-        min-height: 500px;
-        padding-bottom: 100px;
+    header { 
+        border-top: 4px solid darkturquoise;
+        height: 50px;
         .mainTitle{
             display: block;
             margin: 12px 10px 0px 16px;
@@ -57,17 +56,21 @@ body {
             text-decoration: none;
             max-width: 250px;
         }
+    }
+    section {
+        min-height: 500px;
+        padding-bottom: 100px;
+        display: flex;
         .Left-Panel{
             float: left;
             overflow: visible;
             width: 300px;
-
+            margin-left: 10px;
+            margin-right: 10px;
             .list-tasks{
                 float: left;
-                width: 300px;
                 max-height: 700px;
                 border-radius: 4px;
-                margin-left: 10px;
                 overflow: auto;
                 
                 .Tasks{
@@ -95,8 +98,8 @@ body {
                     float: left;
                     width: 300px;
                     border-top: 1px dashed #00BDC0;
-                    margin-top: 10px;
-                    padding-top: 10px;
+                    padding-top: 20px;
+                    margin-bottom: 20px;
                     a{
                         &:hover{ background-color: #E0DCDC; color: #00BDC0; }
                         height: 20px;
@@ -116,9 +119,9 @@ body {
         .container{
             float: left;
             background-color: #FBFBE8;
-            margin-left: 2%;
-            width: 50%;
+            width: 100%;
             padding: 15px 10px 15px 10px;
+            margin-right: 10px;
             position: relative;
             .DinamicTag{
                 position: relative;
@@ -209,5 +212,7 @@ body {
     footer {
         height: 4px;
         background-color: darkturquoise;
+        position: fixed;
+        bottom: 0px;
     }
 }

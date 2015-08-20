@@ -15,20 +15,15 @@
 
 </head>
 <body ng-app="AngularManager">
-    <header></header>
+<header>
+    <a href="@Url.Action("Index","Manager")" class="mainTitle">Список всех задач</a>
+</header>
     <section>
         @RenderBody()
     </section>
     <footer></footer>
-
-
-
-
 </body>
 </html>
-
-
-
 
 @Styles.Render("~/Content/css")
 @Scripts.Render("~/bundles/modernizr")
