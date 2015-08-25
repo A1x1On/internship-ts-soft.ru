@@ -30,7 +30,7 @@ namespace TaskManager.Realizations
         /// <returns>Massage of success for m_ResultMassage</returns>
         public string InsertUser(Users person)
         {
-            var personExist = m_db.Users.Where(x => x.LoginName.Equals(person.LoginName)).FirstOrDefault();
+            var personExist = m_db.Users.FirstOrDefault(x => x.LoginName.Equals(person.LoginName));
             if (personExist == null)
             {
                 var cryptIn = new Crypt(m_Alph);
@@ -58,7 +58,7 @@ namespace TaskManager.Realizations
         /// <returns>Massage of success for m_ResultMassage</returns>
         public string SetConfirmation(string code, string l)
         {
-            var value = m_db.Users.Where(x => x.LoginName == l).FirstOrDefault();
+            var value = m_db.Users.FirstOrDefault(x => x.LoginName == l);
             if (value != null && value.Confirmation != 1)
             {
                 FormsAuthentication.SetAuthCookie(value.LoginName, true);
@@ -89,7 +89,7 @@ namespace TaskManager.Realizations
         public string[] AuthUser(LogIn model)
         {
             string[] dataAuth = new string[2];
-            var User = m_db.Users.Where(a => a.LoginName.Equals(model.Login)).FirstOrDefault();
+            var User = m_db.Users.FirstOrDefault(a => a.LoginName.Equals(model.Login));
             if (User != null)
             {
                 var cryptIn = new Crypt(m_Alph);

@@ -40,11 +40,17 @@ namespace TaskManager.Controllers
         [Authorize]
         public ActionResult Index(int tagId = 0, string date = "")
         {
+            DateTime dateTime = default(DateTime);
+            if (date != "")
+            {
+                dateTime = DateTime.Parse(date);
+            }
+            
             // Auto-Updating all user's tasks that is updating of statuses of the every task
             m_Realize.UpdateStatusEachTask(m_Realize.GetCurrentUser(m_Login).UserId);
             return View(new TasksAddChangeSelect()
             {
-                SelectTasks = m_Realize.GetTasks(m_Realize.GetCurrentUser(m_Login).UserId, tagId, date),
+                SelectTasks = m_Realize.GetTasks(m_Realize.GetCurrentUser(m_Login).UserId, tagId, dateTime),
                 SelectTags = m_Realize.GetTags(m_Realize.GetCurrentUser(m_Login).UserId),
                 CurStatus = m_StatusActive,
                 CurLogin = m_Login,
@@ -55,7 +61,7 @@ namespace TaskManager.Controllers
         [Authorize]
         public JsonResult FiltrTasksByTag(int tagId)
         {
-            IEnumerable<Tasks> tasks = m_Realize.GetTasks(m_Realize.GetCurrentUser(m_Login).UserId, tagId, "");
+            IEnumerable<Tasks> tasks = m_Realize.GetTasks(m_Realize.GetCurrentUser(m_Login).UserId, tagId, default(DateTime));
             return new JsonResult { Data = tasks, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
@@ -65,12 +71,23 @@ namespace TaskManager.Controllers
         /// <param name="TaskFromFinish">ID of task</param>
         /// <returns>View Index/Manager</returns>
         [Authorize]
-        [HttpPost]
-        public ActionResult Finish(int TaskFromFinish)
+        public JsonResult SetEndStatus(int idTask)
         {
-            string status = m_Realize.EndActTask(TaskFromFinish);
-            return RedirectToAction("Index", "Manager", new { m_ResultMassage = status });
+            string status = m_Realize.EndActTask(idTask);
+            //return RedirectToAction("Index", "Manager", new { m_ResultMassage = status });
+            return new JsonResult { Data = status, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
+
+        [Authorize]
+        public JsonResult SetActiveStatus(int idTask)
+        {
+            string status = m_Realize.ChangeStatus(idTask);
+            return new JsonResult { Data = status, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+
+       
+
 
         /// <summary>
         /// Adding and Changing of tasks
@@ -117,7 +134,8 @@ namespace TaskManager.Controllers
             {
                 messageDelete = "Выберите задачу";
             }
-            return new JsonResult { Data = messageDelete, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            var tasks = m_Realize.GetTasks(m_Realize.GetCurrentUser(m_Login).UserId, 0, default(DateTime));
+            return new JsonResult { Data = tasks, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         /// <summary>
@@ -131,5 +149,13 @@ namespace TaskManager.Controllers
             Array values = m_Realize.GetValuesTask(taskId);
             return new JsonResult { Data = values, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
+
+        [Authorize]
+        public ActionResult Tasks()
+        {
+            return View();
+
+        }
+
     }
 }

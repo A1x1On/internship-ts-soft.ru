@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<TaskManager.Tasks>
 
-<div class="Tasks">
+<div class="Tasks" >
     @foreach (var Task in Model.Take(100))
     {
         <i ng-controller="OpenTask" ng-click="ClickedTask(@Task.TaskId)" id="@Task.TaskId">
@@ -13,4 +13,15 @@
         </i>
 
     }
+    {{mass}}
+
+    <i id="{{y.TaskId}}" ng-repeat="y in Tasks | filter:query">
+        <div>{{y.Title}}</div><br />
+        <div class="d-disc">{{y.Description}}</div>
+        <div class="d-date">
+            <b>Дата:</b> {{y.TaskTerm}}
+        </div>
+        <div class="d-status"><b>Cтатус:</b> {{y.StatusString}} </div>
+    </i>
+
 </div>

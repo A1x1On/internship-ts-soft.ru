@@ -295,7 +295,8 @@ body section .container .mainTaskInfo input {
 }
 body section .container .saveTask,
 body section .container .RemoveTask,
-body section .container .finishtag {
+body section .container .finishtag,
+body section .container .Cancelfinishtag {
   width: 210px;
   height: 39px;
   margin-bottom: 1px;
@@ -310,12 +311,14 @@ body section .container .finishtag {
 }
 body section .container .saveTask:hover,
 body section .container .RemoveTask:hover,
-body section .container .finishtag:hover {
+body section .container .finishtag:hover,
+body section .container .Cancelfinishtag:hover {
   background-color: #E0DCDC;
 }
 body section .container .RemoveTask,
 body section .container .finishtag,
-body section .container .saveTasksub {
+body section .container .saveTasksub,
+body section .container .Cancelfinishtag {
   display: none;
 }
 body section .container .HIDDDENTAGS {

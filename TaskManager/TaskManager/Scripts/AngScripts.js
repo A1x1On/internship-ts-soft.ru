@@ -15,12 +15,16 @@
         // Deleting of task
         $scope.DeleteTask = function (obj) {
             idTask = obj.currentTarget.id;
-            
+            $scope.mass = "ПРОБА";
+
             if (idTask != 0) {
-                $("i#" + idTask).fadeOut();
+                
                 // Use TService for Deleting of task
                 TService.DeleteTask().then(function (d) {
-                    $("header").html(d.data);
+                    //$(".Tasks>i").remove();
+                    $("i#" + idTask).fadeOut();
+
+                    //$scope.Tasks = d.data; in View ng-repeat
                 }, function () {
                     alert("Fail of deleting task");
                 });
@@ -42,6 +46,30 @@
                 $scope.Tags = "";
             }
         }
+
+
+        $scope.EndActTask = function (obj) {
+            idTask = obj.currentTarget.id;
+            TService.EndActTask().then(function (d) {
+                $scope.Tags = d.data;
+                $("i#" + idTask).children(".d-status").html("<b>Cтатус: </b>Завершен");
+              
+            }, function () {
+                alert("Fail of getting tags");
+            });
+        }
+
+
+        $scope.ChangeStatus = function (obj) {
+            idTask = obj.currentTarget.id;
+            TService.ChangeStatus().then(function (d) {
+                $scope.Tags = d.data;
+                $("i#" + idTask).children(".d-status").html("<b>Cтатус: </b>Активный");
+            }, function () {
+                alert("Fail of getting tags");
+            });
+        }
+
     });
 
     ModuleManager.factory("TService", function ($http) {
@@ -51,6 +79,12 @@
         }
         fac.DeleteTask = function () {
             return $http({ method: "GET", url: "/Manager/Delete/", params: { 'idTask': idTask } });
+        }
+        fac.ChangeStatus = function () {
+            return $http({ method: "POST", url: "/Manager/SetActiveStatus/", params: { 'idTask': idTask } });
+        }
+        fac.EndActTask = function () {
+            return $http({ method: "POST", url: "/Manager/SetEndStatus/", params: { 'idTask': idTask } });
         }
         return fac;
 
@@ -72,13 +106,19 @@
                 $scope.Task = t.data;
                 if ($scope.Task[3] !== "1") {
                     $(".finishtag").fadeIn();
+                    $(".Cancelfinishtag").css("display", "none");
+
                 } else {
                     $(".finishtag").fadeOut();
+                    setTimeout(function () {
+                        $(".Cancelfinishtag").fadeIn();
+                    }, 500);
                 }
 
                 $(".t-title").val($scope.Task[0]);
                 $(".TASKID").val($scope.Task[5]);
-                $(".finishFromTask").val($scope.Task[5]);        
+                $(".finishtag").attr("id", $scope.Task[5]);
+                $(".Cancelfinishtag").attr("id", $scope.Task[5]);
                 $(".t-disc").val($scope.Task[1]);
                 $(".RemoveTask").attr("id", $scope.Task[5]);
                 $(".TASKSTATUS").val($scope.Task[3]);
@@ -112,6 +152,8 @@
                 alert('Fail of forming tags');
             });
         }
+
+        
 
     });
 

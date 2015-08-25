@@ -18,7 +18,7 @@
 <header>
     <a href="@Url.Action("Index","Manager")" class="mainTitle">Список всех задач</a>
 </header>
-    <section>
+    <section ng-controller="TaskFrom">
         @RenderBody()
     </section>
     <footer></footer>

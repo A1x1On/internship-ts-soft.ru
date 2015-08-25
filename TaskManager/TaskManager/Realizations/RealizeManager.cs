@@ -1,10 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common.CommandTrees;
+using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json.Linq;
+using TaskManager.Models;
+using WebGrease.Css.Extensions;
 
 namespace TaskManager.Realizations
 {
@@ -23,24 +30,46 @@ namespace TaskManager.Realizations
         /// <summary>
         /// Finishing of task
         /// </summary>
-        /// <param name="taskFromFinish">ID of task</param>
-        public string EndActTask(int taskFromFinish)  
+        /// <param name="tasId">ID of task</param>
+        public string EndActTask(int taskId)
         {
-            using (var sqlConn = ConnectToDb())
+            try
             {
-                try
-                {
-                    string sqlUpdate = "UPDATE Tasks SET StatusId = 1 WHERE TASKID = @TaskFromFinish";
-                    SqlCommand cmdUpdate = new SqlCommand(sqlUpdate, sqlConn);
-                    cmdUpdate.Parameters.AddWithValue("@TaskFromFinish", taskFromFinish);
-                    cmdUpdate.ExecuteNonQuery();
-                    return "Задача завершина";
-                }
-                catch (Exception)
-                {
-                    return "Задача не завершина";
-                }
+                var task = m_db.Tasks.FirstOrDefault(x => x.TaskId.Equals(taskId));
+                task.StatusId = 1;
+                m_db.Tasks.AddOrUpdate(task);
+                m_db.SaveChanges();
+
+                return "Задача завершина";
             }
+            catch (Exception)
+            {
+                return "Задача не завершина";
+            }
+        }
+
+        /// <summary>
+        /// Cancel inactive status
+        /// </summary>
+        /// <param name="taskId"></param>
+        /// <returns></returns>
+        public string ChangeStatus(int taskId)
+        {
+
+            try
+            {
+                var task = m_db.Tasks.FirstOrDefault(x => x.TaskId == taskId);
+                task.StatusId = 2;
+                m_db.Tasks.AddOrUpdate(task);
+                m_db.SaveChanges();
+
+                return "Задача активна";
+            }
+            catch (Exception)
+            {
+                return "Ошибка изменения статуса на 'Активна'";
+            }
+           
         }
   
         /// <summary>
@@ -49,31 +78,25 @@ namespace TaskManager.Realizations
         /// <param name="usId"></param>
         public void UpdateStatusEachTask(int usId)
         {
-            using (var sqlConn = ConnectToDb())
+            foreach (Tasks t in m_db.Tasks)
             {
-                string sqlSel = "SELECT TaskTerm, TaskId FROM Tasks WHERE UsId = @UsId AND StatusId != 1";
-
-                SqlCommand cmdSel = new SqlCommand(sqlSel, sqlConn);
-                cmdSel.Parameters.AddWithValue("@UsId", usId);
-
-                using (SqlDataReader reader = cmdSel.ExecuteReader())
+                if (t.StatusId != 1 && t.UsId == usId)
                 {
-                    while (reader.Read())
+                    Tasks task = new Tasks()
                     {
-                        using (var sqlConnInner = ConnectToDb())
-                        {
-                            string sqlChange = "UPDATE Tasks SET StatusId = @StatusId " +
-                                               "WHERE UsId = @UsId AND StatusId != 1 AND TaskId = @TaskId";
-                            SqlCommand cmdChange = new SqlCommand(sqlChange, sqlConnInner);
-
-                            cmdChange.Parameters.AddWithValue("@StatusId", FormStatus(reader["TaskTerm"].ToString()));
-                            cmdChange.Parameters.AddWithValue("@UsId", usId);
-                            cmdChange.Parameters.AddWithValue("@TaskId", reader.GetInt32(reader.GetOrdinal("TaskId")));
-                            cmdChange.ExecuteNonQuery();
-                        }
-                    }
-                }               
+                        StatusId = FormStatus(t.TaskTerm.ToString()),
+                        UsId = t.UsId,
+                        TaskId = t.TaskId,
+                        Description = t.Description,
+                        Tags = t.Tags,
+                        Title = t.Title,
+                        TaskTerm = t.TaskTerm,
+                        Users = t.Users
+                    };
+                    m_db.Tasks.AddOrUpdate(task);
+                }
             }
+            m_db.SaveChanges();
         }
 
         /// <summary>
@@ -84,40 +107,28 @@ namespace TaskManager.Realizations
         public Array GetValuesTask(int taskId)
         {  
             var list = new List<string>();
-            using (var sqlConn = ConnectToDb())
-            {
-                string tags = "";
-                string sqlTags = "SELECT * FROM Tags AS t JOIN CrossTasksTags AS c ON (t.Id = c.TagsId) WHERE c.TaskId = @taskId";
-                using (SqlCommand cmdSel = new SqlCommand(sqlTags, sqlConn))
-                {
-                    cmdSel.Parameters.AddWithValue("@TaskId", taskId);
-                    using (SqlDataReader reader = cmdSel.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            tags = tags + ", "+reader["TitleTag"].ToString();
-                        }
-                    }
-                }
-                string sqlSel = "SELECT * FROM Tasks WHERE TaskId = @TaskId";
-                using (SqlCommand cmdSel = new SqlCommand(sqlSel, sqlConn))
-                {
-                    cmdSel.Parameters.AddWithValue("@TaskId", taskId);
+            string tags = "";
 
-                    using (SqlDataReader reader = cmdSel.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            list.Add(reader["Title"].ToString());
-                            list.Add(reader["Description"].ToString());
-                            list.Add(reader["TaskTerm"].ToString());
-                            list.Add(reader["StatusId"].ToString());
-                            list.Add(tags);
-                            list.Add(reader["TaskId"].ToString());
-                        }
-                    }
-                }
+            var tagsCross = m_db.Tags.Join(
+                m_db.CrossTasksTags,
+                t => t.Id,
+                c => c.TagsId,
+                (t, c) => new { Tags = t, CrossTasksTags = c })
+                .Where(x => x.CrossTasksTags.TaskId == taskId);
+
+            foreach (var q in tagsCross)
+            {
+                tags = tags + ", " + q.Tags.TitleTag;
             }
+
+            var task = m_db.Tasks.FirstOrDefault(x => x.TaskId == taskId);
+            list.Add(task.Title);
+            list.Add(task.Description);
+            list.Add(task.TaskTerm.ToString());
+            list.Add(task.StatusId.ToString());
+            list.Add(tags);
+            list.Add(taskId.ToString());
+
             return list.ToArray();
         }
 
@@ -128,33 +139,26 @@ namespace TaskManager.Realizations
         /// <returns>Result to m_ResultMassage in controller</returns>
         public string InsertTask(Tasks model)
         {
-            using (var sqlConn = ConnectToDb())
+            try
             {
-                try
+                Tasks task = new Tasks()
                 {
-                    string sqlAdd = "INSERT INTO Tasks (Title, Description, TaskTerm, UsId, StatusId) VALUES (@Title, @Description, @TaskTerm, @UsId, @StatusId) SELECT @@IDENTITY";
-                    SqlCommand cmdAdd = new SqlCommand(sqlAdd, sqlConn);
+                    Title = model.Title,
+                    Description = model.Description,
+                    TaskTerm = model.TaskTerm,
+                    UsId = model.UsId,
+                    StatusId = FormStatus(model.TaskTerm.ToString()),
+                };
+                m_db.Tasks.Add(task);
+                m_db.SaveChanges();
 
-                    cmdAdd.Parameters.AddWithValue("@Title", model.Title);
-                    cmdAdd.Parameters.AddWithValue("@Description", model.Description);
-                    cmdAdd.Parameters.AddWithValue("@TaskTerm", model.TaskTerm);
-                    cmdAdd.Parameters.AddWithValue("@UsId", model.UsId);
-                    cmdAdd.Parameters.AddWithValue("@StatusId", FormStatus(model.TaskTerm.ToString()));
-
-                    using (SqlDataReader reader = cmdAdd.ExecuteReader())
-                    {
-                        reader.Read();
-                        m_IdCurrentTask = int.Parse(reader[0].ToString());  
-                    }
-
-                    InsertTags(model.Tags, m_IdCurrentTask, 0);
-                    
-                    return "Задача сохранена ";
-                }
-                catch (Exception)
-                {
-                    return "Ошибка добавления задачи";
-                }
+                InsertTags(model.Tags, task.TaskId, 0);
+                
+                return "Задача сохранена";
+            }
+            catch (Exception)
+            {
+                return "Ошибка добавления задачи";
             }
         }
 
@@ -165,59 +169,35 @@ namespace TaskManager.Realizations
         /// <returns>Result to m_ResultMassage in controller</returns>
         public string UpdateTask(Tasks model)
         {
-            using (var sqlConn = ConnectToDb())
+            try
             {
-                try
+                var value = m_db.Tasks.FirstOrDefault(c => c.TaskId == model.TaskId);
+                if (value != null)
                 {
-                    string sqlUpdate = "UPDATE Tasks SET Description = @Description, " +
-                                       "StatusId = @StatusId, " +
-                                       "Title = @Title, " +
-                                       "TaskTerm = @TaskTerm, " +
-                                       "UsId = @UsId WHERE TaskId = @TaskId";
-                    SqlCommand cmdUpdate = new SqlCommand(sqlUpdate, sqlConn);
-
-                    cmdUpdate.Parameters.AddWithValue("@Description", model.Description);
-                    cmdUpdate.Parameters.AddWithValue("@Title", model.Title);
-                    cmdUpdate.Parameters.AddWithValue("@TaskTerm", model.TaskTerm);
-                    cmdUpdate.Parameters.AddWithValue("@UsId", model.UsId);
-                    cmdUpdate.Parameters.AddWithValue("@StatusId", model.StatusId);
-                    cmdUpdate.Parameters.AddWithValue("@TaskId", model.TaskId);
-                    cmdUpdate.ExecuteNonQuery();
+                    Tasks task = new Tasks()
+                    {
+                        TaskId = model.TaskId,
+                        Title = model.Title,
+                        Description = model.Description,
+                        TaskTerm = model.TaskTerm,
+                        UsId = model.UsId,
+                        StatusId = model.StatusId,
+                    };
+                    m_db.Tasks.AddOrUpdate(task);
+                    m_db.SaveChanges();
 
                     RemoveTags(model.Tags, model.TaskId);
                     InsertTags(model.Tags, model.TaskId, 1);
-                    return "Задача изменена";
                 }
-                catch (Exception)
-                {
-                    return "Задача не изменена";
-                }
+                return "Задача изменена";
             }
+            catch (Exception)
+            {
+                return "Задача не изменена";
+            } 
         }
 
-        /// <summary>
-        /// Removing tag from CrossTasksTags(Association)
-        /// </summary>
-        /// <param name="tags"></param>
-        /// <param name="taskId"></param>
-        public void RemoveTags(string tags, int taskId)
-        {
-            var listTagId = m_db.CrossTasksTags.Where(x => x.TaskId == taskId).Select(x => new { x.TagsId }).ToList();
-            int resId;
-            CrossTasksTags forDel;
-            tags = tags.ToLower();
-            foreach (Match t in Regex.Matches(tags, @"([\b\w\-\w\b]+)"))
-            {
-                resId = m_db.Tags.Where(x => x.TitleTag == t.Value).FirstOrDefault().Id;
-                listTagId.Remove(listTagId.Find(x => x.TagsId.Equals(resId)));
-            }
-            foreach (var i in listTagId)
-            {
-                forDel = m_db.CrossTasksTags.FirstOrDefault(d => d.TagsId == i.TagsId);
-                m_db.Set<CrossTasksTags>().Remove(forDel);
-            }
-            m_db.SaveChanges();
-        }
+        
         
         /// <summary>
         /// Removing of task
@@ -227,24 +207,17 @@ namespace TaskManager.Realizations
         {
             try
             {
-                using (var sqlCross = ConnectToDb())
+                var crossTasks = m_db.CrossTasksTags.Where(c => c.TaskId == taskId);
+                foreach (var cross in crossTasks)
                 {
-                    string sqlDel = "DELETE CrossTasksTags WHERE TaskId = @TaskId";
-                    using (SqlCommand cmdCrossDel = new SqlCommand(sqlDel, sqlCross))
-                    {
-                        cmdCrossDel.Parameters.AddWithValue("@TaskId", taskId);
-                        cmdCrossDel.ExecuteNonQuery();
-                    }
+                    m_db.Set<CrossTasksTags>().Remove(cross);  
                 }
-                using (var sqlConn = ConnectToDb())
-                {
-                    string sqlDel = "DELETE Tasks WHERE TaskId = @TaskId";
-                    using (SqlCommand cmdTaskDel = new SqlCommand(sqlDel, sqlConn))
-                    {
-                        cmdTaskDel.Parameters.AddWithValue("@TaskId", taskId);
-                        cmdTaskDel.ExecuteNonQuery(); 
-                    }   
-                }
+                m_db.SaveChanges();
+
+                var task = m_db.Tasks.FirstOrDefault(c => c.TaskId == taskId);
+                m_db.Set<Tasks>().Remove(task);
+                m_db.SaveChanges();
+
                 return true;
             }
             catch (Exception)
@@ -258,54 +231,58 @@ namespace TaskManager.Realizations
         /// </summary>
         /// <param name="curId">Authorized user</param>
         /// <returns>List of tasks for _PartialSelectionTasks.cshtml</returns>
-        public IEnumerable<Tasks> GetTasks(int curId, int tagId, string date)
+        public IEnumerable<Tasks> GetTasks(int curUserId, int tagId, DateTime dateTime)
         {
-            using (var sqlConn = ConnectToDb())
+            List<Tasks> tasksAsList = new List<Tasks>();
+
+            IEnumerable<Tasks> withoutFilter = null;
+            IQueryable<Tasks> query = null;
+
+            // Without filter
+            query = from tasks in m_db.Tasks
+                    where tasks.UsId == curUserId
+                    select tasks;
+
+            // By tag
+            if (tagId != 0)
             {
-                using (SqlCommand cmdSel = new SqlCommand())
-                {
-                    StringBuilder sbWhere = new StringBuilder();
-                    StringBuilder sbTagAndOther = new StringBuilder();
-                    sbWhere.Append("SELECT * FROM Tasks WHERE UsId = @UsId");
-                    sbTagAndOther.Append("SELECT * FROM Tasks AS t");
-
-                    if (tagId != 0)
-                    {
-                        sbTagAndOther.Append(" JOIN CrossTasksTags AS c ON (t.TaskId = c.TaskId) WHERE t.UsId = @UsId and c.TagsId = @TagsId");
-                        sbWhere = sbTagAndOther;
-                        cmdSel.Parameters.AddWithValue("@TagsId", tagId);
-                    }
-                    if (date != "")
-                    {
-                        sbTagAndOther.Append(" WHERE t.UsId = @UsId and TaskTerm = @TaskTerm");
-                        sbWhere = sbTagAndOther;
-                        cmdSel.Parameters.Add("@TaskTerm", SqlDbType.Date).Value = date;
-                    }
-
-                    cmdSel.Parameters.AddWithValue("@UsId", curId);
-                    cmdSel.Connection = sqlConn;
-                    cmdSel.CommandText = sbWhere.ToString();
-
-                    List<Tasks> query = new List<Tasks>();
-                    using (SqlDataReader reader = cmdSel.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            query.Add(new Tasks()
-                            {
-                                StatusString = GetStatusString(reader.GetInt32(5)),
-                                Description = reader["Description"].ToString(),
-                                TaskId = reader.GetInt32(0),
-                                Title = reader["Title"].ToString(),
-                                TaskTerm = reader.GetDateTime(2),
-                                UsId = reader.GetInt32(4)
-
-                            });
-                        }
-                    }
-                    return query;
-                }
+                query = m_db.Tasks.Join(
+                    m_db.CrossTasksTags,
+                    t => t.TaskId,
+                    c => c.TaskId,
+                    (t, c) => new { Tasks = t, CrossTasksTags = c })
+                    .Where(x => x.CrossTasksTags.TagsId == tagId && x.Tasks.UsId == curUserId)
+                    .Select(p => p.Tasks);
             }
+
+            // By date
+            if (dateTime != default(DateTime))
+            {
+                query = m_db.Tasks.Join(
+                    m_db.CrossTasksTags,
+                    t => t.TaskId,
+                    c => c.TaskId,
+                    (t, c) => new {Tasks = t, CrossTasksTags = c})
+                    .Where(x => x.Tasks.TaskTerm == dateTime && x.Tasks.UsId == curUserId)
+                    .Select(p => p.Tasks);
+            }
+
+            foreach (var q in query)
+            {
+                tasksAsList.Add(new Tasks()
+                {
+                    StatusString = GetStatusString(q.StatusId.Value),
+                    Description = q.Description,
+                    TaskId = q.TaskId,
+                    Title = q.Title,
+                    TaskTerm = q.TaskTerm,
+                    UsId = q.UsId
+
+                });
+            }
+
+
+            return tasksAsList.Count != 0 ? tasksAsList : withoutFilter.ToList();
         }
 
         /// <summary>
@@ -313,76 +290,48 @@ namespace TaskManager.Realizations
         /// </summary>
         /// <param name="CurId"></param>
         /// <returns></returns>
-        public IEnumerable<Tags> GetTags(int CurId)
+        public IEnumerable<Tags> GetTags(int curId)
         {
-            using (var sqlConn = ConnectToDb())
-            {
-                List<Tags> query = new List<Tags>();
-                List<int> listTagsId;
+            List<Tags> tagsAsList = new List<Tags>();
+            Tags tag;
 
-                string sqlCrossTags = "SELECT DISTINCT TagsId FROM CrossTasksTags AS c JOIN Tasks AS t ON (c.TaskId = t.TaskId) WHERE t.UsId = @UsId";
-                using (SqlCommand cmdCrossTags = new SqlCommand(sqlCrossTags, sqlConn))
+            var query = from tasks in m_db.Tasks
+                        join cross in m_db.CrossTasksTags
+                        on tasks.TaskId equals cross.TaskId
+                        where tasks.UsId == curId
+                        select new {tasks, cross};
+
+            foreach (var c in query)
+            {
+                tag = m_db.Tags.Where(x => x.Id == c.cross.TagsId).First();
+                tagsAsList.Add(new Tags()
                 {
-                    cmdCrossTags.Parameters.AddWithValue("@UsId", CurId);
-                    using (SqlDataReader readerCrossTags = cmdCrossTags.ExecuteReader())
-                    {
-                        listTagsId = (from IDataRecord r in readerCrossTags select (int) r["TagsId"]).ToList();
-                        readerCrossTags.Close();
-                    }
-                }
-                string sqlSelTags = "SELECT * FROM Tags WHERE Id = @Id";
-                using (SqlCommand cmdTags = new SqlCommand(sqlSelTags, sqlConn))
-                {
-                    cmdTags.Parameters.AddWithValue("@Id", 0);
-                    foreach (var id in listTagsId)
-                    {
-                        cmdTags.Parameters["@id"].Value = id;
-                        using (SqlDataReader readerTags = cmdTags.ExecuteReader())
-                        {       
-                            if (readerTags.Read())
-                            {
-                                query.Add(new Tags()
-                                {
-                                    Id = readerTags.GetInt32(0),
-                                    TitleTag = readerTags["TitleTag"].ToString()
-                                });
-                            }
-                        }
-                    }    
-                }
-                
-                return query;
+                    Id = tag.Id,
+                    TitleTag = tag.TitleTag
+                });
             }
+
+            return tagsAsList; 
         }
   
-
         /// <summary>
         /// Getting of Tags with inputted Keyword and angular service if such tag exists in DB
         /// </summary>
         /// <param name="tagKeyword">Key word from (text input of class="inputTag")</param>
         /// <returns>list of received tags</returns>
-        public IEnumerable<Tags> GetTags(string tagKeyword)  
+        public IEnumerable<Tags> GetTags(string tagKeyword)
         {
-            using (var sqlConn = ConnectToDb())
+            List<Tags> query = new List<Tags>();
+            var tags = m_db.Tags.Where(x => x.TitleTag.Contains(tagKeyword));
+            foreach (var t in tags)
             {
-                string sqlSel = "SELECT * FROM Tags WHERE TitleTag like @TagKeyword";
-                SqlCommand cmdSel = new SqlCommand(sqlSel, sqlConn);
-                cmdSel.Parameters.AddWithValue("@TagKeyword", "%" + tagKeyword + "%");
-                List<Tags> query = new List<Tags>();
-
-                using (SqlDataReader reader = cmdSel.ExecuteReader())
+                query.Add(new Tags()
                 {
-                    while (reader.Read())
-                    {
-                        query.Add(new Tags()
-                        {
-                            TitleTag = reader["TitleTag"].ToString(),
-                            Id = reader.GetInt32(0)
-                        });
-                    }
-                    return query;
-                }
+                    TitleTag = t.TitleTag,
+                    Id = t.Id
+                });  
             }
+            return query;
         }
 
         /// <summary>
@@ -392,27 +341,17 @@ namespace TaskManager.Realizations
         /// <returns>Object USER</returns>
         public Users GetCurrentUser(string safetyLogin)
         {
-            using (var sqlConn = ConnectToDb())
+            var user = m_db.Users.FirstOrDefault(x => x.LoginName == safetyLogin);
+            return new Users()
             {
-                string sqlSel = "SELECT * FROM Users WHERE LoginName = @LoginName";
-                SqlCommand cmdSel = new SqlCommand(sqlSel, sqlConn);
-                cmdSel.Parameters.AddWithValue("@LoginName", safetyLogin);
-                using (SqlDataReader reader = cmdSel.ExecuteReader())
-                {
-                    reader.Read();
-                    return new Users()
-                    {
-                        FirstName = reader["FirstName"].ToString(),
-                        LastName = reader["LastName"].ToString(),
-                        Email = reader["Email"].ToString(),
-                        LoginName = reader["LoginName"].ToString(),
-                        Pass = reader["Pass"].ToString(),
-                        Confirmation = reader.GetInt32(6),
-                        UserId = reader.GetInt32(0)
-                    };
-                    
-                }
-            }
+                FirstName = user.LoginName,
+                LastName = user.LastName,
+                Email = user.Email,
+                LoginName = user.LoginName,
+                Pass = user.Pass,
+                Confirmation = user.Confirmation,
+                UserId = user.UserId
+            };
         }
 
 
@@ -425,7 +364,8 @@ namespace TaskManager.Realizations
         /// <returns>String status</returns>
         private string GetStatusString(int statusId)
         {
-            return m_db.Statuses.Where(x => x.Id.Equals(statusId)).FirstOrDefault().TitleStatus;
+            var state = m_db.Statuses.FirstOrDefault(x => x.Id.Equals(statusId));
+            return state.TitleStatus;
         }
 
         /// <summary>
@@ -465,7 +405,7 @@ namespace TaskManager.Realizations
             tagRow = tagRow.ToLower();
             foreach (Match t in Regex.Matches(tagRow, @"([\b\w\-\w\b]+)"))
             {
-                tagRes = m_db.Tags.Where(x => x.TitleTag == t.Value).FirstOrDefault(); // search next tag of Match list
+                tagRes = m_db.Tags.FirstOrDefault(x => x.TitleTag == t.Value); // search next tag of Match list
 
                 if (way == 0) // Condition for insert of task
                 {
@@ -492,9 +432,7 @@ namespace TaskManager.Realizations
 
                     if (tagRes != null) // Tag found in table tags
                     {
-                        if (m_db.CrossTasksTags
-                            .Where(x => x.TagsId == tagRes.Id && x.TaskId == taskId)
-                            .FirstOrDefault() != null)
+                        if (m_db.CrossTasksTags.FirstOrDefault(x => x.TagsId == tagRes.Id && x.TaskId == taskId) != null)
                         {
                             associate = false;
                         }
@@ -525,6 +463,30 @@ namespace TaskManager.Realizations
 
                 m_db.SaveChanges(); 
             }
+        }
+
+        /// <summary>
+        /// Removing tag from CrossTasksTags(Association)
+        /// </summary>
+        /// <param name="tags"></param>
+        /// <param name="taskId"></param>
+        public void RemoveTags(string tags, int taskId)
+        {
+            var listTagId = m_db.CrossTasksTags.Where(x => x.TaskId == taskId).Select(x => new { x.TagsId }).ToList();
+            int resId;
+            CrossTasksTags forDel;
+            tags = tags.ToLower();
+            foreach (Match t in Regex.Matches(tags, @"([\b\w\-\w\b]+)"))
+            {
+                resId = m_db.Tags.FirstOrDefault(x => x.TitleTag == t.Value).Id;
+                listTagId.Remove(listTagId.Find(x => x.TagsId.Equals(resId)));
+            }
+            foreach (var i in listTagId)
+            {
+                forDel = m_db.CrossTasksTags.FirstOrDefault(d => d.TagsId == i.TagsId);
+                m_db.Set<CrossTasksTags>().Remove(forDel);
+            }
+            m_db.SaveChanges();
         }
 
         /// <summary>

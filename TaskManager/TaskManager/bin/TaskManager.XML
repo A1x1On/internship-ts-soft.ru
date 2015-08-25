@@ -111,7 +111,7 @@
             </summary>
             <returns>View Index/Account</returns>
         </member>
-        <member name="M:TaskManager.Controllers.ManagerController.Finish(System.Int32)">
+        <member name="M:TaskManager.Controllers.ManagerController.SetEndStatus(System.Int32)">
             <summary>
             Finishing of task
             </summary>
@@ -172,7 +172,7 @@
             <summary>
             Finishing of task
             </summary>
-            <param name="taskFromFinish">ID of task</param>
+            <param name="taskId">ID of task</param>
         </member>
         <member name="M:TaskManager.Realizations.IManager.UpdateStatusEachTask(System.Int32)">
             <summary>
@@ -206,7 +206,7 @@
             </summary>
             <param name="taskId">Id of task</param>
         </member>
-        <member name="M:TaskManager.Realizations.IManager.GetTasks(System.Int32,System.Int32,System.String)">
+        <member name="M:TaskManager.Realizations.IManager.GetTasks(System.Int32,System.Int32,System.DateTime)">
             <summary>
             Getting of tasks' list
             </summary>
@@ -296,7 +296,14 @@
             <summary>
             Finishing of task
             </summary>
-            <param name="taskFromFinish">ID of task</param>
+            <param name="tasId">ID of task</param>
+        </member>
+        <member name="M:TaskManager.Realizations.RealizeManager.ChangeStatus(System.Int32)">
+            <summary>
+            Cancel inactive status
+            </summary>
+            <param name="taskId"></param>
+            <returns></returns>
         </member>
         <member name="M:TaskManager.Realizations.RealizeManager.UpdateStatusEachTask(System.Int32)">
             <summary>
@@ -325,20 +332,13 @@
             <param name="model">Object of task who ready to change from database</param>
             <returns>Result to m_ResultMassage in controller</returns>
         </member>
-        <member name="M:TaskManager.Realizations.RealizeManager.RemoveTags(System.String,System.Int32)">
-            <summary>
-            Removing tag from CrossTasksTags(Association)
-            </summary>
-            <param name="tags"></param>
-            <param name="taskId"></param>
-        </member>
         <member name="M:TaskManager.Realizations.RealizeManager.DeleteTask(System.Int32)">
             <summary>
             Removing of task
             </summary>
             <param name="taskId">Id of task</param>
         </member>
-        <member name="M:TaskManager.Realizations.RealizeManager.GetTasks(System.Int32,System.Int32,System.String)">
+        <member name="M:TaskManager.Realizations.RealizeManager.GetTasks(System.Int32,System.Int32,System.DateTime)">
             <summary>
             Getting of tasks
             </summary>
@@ -394,6 +394,13 @@
             Adding of tags to DB or not
             </summary>
             <param name="tagRow">Got string from (text input of class="inputTag")</param>
+        </member>
+        <member name="M:TaskManager.Realizations.RealizeManager.RemoveTags(System.String,System.Int32)">
+            <summary>
+            Removing tag from CrossTasksTags(Association)
+            </summary>
+            <param name="tags"></param>
+            <param name="taskId"></param>
         </member>
         <member name="M:TaskManager.Realizations.RealizeManager.FormStatus(System.String)">
             <summary>

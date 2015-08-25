@@ -349,6 +349,7 @@
       <DependentUpon>TModel.edmx</DependentUpon>
       <LastGenOutput>TModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\Manager\Tasks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

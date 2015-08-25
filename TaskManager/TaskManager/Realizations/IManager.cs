@@ -8,8 +8,11 @@ namespace TaskManager.Realizations
         /// <summary>
         /// Finishing of task
         /// </summary>
-        /// <param name="taskFromFinish">ID of task</param>
-        string EndActTask(int taskFromFinish);
+        /// <param name="taskId">ID of task</param>
+        string EndActTask(int taskId);
+
+
+        string ChangeStatus(int taskId);
 
         /// <summary>
         /// Auto-Updating all user's tasks that is updating statuses of the every task
@@ -48,7 +51,7 @@ namespace TaskManager.Realizations
         /// </summary>
         /// <param name="curId">Authorized user</param>
         /// <returns>List of tasks for _PartialSelectionTasks.cshtml</returns>
-        IEnumerable<Tasks> GetTasks(int curId, int tagId, string data);
+        IEnumerable<Tasks> GetTasks(int curId, int tagId, DateTime dateTime);
 
         /// <summary>
         /// 
