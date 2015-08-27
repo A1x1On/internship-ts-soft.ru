@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "Registration";
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+}
+@model TaskManager.Users
+<div class="auth-block">
+    <h2>Регистрация</h2>
+    <a href="@Url.Action("Index","Account")" class="backToAuth"></a>
+
+    @using (Html.BeginForm("Registration", "Account", FormMethod.Post))
+    {
+        
+        <div class="item-block">
+            @Html.TextBoxFor(x => x.FirstName, new { @placeholder = @Html.DisplayNameFor(model => model.FirstName) })
+            @Html.ValidationMessageFor(x => x.FirstName)
+        </div>
+        <div class="item-block">
+            @Html.TextBoxFor(x => x.LastName, new { @placeholder = @Html.DisplayNameFor(model => model.LastName) })
+            @Html.ValidationMessageFor(x => x.LastName)
+        </div>
+        <div class="item-block">
+            @Html.TextBoxFor(x => x.LoginName, new { @placeholder = @Html.DisplayNameFor(model => model.LoginName) })
+            @Html.ValidationMessageFor(x => x.LoginName)
+        </div>
+        <div class="item-block">
+            @Html.TextBoxFor(x => x.Email, new { @placeholder = @Html.DisplayNameFor(model => model.Email) })
+            @Html.ValidationMessageFor(x => x.Email)
+        </div>
+        <div class="item-block">
+            @Html.PasswordFor(x => x.Pass, new { @placeholder = @Html.DisplayNameFor(model => model.Pass) })
+            @Html.ValidationMessageFor(x => x.Pass)
+        </div>
+        <div class="item-block">
+            @Html.PasswordFor(x => x.PassConfirmation, new { @placeholder = @Html.DisplayNameFor(model => model.PassConfirmation) })
+            @Html.ValidationMessageFor(x => x.PassConfirmation)
+        </div>
+        // CAPCHA
+        <img src="@Url.Action("GetCapthcaImage", "Account")" class="Capcha" />
+        <div class="item-block">
+            @Html.TextBoxFor(x => x.Captcha, new { @placeholder = @Html.DisplayNameFor(model => model.Captcha) })<br/>
+            @Html.ValidationMessageFor(x => x.Captcha)
+        </div>
+        //
+        <input type="submit" value="Зарегистрироваться" class="btn-registration" />
+    }
+</div>

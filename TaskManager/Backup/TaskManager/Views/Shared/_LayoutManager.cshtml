@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Менеджер задач | @ViewBag.Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <link href="@Url.Content("~/Content/Manager.css")" type="stylesheet/less" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.11.3.js"></script>
+    <script src="~/Scripts/managerScripts.js"></script>
+    <script type="text/javascript" src="~/Scripts/angular.js"></script>
+    <script type="text/javascript" src="~/Scripts/AngScripts.js"></script>
+    <script type="text/javascript" src="~/Scripts/angular-route.js"></script>
+    <script type="text/javascript" src="~/Scripts/less.min.js"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/Images/favicon.png" />
+
+</head>
+<body ng-app="AngularManager">
+<header>
+    <a href="@Url.Action("Index","Manager")" class="mainTitle">Список всех задач</a>
+</header>
+    <section ng-controller="TaskFrom">
+        @RenderBody()
+    </section>
+    <footer></footer>
+</body>
+</html>
+
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")

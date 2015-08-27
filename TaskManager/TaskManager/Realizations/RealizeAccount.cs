@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Web.Security;
@@ -11,17 +12,7 @@ namespace TaskManager.Realizations
         /// <summary>
         /// Instance EntitieDatabase is
         /// </summary>
-        private TaskManagerEntities m_db = new TaskManagerEntities();
-        
-        /// <summary>
-        /// Variable contains mask of password's encryption
-        /// </summary>
-        private string m_Alph = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZйцукенгшщзхъфывапролдячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЯЧСМИТЬБЮёЁ1234567890";
-
-        /// <summary>
-        /// Variable contains key of encryption
-        /// </summary>
-        private string m_Key = "xmck";
+        private TManagerEntities m_db = new TManagerEntities();
 
         /// <summary>
         /// Adding of User to DataBase
@@ -33,8 +24,7 @@ namespace TaskManager.Realizations
             var personExist = m_db.Users.FirstOrDefault(x => x.LoginName.Equals(person.LoginName));
             if (personExist == null)
             {
-                var cryptIn = new Crypt(m_Alph);
-                string encrypt = cryptIn.CryptDecrypt(person.Pass, m_Key, true);
+                string encrypt = base64Encode(person.Pass);
                 string realPass = person.Pass;
                 person.Pass = encrypt;
                 person.Confirmation = 0;
@@ -77,7 +67,7 @@ namespace TaskManager.Realizations
                     return "Ваш профиль уже подтвержден";
                 }
                 return "Ошибка подтверждения";
-                
+
             }
         }
 
@@ -92,8 +82,7 @@ namespace TaskManager.Realizations
             var User = m_db.Users.FirstOrDefault(a => a.LoginName.Equals(model.Login));
             if (User != null)
             {
-                var cryptIn = new Crypt(m_Alph);
-                string decrypt = cryptIn.CryptDecrypt(User.Pass, m_Key, false);
+                string decrypt = base64Decode(User.Pass);
 
                 if (model.Password == decrypt && User.Confirmation == 1)
                 {
@@ -122,7 +111,7 @@ namespace TaskManager.Realizations
         }
 
         ///The others Methods///
-       
+
         /// <summary>
         /// Forming and Sending of Email to confirm registered Account
         /// </summary>
@@ -143,18 +132,65 @@ namespace TaskManager.Realizations
             message.IsBodyHtml = true;
             message.Subject = "Подтверждение паролья | Хранилище документов";
             message.Body =
-                "<html><body><br><img src=\"http://drunkendial.us/files/2008/09/Ubuntu-Logo-square-170x170.png\" alt=\"Super Game!\">" +
-                @" 
+                "<html><body><br><img src=\" http://drunkendial.us/files/2008/09/Ubuntu-Logo-square-170x170.png \" alt=\" Super Game!\">" +
+                @"
                 <br>Здравствуйте уважаемый(я) " + firstName + " " + lastName + @" !
                 <br>Вы получили это письмо, потому что вы зарегистрировались на http://www.TaskManager.РФ.
                 <br>Высылаем Вам секретный код для активации вашего профиля.
-                <br>                                                                                              
+                <br>                                                                                             
                 <br>Код активации:       <b>" + resCrypt + @"</b>
                 <br>Ваш логин: " + login + "<br>Ваш пароль: " + password +
-                "<br> Пройдите по ссылке для подтверждения: <a href='http://localhost:54723//Account/ConfirMail/?l="+login+"&code=" +
+                "<br> Пройдите по ссылке для подтверждения: <a href='http://localhost:54723//Account/ConfirMail/?l=" + login + "&code=" +
                 resCrypt +
                 "'>Клик</a><br><br>Мы будем рады видеть Вас на нашем сайте и желаем Вам удачного дня!</body></html>";
             smtp.Send(message);
+        }
+
+
+
+        /// <summary>
+        /// Encoding method
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public string base64Encode(string data)
+        {
+            try
+            {
+                byte[] encData_byte = new byte[data.Length];
+                encData_byte = System.Text.Encoding.UTF8.GetBytes(data);
+                string encodedData = Convert.ToBase64String(encData_byte);
+                return encodedData;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error in base64Encode" + e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Decoding method
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public string base64Decode(string data)
+        {
+            try
+            {
+                System.Text.UTF8Encoding encoder = new System.Text.UTF8Encoding();
+                System.Text.Decoder utf8Decode = encoder.GetDecoder();
+
+                byte[] todecode_byte = Convert.FromBase64String(data);
+                int charCount = utf8Decode.GetCharCount(todecode_byte, 0, todecode_byte.Length);
+                char[] decoded_char = new char[charCount];
+                utf8Decode.GetChars(todecode_byte, 0, todecode_byte.Length, decoded_char, 0);
+                string result = new String(decoded_char);
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error in base64Decode" + e.Message);
+            }
         }
     }
 }

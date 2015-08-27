@@ -7,13 +7,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.ComponentModel.DataAnnotations;
-
 namespace TaskManager
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Users
     {
         public Users()
@@ -53,8 +52,5 @@ namespace TaskManager
         public string Captcha { get; set; }
 
         public virtual ICollection<Tasks> Tasks { get; set; }
-
     }
-
-
 }

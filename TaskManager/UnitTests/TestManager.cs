@@ -12,7 +12,7 @@ namespace UnitTests
     [TestClass]
     public class TestManager
     {
-        private readonly TaskManagerEntities m_db = new TaskManagerEntities();
+        private readonly TManagerEntities m_db = new TManagerEntities();
         private RealizeManager m_RealizeManager = new RealizeManager();
         private string m_ForIsTrue;
 

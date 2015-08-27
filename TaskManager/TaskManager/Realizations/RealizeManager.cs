@@ -9,7 +9,6 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using Newtonsoft.Json.Linq;
 using TaskManager.Models;
 using WebGrease.Css.Extensions;
 
@@ -20,7 +19,7 @@ namespace TaskManager.Realizations
         /// <summary>
         /// Instance EntitieDatabase is
         /// </summary>
-        private TaskManagerEntities m_db = new TaskManagerEntities();
+        private TManagerEntities m_db = new TManagerEntities();
 
         /// <summary>
         /// SELECT @@IDENTITY from sql of request
@@ -69,9 +68,9 @@ namespace TaskManager.Realizations
             {
                 return "Ошибка изменения статуса на 'Активна'";
             }
-           
+
         }
-  
+
         /// <summary>
         /// Auto-Updating all user's tasks that is updating statuses of the every task
         /// </summary>
@@ -100,12 +99,12 @@ namespace TaskManager.Realizations
         }
 
         /// <summary>
-        /// Opening of task on page or the other words review of task's Detail info 
+        /// Opening of task on page or the other words review of task's Detail info
         /// </summary>
         /// <param name="taskId">ID of task</param>
         /// <returns>Set of property for Angular act</returns>
         public Array GetValuesTask(int taskId)
-        {  
+        {
             var list = new List<string>();
             string tags = "";
 
@@ -153,7 +152,7 @@ namespace TaskManager.Realizations
                 m_db.SaveChanges();
 
                 InsertTags(model.Tags, task.TaskId, 0);
-                
+
                 return "Задача сохранена";
             }
             catch (Exception)
@@ -194,23 +193,23 @@ namespace TaskManager.Realizations
             catch (Exception)
             {
                 return "Задача не изменена";
-            } 
+            }
         }
 
-        
-        
+
+
         /// <summary>
         /// Removing of task
         /// </summary>
         /// <param name="taskId">Id of task</param>
-        public bool DeleteTask(int taskId)              
+        public bool DeleteTask(int taskId)
         {
             try
             {
                 var crossTasks = m_db.CrossTasksTags.Where(c => c.TaskId == taskId);
                 foreach (var cross in crossTasks)
                 {
-                    m_db.Set<CrossTasksTags>().Remove(cross);  
+                    m_db.Set<CrossTasksTags>().Remove(cross);
                 }
                 m_db.SaveChanges();
 
@@ -234,14 +233,13 @@ namespace TaskManager.Realizations
         public IEnumerable<Tasks> GetTasks(int curUserId, int tagId, DateTime dateTime)
         {
             List<Tasks> tasksAsList = new List<Tasks>();
-
-            IEnumerable<Tasks> withoutFilter = null;
             IQueryable<Tasks> query = null;
 
             // Without filter
             query = from tasks in m_db.Tasks
                     where tasks.UsId == curUserId
                     select tasks;
+
 
             // By tag
             if (tagId != 0)
@@ -262,7 +260,7 @@ namespace TaskManager.Realizations
                     m_db.CrossTasksTags,
                     t => t.TaskId,
                     c => c.TaskId,
-                    (t, c) => new {Tasks = t, CrossTasksTags = c})
+                    (t, c) => new { Tasks = t, CrossTasksTags = c })
                     .Where(x => x.Tasks.TaskTerm == dateTime && x.Tasks.UsId == curUserId)
                     .Select(p => p.Tasks);
             }
@@ -282,7 +280,7 @@ namespace TaskManager.Realizations
             }
 
 
-            return tasksAsList.Count != 0 ? tasksAsList : withoutFilter.ToList();
+            return tasksAsList.Count != 0 ? tasksAsList : query.ToList();
         }
 
         /// <summary>
@@ -299,7 +297,7 @@ namespace TaskManager.Realizations
                         join cross in m_db.CrossTasksTags
                         on tasks.TaskId equals cross.TaskId
                         where tasks.UsId == curId
-                        select new {tasks, cross};
+                        select new { tasks, cross };
 
             foreach (var c in query)
             {
@@ -311,9 +309,9 @@ namespace TaskManager.Realizations
                 });
             }
 
-            return tagsAsList; 
+            return tagsAsList;
         }
-  
+
         /// <summary>
         /// Getting of Tags with inputted Keyword and angular service if such tag exists in DB
         /// </summary>
@@ -329,7 +327,7 @@ namespace TaskManager.Realizations
                 {
                     TitleTag = t.TitleTag,
                     Id = t.Id
-                });  
+                });
             }
             return query;
         }
@@ -369,25 +367,6 @@ namespace TaskManager.Realizations
         }
 
         /// <summary>
-        /// Variable is for sqlConnection() / connection to db
-        /// </summary>
-        private SqlConnection m_Connection;
-
-        /// <summary>
-        /// Connecting to DataBase with ADO.NET F.
-        /// </summary>
-        /// <returns>SqlConnection m_Connection</returns>
-        public SqlConnection ConnectToDb()
-        {
-            System.Configuration.Configuration rootWebConfig = System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("/TaskManager");
-            System.Configuration.ConnectionStringSettings constring;
-            constring = rootWebConfig.ConnectionStrings.ConnectionStrings["TaskManagerADONET"];
-            SqlConnection m_Connection = new SqlConnection(constring.ConnectionString);
-            m_Connection.Open();
-            return m_Connection;   
-        }
-
-        /// <summary>
         /// Amount of string
         /// </summary>
         private int m_CountTag;
@@ -401,9 +380,9 @@ namespace TaskManager.Realizations
             Tags tagRes;
             CrossTasksTags cross = null;
             int TagsId;
-          
+
             tagRow = tagRow.ToLower();
-            foreach (Match t in Regex.Matches(tagRow, @"([\b\w\-\w\b]+)"))
+            foreach (Match t in Regex.Matches(tagRow, @"([ \b\w\- \w\b] +)"))
             {
                 tagRes = m_db.Tags.FirstOrDefault(x => x.TitleTag == t.Value); // search next tag of Match list
 
@@ -427,7 +406,7 @@ namespace TaskManager.Realizations
                 }
                 else // Condition for update of task
                 {
-                    bool addAndAssociate = false; 
+                    bool addAndAssociate = false;
                     bool associate = true;
 
                     if (tagRes != null) // Tag found in table tags
@@ -444,9 +423,9 @@ namespace TaskManager.Realizations
                     }
 
 
-                    if (addAndAssociate) // add and associate tag 
+                    if (addAndAssociate) // add and associate tag
                     {
-                        Tags theTag = new Tags() {TitleTag = t.Value};
+                        Tags theTag = new Tags() { TitleTag = t.Value };
                         m_db.Tags.Add(theTag);
                         m_db.SaveChanges();
 
@@ -454,14 +433,14 @@ namespace TaskManager.Realizations
                         cross = new CrossTasksTags() { TaskId = taskId, TagsId = TagsId };
                         m_db.CrossTasksTags.Add(cross);
                     }
-                    else if (associate) // just associate tag 
+                    else if (associate) // just associate tag
                     {
                         cross = new CrossTasksTags() { TaskId = taskId, TagsId = tagRes.Id };
                         m_db.CrossTasksTags.Add(cross);
                     }
                 }
 
-                m_db.SaveChanges(); 
+                m_db.SaveChanges();
             }
         }
 
@@ -476,7 +455,7 @@ namespace TaskManager.Realizations
             int resId;
             CrossTasksTags forDel;
             tags = tags.ToLower();
-            foreach (Match t in Regex.Matches(tags, @"([\b\w\-\w\b]+)"))
+            foreach (Match t in Regex.Matches(tags, @"([ \b\w\- \w\b] +)"))
             {
                 resId = m_db.Tags.FirstOrDefault(x => x.TitleTag == t.Value).Id;
                 listTagId.Remove(listTagId.Find(x => x.TagsId.Equals(resId)));
@@ -494,7 +473,7 @@ namespace TaskManager.Realizations
         /// </summary>
         /// <param name="userDate">Own user of date from DataBase</param>
         /// <returns>Status of task</returns>
-        public int FormStatus(string userDate)      
+        public int FormStatus(string userDate)
         {
             DateTime curDate = DateTime.Now;
             string strDYear = "";

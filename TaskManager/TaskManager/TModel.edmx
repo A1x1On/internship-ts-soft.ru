@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="TaskManagerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="TaskManagerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CrossTasksTags">
           <Key>
             <PropertyRef Name="Id" />
@@ -121,10 +121,21 @@
             <End Role="Tasks" EntitySet="Tasks" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TaskManagerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CrossTasksTags">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="TaskId" Type="Int32" />
+          <Property Name="TagsId" Type="Int32" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Tags" Relationship="Self.FK__CrossTask__TagsI__4BAC3F29" FromRole="CrossTasksTags" ToRole="Tags" />
+          <NavigationProperty Name="Tasks" Relationship="Self.FK__CrossTask__TaskI__4AB81AF0" FromRole="CrossTasksTags" ToRole="Tasks" />
+        </EntityType>
         <EntityType Name="Statuses">
           <Key>
             <PropertyRef Name="Id" />
@@ -139,7 +150,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TitleTag" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="CrossTasksTags" Relationship="TaskManagerModel.FK__CrossTask__TagsI__4BAC3F29" FromRole="Tags" ToRole="CrossTasksTags" />
+          <NavigationProperty Name="CrossTasksTags" Relationship="Self.FK__CrossTask__TagsI__4BAC3F29" FromRole="Tags" ToRole="CrossTasksTags" />
         </EntityType>
         <EntityType Name="Tasks">
           <Key>
@@ -151,9 +162,9 @@
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UsId" Type="Int32" />
           <Property Name="StatusId" Type="Int32" />
+          <NavigationProperty Name="CrossTasksTags" Relationship="Self.FK__CrossTask__TaskI__4AB81AF0" FromRole="Tasks" ToRole="CrossTasksTags" />
           <NavigationProperty Name="Statuses" Relationship="Self.FK__Tasks__StatusId__398D8EEE" FromRole="Tasks" ToRole="Statuses" />
           <NavigationProperty Name="Users" Relationship="Self.FK__TASKS__USID__1367E606" FromRole="Tasks" ToRole="Users" />
-          <NavigationProperty Name="CrossTasksTags" Relationship="TaskManagerModel.FK__CrossTask__TaskI__4AB81AF0" FromRole="Tasks" ToRole="CrossTasksTags" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -168,6 +179,30 @@
           <Property Name="Confirmation" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Tasks" Relationship="Self.FK__TASKS__USID__1367E606" FromRole="Users" ToRole="Tasks" />
         </EntityType>
+        <Association Name="FK__CrossTask__TagsI__4BAC3F29">
+          <End Role="Tags" Type="Self.Tags" Multiplicity="0..1" />
+          <End Role="CrossTasksTags" Type="Self.CrossTasksTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tags">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CrossTasksTags">
+              <PropertyRef Name="TagsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CrossTask__TaskI__4AB81AF0">
+          <End Role="Tasks" Type="Self.Tasks" Multiplicity="0..1" />
+          <End Role="CrossTasksTags" Type="Self.CrossTasksTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tasks">
+              <PropertyRef Name="TaskId" />
+            </Principal>
+            <Dependent Role="CrossTasksTags">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Tasks__StatusId__398D8EEE">
           <End Role="Statuses" Type="Self.Statuses" Multiplicity="0..1" />
           <End Role="Tasks" Type="Self.Tasks" Multiplicity="*" />
@@ -192,11 +227,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="TaskManagerEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="TManagerEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CrossTasksTags" EntityType="Self.CrossTasksTags" />
           <EntitySet Name="Statuses" EntityType="Self.Statuses" />
           <EntitySet Name="Tags" EntityType="Self.Tags" />
           <EntitySet Name="Tasks" EntityType="Self.Tasks" />
           <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK__CrossTask__TagsI__4BAC3F29" Association="Self.FK__CrossTask__TagsI__4BAC3F29">
+            <End Role="Tags" EntitySet="Tags" />
+            <End Role="CrossTasksTags" EntitySet="CrossTasksTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CrossTask__TaskI__4AB81AF0" Association="Self.FK__CrossTask__TaskI__4AB81AF0">
+            <End Role="Tasks" EntitySet="Tasks" />
+            <End Role="CrossTasksTags" EntitySet="CrossTasksTags" />
+          </AssociationSet>
           <AssociationSet Name="FK__Tasks__StatusId__398D8EEE" Association="Self.FK__Tasks__StatusId__398D8EEE">
             <End Role="Statuses" EntitySet="Statuses" />
             <End Role="Tasks" EntitySet="Tasks" />
@@ -205,56 +249,22 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Tasks" EntitySet="Tasks" />
           </AssociationSet>
-          <EntitySet Name="CrossTasksTags" EntityType="TaskManagerModel.CrossTasksTags" />
-          <AssociationSet Name="FK__CrossTask__TagsI__4BAC3F29" Association="TaskManagerModel.FK__CrossTask__TagsI__4BAC3F29">
-            <End Role="Tags" EntitySet="Tags" />
-            <End Role="CrossTasksTags" EntitySet="CrossTasksTags" />
-          </AssociationSet>
-          <AssociationSet Name="FK__CrossTask__TaskI__4AB81AF0" Association="TaskManagerModel.FK__CrossTask__TaskI__4AB81AF0">
-            <End Role="Tasks" EntitySet="Tasks" />
-            <End Role="CrossTasksTags" EntitySet="CrossTasksTags" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="CrossTasksTags">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="TaskId" Type="Int32" />
-          <Property Name="TagsId" Type="Int32" />
-          <NavigationProperty Name="Tags" Relationship="TaskManagerModel.FK__CrossTask__TagsI__4BAC3F29" FromRole="CrossTasksTags" ToRole="Tags" />
-          <NavigationProperty Name="Tasks" Relationship="TaskManagerModel.FK__CrossTask__TaskI__4AB81AF0" FromRole="CrossTasksTags" ToRole="Tasks" />
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-        </EntityType>
-        <Association Name="FK__CrossTask__TagsI__4BAC3F29">
-          <End Type="TaskManagerModel.Tags" Role="Tags" Multiplicity="0..1" />
-          <End Type="TaskManagerModel.CrossTasksTags" Role="CrossTasksTags" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tags">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="CrossTasksTags">
-              <PropertyRef Name="TagsId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__CrossTask__TaskI__4AB81AF0">
-          <End Type="TaskManagerModel.Tasks" Role="Tasks" Multiplicity="0..1" />
-          <End Type="TaskManagerModel.CrossTasksTags" Role="CrossTasksTags" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tasks">
-              <PropertyRef Name="TaskId" />
-            </Principal>
-            <Dependent Role="CrossTasksTags">
-              <PropertyRef Name="TaskId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="TaskManagerModelStoreContainer" CdmEntityContainer="TaskManagerEntities">
+        <EntityContainerMapping StorageEntityContainer="TaskManagerModelStoreContainer" CdmEntityContainer="TManagerEntities">
+          <EntitySetMapping Name="CrossTasksTags">
+            <EntityTypeMapping TypeName="TaskManagerModel.CrossTasksTags">
+              <MappingFragment StoreEntitySet="CrossTasksTags">
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="TagsId" ColumnName="TagsId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Statuses">
             <EntityTypeMapping TypeName="TaskManagerModel.Statuses">
               <MappingFragment StoreEntitySet="Statuses">
@@ -293,15 +303,6 @@
                 <ScalarProperty Name="LoginName" ColumnName="LoginName" />
                 <ScalarProperty Name="Pass" ColumnName="Pass" />
                 <ScalarProperty Name="Confirmation" ColumnName="Confirmation" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CrossTasksTags">
-            <EntityTypeMapping TypeName="TaskManagerModel.CrossTasksTags">
-              <MappingFragment StoreEntitySet="CrossTasksTags">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="TagsId" ColumnName="TagsId" />
-                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

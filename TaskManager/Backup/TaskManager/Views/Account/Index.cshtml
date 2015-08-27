@@ -1,0 +1,28 @@
+﻿@model TaskManager.Models.LogIn
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+}
+@{
+    string error = Request.QueryString["aspxerrorpath"];
+}
+@Request.QueryString["m_ResultMessage"]
+
+<div class="auth-block">
+    <h2>Менеджер Задач</h2>
+    @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+    {
+        @Html.ValidationSummary(true)
+        @Html.AntiForgeryToken()
+        @Html.TextBoxFor(x => x.Login, new { @placeholder = "Введите логин" })
+        @Html.ValidationMessageFor(x => x.Login)
+        <br />
+        @Html.PasswordFor(x => x.Password, new { @placeholder = "Введите пароль" })
+        @Html.ValidationMessageFor(x => x.Password)
+        <br />
+        <input type="submit" value="ВХОД" />
+    }
+    <a href="@Url.Action("Registration", "Account")" class="LinkReg">Регистрация</a> 
+</div>
+
+@Scripts.Render("~/bundles/jqueryval")

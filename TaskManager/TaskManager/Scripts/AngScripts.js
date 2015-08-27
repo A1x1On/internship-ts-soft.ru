@@ -47,7 +47,6 @@
             }
         }
 
-
         $scope.EndActTask = function (obj) {
             idTask = obj.currentTarget.id;
             TService.EndActTask().then(function (d) {
@@ -58,7 +57,6 @@
                 alert("Fail of getting tags");
             });
         }
-
 
         $scope.ChangeStatus = function (obj) {
             idTask = obj.currentTarget.id;
@@ -75,16 +73,16 @@
     ModuleManager.factory("TService", function ($http) {
         var fac = {};
         fac.GetTags = function () {
-            return $http({ method: "GET", url: "/Manager/GetTags/", params: { "name": key } });
+            return $http({ method: "GET", url: "/api/Tags/GetTags/", params: { "name": key } });
         }
         fac.DeleteTask = function () {
-            return $http({ method: "GET", url: "/Manager/Delete/", params: { 'idTask': idTask } });
+            return $http({ method: "GET", url: "/api/Tasks/DeleteTask/", params: { 'idTask': idTask } });
         }
         fac.ChangeStatus = function () {
-            return $http({ method: "POST", url: "/Manager/SetActiveStatus/", params: { 'idTask': idTask } });
+            return $http({ method: "POST", url: "/api/Tasks/SetActiveStatus/", params: { 'idTask': idTask } });
         }
         fac.EndActTask = function () {
-            return $http({ method: "POST", url: "/Manager/SetEndStatus/", params: { 'idTask': idTask } });
+            return $http({ method: "POST", url: "/api/Tasks/SetEndStatus/", params: { 'idTask': idTask } });
         }
         return fac;
 
@@ -152,18 +150,12 @@
                 alert('Fail of forming tags');
             });
         }
-
-        
-
     });
 
     ModuleManager.factory("OpenTaskService", function ($http) {
         var fac2 = {};
         fac2.GetTask = function () {
-            return $http({ method: 'GET', url: "/Manager/OpenTask/", params: { 'TaskId': key } });
-        }
-        fac2.GetTaskByTag = function () {
-            return $http({ method: 'GET', url: "/Manager/FiltrTasksByTag/", params: { 'Tag': key } });
+            return $http({ method: 'GET', url: "/api/Tasks/GetValuesTask", params: { 'id': key } });
         }
         return fac2;
     });

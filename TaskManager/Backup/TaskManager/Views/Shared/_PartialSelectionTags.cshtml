@@ -1,0 +1,10 @@
+﻿@model IEnumerable<TaskManager.Tags>
+
+<div class="Tags">
+    @foreach (var Tag in Model.Take(100))
+    {
+        <a href="@Url.Action("Index", "Manager", new {@tagId = @Tag.Id})" id="@Tag.Id">@Tag.TitleTag</a>
+    }
+</div>
+
+ 

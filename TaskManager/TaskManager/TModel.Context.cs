@@ -13,10 +13,10 @@ namespace TaskManager
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class TaskManagerEntities : DbContext
+    public partial class TManagerEntities : DbContext
     {
-        public TaskManagerEntities()
-            : base("name=TaskManagerEntities")
+        public TManagerEntities()
+            : base("name=TManagerEntities")
         {
         }
     
@@ -25,10 +25,10 @@ namespace TaskManager
             throw new UnintentionalCodeFirstException();
         }
     
+        public DbSet<CrossTasksTags> CrossTasksTags { get; set; }
         public DbSet<Statuses> Statuses { get; set; }
         public DbSet<Tags> Tags { get; set; }
         public DbSet<Tasks> Tasks { get; set; }
         public DbSet<Users> Users { get; set; }
-        public DbSet<CrossTasksTags> CrossTasksTags { get; set; }
     }
 }

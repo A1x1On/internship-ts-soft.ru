@@ -18,7 +18,7 @@ namespace TaskManager
         {
             this.CrossTasksTags = new HashSet<CrossTasksTags>();
         }
-    
+
         public int TaskId { get; set; }
         public string Title { get; set; }
         public System.DateTime TaskTerm { get; set; }
@@ -27,7 +27,7 @@ namespace TaskManager
         public string Description { get; set; }
         public Nullable<int> UsId { get; set; }
         public Nullable<int> StatusId { get; set; }
-    
+
         public virtual Statuses Statuses { get; set; }
         public virtual Users Users { get; set; }
         public virtual ICollection<CrossTasksTags> CrossTasksTags { get; set; }

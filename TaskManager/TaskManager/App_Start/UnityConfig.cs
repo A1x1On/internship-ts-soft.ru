@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
 using TaskManager.Realizations;
@@ -36,18 +36,8 @@ namespace TaskManager.App_Start
             // NOTE: To load from web.config uncomment the line below. Make sure to add a Microsoft.Practices.Unity.Configuration to the using statements.
             // container.LoadConfiguration();
 
-            // TODO: Register your types here
-            // container.RegisterType<IProductRepository, ProductRepository>();
-
-
-
             container.RegisterType<IAccount, RealizeAccount>(new PerRequestLifetimeManager());
             container.RegisterType<IManager, RealizeManager>(new PerRequestLifetimeManager());
-
-
-
-
-
         }
     }
 }

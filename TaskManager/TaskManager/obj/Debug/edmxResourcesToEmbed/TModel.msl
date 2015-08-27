@@ -1,6 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="TaskManagerModelStoreContainer" CdmEntityContainer="TaskManagerEntities">
+  <EntityContainerMapping StorageEntityContainer="TaskManagerModelStoreContainer" CdmEntityContainer="TManagerEntities">
+    <EntitySetMapping Name="CrossTasksTags">
+      <EntityTypeMapping TypeName="TaskManagerModel.CrossTasksTags">
+        <MappingFragment StoreEntitySet="CrossTasksTags">
+          <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+          <ScalarProperty Name="TagsId" ColumnName="TagsId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Statuses">
       <EntityTypeMapping TypeName="TaskManagerModel.Statuses">
         <MappingFragment StoreEntitySet="Statuses">
@@ -39,15 +48,6 @@
           <ScalarProperty Name="LoginName" ColumnName="LoginName" />
           <ScalarProperty Name="Pass" ColumnName="Pass" />
           <ScalarProperty Name="Confirmation" ColumnName="Confirmation" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="CrossTasksTags">
-      <EntityTypeMapping TypeName="TaskManagerModel.CrossTasksTags">
-        <MappingFragment StoreEntitySet="CrossTasksTags">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="TagsId" ColumnName="TagsId" />
-          <ScalarProperty Name="TaskId" ColumnName="TaskId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

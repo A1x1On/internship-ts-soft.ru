@@ -4,16 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="171172ac80174cd4b346884c76bb8108" Name="Diagram1">
+      <Diagram DiagramId="cf7b6618d3d34b21b34142d6a1858b1b" Name="Diagram1">
+        <EntityTypeShape EntityType="TaskManagerModel.CrossTasksTags" Width="1.5" PointX="5.25" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="TaskManagerModel.Statuses" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="TaskManagerModel.Tags" Width="1.5" PointX="8.25" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TaskManagerModel.Tags" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
         <EntityTypeShape EntityType="TaskManagerModel.Tasks" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="TaskManagerModel.Users" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <AssociationConnector Association="TaskManagerModel.FK__CrossTask__TagsI__4BAC3F29" ManuallyRouted="false" />
+        <AssociationConnector Association="TaskManagerModel.FK__CrossTask__TaskI__4AB81AF0" ManuallyRouted="false" />
         <AssociationConnector Association="TaskManagerModel.FK__Tasks__StatusId__398D8EEE" ManuallyRouted="false" />
         <AssociationConnector Association="TaskManagerModel.FK__TASKS__USID__1367E606" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="TaskManagerModel.CrossTasksTags" Width="1.5" PointX="5.375" PointY="1.875" />
-        <AssociationConnector Association="TaskManagerModel.FK__CrossTask__TagsI__4BAC3F29" />
-        <AssociationConnector Association="TaskManagerModel.FK__CrossTask__TaskI__4AB81AF0" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -1,0 +1,8 @@
+﻿<i id="{{y.TaskId}}" ng-repeat="y in Tasks | filter:query">
+    <div>{{y.Title}}</div><br />
+    <div class="d-disc">{{y.Description}}</div>
+    <div class="d-date">
+        <b>Дата:</b> {{y.TaskTerm}}
+    </div>
+    <div class="d-status"><b>Cтатус:</b> {{y.StatusString}} </div>
+</i>
