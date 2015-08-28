@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace TaskManager.Models
 {
@@ -6,7 +7,7 @@ namespace TaskManager.Models
     {
         public Tasks AddChange { get; set; }
         public IEnumerable<Tags> SelectTags { get; set; }
-        public IEnumerable<Tasks> SelectTasks { get; set; }
+        public IEnumerable<DateTasks> SelectDates { get; set; }
         public string CurStatus { get; set; }
         public string CurLogin { get; set; }
         public int CurId { get; set; }

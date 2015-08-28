@@ -38,24 +38,22 @@ namespace TaskManager.Controllers
         /// </summary>
         /// <returns>View Index/Account</returns>
         [Authorize]
-        public ActionResult Index(int tagId = 0, string date = "")
+        public ActionResult Index()
         {
-            DateTime dateTime = default(DateTime);
-            if (date != "")
-            {
-                dateTime = DateTime.Parse(date);
-            }
+           
 
             // Auto-Updating all user's tasks that is updating of statuses of the every task
             m_Realize.UpdateStatusEachTask(m_Realize.GetCurrentUser(m_Login).UserId);
 
-            IEnumerable<Tasks> tasks = m_Realize.GetTasks(m_Realize.GetCurrentUser(m_Login).UserId, tagId, dateTime);
+            //IEnumerable<Tasks> tasks = m_Realize.GetTasks(m_Realize.GetCurrentUser(m_Login).UserId, tagId, dateTime);
             IEnumerable<Tags> tags = m_Realize.GetTags(m_Realize.GetCurrentUser(m_Login).UserId);
+            IEnumerable<DateTasks> dates = m_Realize.GetDates(m_Realize.GetCurrentUser(m_Login).UserId);
             int userId = m_Realize.GetCurrentUser(m_Login).UserId;
             return View(new TasksAddChangeSelect()
             {
-                SelectTasks = tasks,
+                //SelectTasks = tasks,
                 SelectTags = tags,
+                SelectDates = dates,
                 CurStatus = m_StatusActive,
                 CurLogin = m_Login,
                 CurId = userId
@@ -80,13 +78,6 @@ namespace TaskManager.Controllers
                 m_ResultMessage = m_Realize.UpdateTask(model.AddChange);
             }
             return RedirectToAction("Index", "Manager", new { m_ResultMessage });
-        }
-
-        [Authorize]
-        public ActionResult Tasks()
-        {
-            return View();
-
         }
 
     }

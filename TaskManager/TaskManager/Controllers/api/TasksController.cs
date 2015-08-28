@@ -25,6 +25,57 @@ namespace TaskManager.Controllers.api
         /// </summary>
         private string m_Login = WebSecurity.CurrentUserName;
 
+
+
+
+        [Route("GetTasks")]
+        public IEnumerable<Tasks> GetTasks()
+        {
+
+            //int tagId = 0, string date = ""
+            //DateTime dateTime = default(DateTime);
+            //if (date != "")
+            //{
+            //    dateTime = DateTime.Parse(date);
+            //}
+
+            List<Tasks> TaskWithTags = new List<Tasks>();
+
+
+            IEnumerable<Tasks> tasks = m_Realize.GetTasks(m_Realize.GetCurrentUser(m_Login).UserId, 0, default(DateTime));
+
+            IEnumerable<Tags> tags = null;
+
+
+            foreach (var t in tasks)
+            {
+
+
+                TaskWithTags.Add(new Tasks()
+                {
+                    TaskId = t.TaskId,
+                    Title = t.Title,
+                    Description = t.Description,
+                    TaskTerm = t.TaskTerm,
+                    UsId = t.UsId,
+                    StatusString = t.StatusString,
+                    Tags = m_Realize.GetTagsOfTask(t.TaskId)
+                });
+   
+                
+            }
+
+
+
+            return TaskWithTags;
+        }
+
+
+       
+
+
+
+
         /// <summary>
         /// Dynamic opening of detail task on the Index page
         /// </summary>

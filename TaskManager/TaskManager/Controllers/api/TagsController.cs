@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -29,6 +30,9 @@ namespace TaskManager.Controllers.api
 
             return tags;
         }
+
+
+
 
         // GET api/<controller>
         public IEnumerable<string> Get()

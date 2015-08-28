@@ -128,7 +128,7 @@ body header .mainTitle {
   max-width: 250px;
 }
 body section {
-  min-height: 500px;
+  height: 100vh;
   padding-bottom: 100px;
   display: flex;
 }
@@ -145,40 +145,6 @@ body section .Left-Panel .list-tasks {
   border-radius: 4px;
   overflow: auto;
 }
-body section .Left-Panel .list-tasks .Tasks i {
-  float: left;
-  background-color: #FBFBE8;
-  margin-bottom: 2px;
-  font-style: normal;
-  font-size: 13px;
-  cursor: pointer;
-  display: block;
-  text-decoration: none;
-  width: 96%;
-  padding: 5px;
-}
-body section .Left-Panel .list-tasks .Tasks i:hover {
-  background-color: #E0DCDC;
-  color: #00BDC0;
-}
-body section .Left-Panel .list-tasks .Tasks i div {
-  float: left;
-  width: 100%;
-  line-height: 22px;
-}
-body section .Left-Panel .list-tasks .Tasks i div:first-child {
-  font-size: 20px;
-}
-body section .Left-Panel .list-tasks .Tasks i .d-disc {
-  max-height: 50px;
-  overflow: hidden;
-}
-body section .Left-Panel .list-tasks .Tasks i .d-date {
-  color: #666;
-}
-body section .Left-Panel .list-tasks .Tasks i .d-status {
-  color: darkturquoise;
-}
 body section .Left-Panel .Tags,
 body section .Left-Panel .Dates {
   float: left;
@@ -187,8 +153,8 @@ body section .Left-Panel .Dates {
   padding-top: 20px;
   margin-bottom: 20px;
 }
-body section .Left-Panel .Tags a,
-body section .Left-Panel .Dates a {
+body section .Left-Panel .Tags span,
+body section .Left-Panel .Dates span {
   height: 20px;
   display: block;
   border: none;
@@ -200,9 +166,10 @@ body section .Left-Panel .Dates a {
   padding: 5px;
   color: #FFF;
   margin: 2px;
+  cursor: pointer;
 }
-body section .Left-Panel .Tags a:hover,
-body section .Left-Panel .Dates a:hover {
+body section .Left-Panel .Tags span:hover,
+body section .Left-Panel .Dates span:hover {
   background-color: #E0DCDC;
   color: #00BDC0;
 }
@@ -214,10 +181,85 @@ body section .container {
   margin-right: 10px;
   position: relative;
 }
-body section .container .DinamicTag {
+body section .container .Tasks i {
+  float: left;
+  background-color: #FBFBE8;
+  margin-bottom: 2px;
+  font-style: normal;
+  font-size: 13px;
+  cursor: pointer;
+  display: block;
+  text-decoration: none;
+  width: 96%;
+  padding: 5px;
+}
+body section .container .Tasks i:hover {
+  background-color: #E0DCDC;
+  color: #00BDC0;
+}
+body section .container .Tasks i div {
+  float: left;
+  width: 100%;
+  line-height: 22px;
+}
+body section .container .Tasks i div:first-child {
+  font-size: 20px;
+}
+body section .container .Tasks i .d-disc {
+  max-height: 50px;
+  overflow: hidden;
+}
+body section .container .Tasks i .d-date {
+  color: #666;
+}
+body section .container .Tasks i .d-status {
+  color: darkturquoise;
+}
+body section .container .Tasks i .d-tags {
+  color: darkturquoise;
+}
+body section .container .blockDetailTask {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background-color: #FBFBE8;
+  box-shadow: 0px 1px 3px 1px #999;
+  padding: 20px 50px 10px 50px;
+  display: none;
+  top: 12%;
+  left: 15%;
+}
+body section .container .btnInsert {
+  width: 210px;
+  height: 39px;
+  margin-bottom: 1px;
+  display: block;
+  border: none;
+  margin-left: -4px;
+  cursor: pointer;
+  background-color: darkturquoise;
+  color: #FBFBFB;
+  font-size: 17px;
+  margin: 10px 0px 10px 0px;
+}
+body section .container .btnInsert:hover {
+  background-color: #E0DCDC;
+}
+body section .container .blockInsertTask {
+  position: absolute;
+  width: 210px;
+  height: 430px;
+  padding: 20px 50px 35px 50px;
+  background-color: #FBFBE8;
+  box-shadow: 0px 1px 3px 1px #999;
+  display: none;
+  top: 12%;
+  left: 15%;
+}
+body section .container .blockInsertTask .DinamicTag {
   position: relative;
 }
-body section .container .DinamicTag input[type=text] {
+body section .container .blockInsertTask .DinamicTag input[type=text] {
   width: 200px;
   height: 28px;
   text-align: left;
@@ -227,7 +269,7 @@ body section .container .DinamicTag input[type=text] {
   border: none;
   float: left;
 }
-body section .container .DinamicTag .sel-list {
+body section .container .blockInsertTask .DinamicTag .sel-list {
   padding: 3px 3px 0px 3px;
   background-color: #fbfbfb;
   position: absolute;
@@ -237,29 +279,29 @@ body section .container .DinamicTag .sel-list {
   float: left;
   top: 35px;
 }
-body section .container .DinamicTag .sel-list:focus {
+body section .container .blockInsertTask .DinamicTag .sel-list:focus {
   outline: none;
 }
-body section .container .DinamicTag .sel-list .focus {
+body section .container .blockInsertTask .DinamicTag .sel-list .focus {
   background-color: #00CED1;
 }
-body section .container .DinamicTag .sel-list .optionTag {
+body section .container .blockInsertTask .DinamicTag .sel-list .optionTag {
   width: 100%;
   border-bottom: 1px solid #EEE;
   display: block;
   padding: 2px 0px 4px 2px;
   cursor: pointer;
 }
-body section .container .DinamicTag .sel-list .optionTag:hover {
+body section .container .blockInsertTask .DinamicTag .sel-list .optionTag:hover {
   background-color: antiquewhite;
 }
-body section .container .DinamicTag .sel-list .optionTag:focus {
+body section .container .blockInsertTask .DinamicTag .sel-list .optionTag:focus {
   outline: none;
 }
-body section .container .DinamicTag .ForTags {
+body section .container .blockInsertTask .DinamicTag .ForTags {
   float: left;
 }
-body section .container .DinamicTag .ForTags span {
+body section .container .blockInsertTask .DinamicTag .ForTags span {
   display: block;
   float: left;
   height: 28px;
@@ -276,7 +318,7 @@ body section .container .DinamicTag .ForTags span {
   transition: all 0.3s ease;
   cursor: pointer;
 }
-body section .container .DinamicTag .ForTags span:hover {
+body section .container .blockInsertTask .DinamicTag .ForTags span:hover {
   background-image: url("Images/cross.png");
   background-size: 35%;
   background-repeat: no-repeat;

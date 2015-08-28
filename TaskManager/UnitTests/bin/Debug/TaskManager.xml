@@ -85,19 +85,17 @@
             </summary>
             <returns>View Index/Account</returns>
         </member>
-        <member name="M:TaskManager.Controllers.api.TagsController.Get(System.String)">
+        <member name="F:TaskManager.Controllers.api.TagsController.m_Realize">
+            <summary>
+            Instance RealizeManager : IManager is
+            </summary>
+        </member>
+        <member name="M:TaskManager.Controllers.api.TagsController.GetTags(System.String)">
             <summary>
             Getting list of Tags with inputted Keyword [AJAX]
             </summary>
             <param name="name">Key word from (text input of class="inputTag")</param>
             <returns>list of received tags</returns>
-        </member>
-        <member name="M:TaskManager.Controllers.api.TasksController.Get(System.Int32)">
-            <summary>
-            Dynamic opening of detail task on the Index page
-            </summary>
-            <param name="taskId"></param>
-            <returns>Set of property for Angular act</returns>
         </member>
         <member name="F:TaskManager.Controllers.ManagerController.m_Realize">
             <summary>
@@ -125,13 +123,6 @@
             </summary>
             <returns>View Index/Account</returns>
         </member>
-        <member name="M:TaskManager.Controllers.ManagerController.SetEndStatus(System.Int32)">
-            <summary>
-            Finishing of task
-            </summary>
-            <param name="TaskFromFinish">ID of task</param>
-            <returns>View Index/Manager</returns>
-        </member>
         <member name="M:TaskManager.Controllers.ManagerController.AddChange(TaskManager.Models.TasksAddChangeSelect)">
             <summary>
             Adding and Changing of tasks
@@ -139,12 +130,43 @@
             <param name="model">Object of task who ready to add database</param>
             <returns>View Index/Manage</returns>
         </member>
-        <member name="M:TaskManager.Controllers.ManagerController.Delete(System.Int32)">
+        <member name="F:TaskManager.Controllers.api.TasksController.m_Realize">
             <summary>
-            Removing of tasks [HttpPost] [Ajax]
+            Instance RealizeManager : IManager is
+            </summary>
+        </member>
+        <member name="F:TaskManager.Controllers.api.TasksController.m_Login">
+            <summary>
+            Variable is login Authorized user
+            </summary>
+        </member>
+        <member name="M:TaskManager.Controllers.api.TasksController.GetValuesTask(System.Int32)">
+            <summary>
+            Dynamic opening of detail task on the Index page
+            </summary>
+            <param name="taskId"></param>
+            <returns>Set of property for Angular act</returns>
+        </member>
+        <member name="M:TaskManager.Controllers.api.TasksController.GetTasks(System.Int32)">
+            <summary>
+            Removing of tasks
             </summary>
             <param name="idTask">Id of task</param>
             <returns>Massage of id task on page</returns>
+        </member>
+        <member name="M:TaskManager.Controllers.api.TasksController.SetActiveStatus(System.Int32)">
+            <summary>
+            Setting activity of tasks
+            </summary>
+            <param name="idTask"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaskManager.Controllers.api.TasksController.SetEndStatus(System.Int32)">
+            <summary>
+            Finishing of task
+            </summary>
+            <param name="TaskFromFinish">ID of task</param>
+            <returns>View Index/Manager</returns>
         </member>
         <member name="M:TaskManager.Realizations.IAccount.InsertUser(TaskManager.Users)">
             <summary>
@@ -262,7 +284,6 @@
             <returns>Massage of Conditions for m_ResultMassage</returns>
         </member>
         <member name="M:TaskManager.Realizations.RealizeAccount.SendLetter(System.String,System.String,System.String,System.String,System.String,System.String)">
-            The others Methods///
             <summary>
             Forming and Sending of Email to confirm registered Account
             </summary>
@@ -372,7 +393,6 @@
             <returns>Object USER</returns>
         </member>
         <member name="M:TaskManager.Realizations.RealizeManager.GetStatusString(System.Int32)">
-            The others Methods///
             <summary>
             Getting string status
             </summary>

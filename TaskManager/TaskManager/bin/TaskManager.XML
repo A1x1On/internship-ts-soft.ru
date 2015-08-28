@@ -97,6 +97,39 @@
             <param name="name">Key word from (text input of class="inputTag")</param>
             <returns>list of received tags</returns>
         </member>
+        <member name="F:TaskManager.Controllers.ManagerController.m_Realize">
+            <summary>
+            Instance RealizeManager : IManager is
+            </summary>
+        </member>
+        <member name="F:TaskManager.Controllers.ManagerController.m_ResultMessage">
+            <summary>
+            Variable is for User errors on Views
+            </summary>
+        </member>
+        <member name="F:TaskManager.Controllers.ManagerController.m_Login">
+            <summary>
+            Variable is login Authorized user
+            </summary>
+        </member>
+        <member name="F:TaskManager.Controllers.ManagerController.m_StatusActive">
+            <summary>
+            Variable is Task Status like "Active status"
+            </summary>
+        </member>
+        <member name="M:TaskManager.Controllers.ManagerController.Index">
+            <summary>
+            View of Review list of Tasks, way adding of task
+            </summary>
+            <returns>View Index/Account</returns>
+        </member>
+        <member name="M:TaskManager.Controllers.ManagerController.AddChange(TaskManager.Models.TasksAddChangeSelect)">
+            <summary>
+            Adding and Changing of tasks
+            </summary>
+            <param name="model">Object of task who ready to add database</param>
+            <returns>View Index/Manage</returns>
+        </member>
         <member name="F:TaskManager.Controllers.api.TasksController.m_Realize">
             <summary>
             Instance RealizeManager : IManager is
@@ -134,39 +167,6 @@
             </summary>
             <param name="TaskFromFinish">ID of task</param>
             <returns>View Index/Manager</returns>
-        </member>
-        <member name="F:TaskManager.Controllers.ManagerController.m_Realize">
-            <summary>
-            Instance RealizeManager : IManager is
-            </summary>
-        </member>
-        <member name="F:TaskManager.Controllers.ManagerController.m_ResultMessage">
-            <summary>
-            Variable is for User errors on Views
-            </summary>
-        </member>
-        <member name="F:TaskManager.Controllers.ManagerController.m_Login">
-            <summary>
-            Variable is login Authorized user
-            </summary>
-        </member>
-        <member name="F:TaskManager.Controllers.ManagerController.m_StatusActive">
-            <summary>
-            Variable is Task Status like "Active status"
-            </summary>
-        </member>
-        <member name="M:TaskManager.Controllers.ManagerController.Index(System.Int32,System.String)">
-            <summary>
-            View of Review list of Tasks, way adding of task
-            </summary>
-            <returns>View Index/Account</returns>
-        </member>
-        <member name="M:TaskManager.Controllers.ManagerController.AddChange(TaskManager.Models.TasksAddChangeSelect)">
-            <summary>
-            Adding and Changing of tasks
-            </summary>
-            <param name="model">Object of task who ready to add database</param>
-            <returns>View Index/Manage</returns>
         </member>
         <member name="M:TaskManager.Realizations.IAccount.InsertUser(TaskManager.Users)">
             <summary>
@@ -237,7 +237,14 @@
         </member>
         <member name="M:TaskManager.Realizations.IManager.GetTags(System.Int32)">
             <summary>
-            
+            Getting of tags
+            </summary>
+            <param name="curId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaskManager.Realizations.IManager.GetDates(System.Int32)">
+            <summary>
+            Getting of dates
             </summary>
             <param name="curId"></param>
             <returns></returns>
@@ -284,7 +291,6 @@
             <returns>Massage of Conditions for m_ResultMassage</returns>
         </member>
         <member name="M:TaskManager.Realizations.RealizeAccount.SendLetter(System.String,System.String,System.String,System.String,System.String,System.String)">
-            The others Methods///
             <summary>
             Forming and Sending of Email to confirm registered Account
             </summary>
@@ -379,6 +385,13 @@
             <param name="CurId"></param>
             <returns></returns>
         </member>
+        <member name="M:TaskManager.Realizations.RealizeManager.GetDates(System.Int32)">
+            <summary>
+            Getting of dates
+            </summary>
+            <param name="CurId"></param>
+            <returns></returns>
+        </member>
         <member name="M:TaskManager.Realizations.RealizeManager.GetTags(System.String)">
             <summary>
             Getting of Tags with inputted Keyword and angular service if such tag exists in DB
@@ -394,7 +407,6 @@
             <returns>Object USER</returns>
         </member>
         <member name="M:TaskManager.Realizations.RealizeManager.GetStatusString(System.Int32)">
-            The others Methods///
             <summary>
             Getting string status
             </summary>

@@ -58,7 +58,7 @@ body {
         }
     }
     section {
-        min-height: 500px;
+        height: 100vh;
         padding-bottom: 100px;
         display: flex;
         .Left-Panel{
@@ -71,9 +71,39 @@ body {
                 float: left;
                 max-height: 700px;
                 border-radius: 4px;
-                overflow: auto;
-                
-                .Tasks{
+                overflow: auto; 
+            }
+            .Tags, .Dates{
+                    float: left;
+                    width: 300px;
+                    border-top: 1px dashed #00BDC0;
+                    padding-top: 20px;
+                    margin-bottom: 20px;
+                    span{
+                        &:hover{ background-color: #E0DCDC; color: #00BDC0; }
+                        height: 20px;
+                        display: block;
+                        border: none;
+                        background-color: darkturquoise;
+                        text-decoration: none;
+                        float: left;
+                        margin-bottom: 2px;
+                        font-size: 13px;
+                        padding: 5px;
+                        color: #FFF;
+                        margin: 2px;
+                        cursor: pointer;
+                    }
+                }
+        }
+        .container{
+            float: left;
+            background-color: #FBFBE8;
+            width: 100%;
+            padding: 15px 10px 15px 10px;
+            margin-right: 10px;
+            position: relative;
+            .Tasks{
                     i{
                         &:hover{ background-color: #E0DCDC; color: #00BDC0; }
                         float: left;
@@ -91,85 +121,89 @@ body {
                         .d-disc{ max-height: 50px; overflow: hidden; }
                         .d-date{ color: #666; }
                         .d-status{ color: darkturquoise; }
+                        .d-tags{ color: darkturquoise; }
                     }
-                }    
+             } 
+            .blockDetailTask{
+                position: absolute;
+                width: 500px;
+                height: 500px;
+                background-color: #FBFBE8;
+                box-shadow: 0px 1px 3px 1px #999;
+                padding: 20px 50px 10px 50px;
+                display: none;
+                top: 12%;
+                left: 15%;
+
             }
-            .Tags, .Dates{
-                    float: left;
-                    width: 300px;
-                    border-top: 1px dashed #00BDC0;
-                    padding-top: 20px;
-                    margin-bottom: 20px;
-                    a{
-                        &:hover{ background-color: #E0DCDC; color: #00BDC0; }
-                        height: 20px;
-                        display: block;
-                        border: none;
-                        background-color: darkturquoise;
-                        text-decoration: none;
-                        float: left;
-                        margin-bottom: 2px;
-                        font-size: 13px;
-                        padding: 5px;
-                        color: #FFF;
-                        margin: 2px;
-                    }
-                }
-        }
-        .container{
-            float: left;
-            background-color: #FBFBE8;
-            width: 100%;
-            padding: 15px 10px 15px 10px;
-            margin-right: 10px;
-            position: relative;
-            .DinamicTag{
-                position: relative;
-                input[type=text]{ .inputText; float: left; }
-                .sel-list{
-                    &:focus { outline: none; }
-                    padding: 3px 3px 0px 3px;
-                    background-color: #fbfbfb;
-                    position: absolute;
-                    width: 200px;
-                    max-height: 100px;
-                    overflow: auto;
-                    float: left;
-                    top: 35px;  
-                    .focus{ background-color: #00CED1; }                  
-                    .optionTag{
-                        &:hover{ background-color: antiquewhite; }
+            .btnInsert{
+                .inputSubmit; margin: 10px 0px 10px 0px;
+
+            }
+            .blockInsertTask{
+                position: absolute;
+                width: 210px;
+                height: 430px;
+                padding: 20px 50px 35px 50px;
+                background-color: #FBFBE8;
+                box-shadow: 0px 1px 3px 1px #999;
+                display: none;
+                top: 12%;
+                left: 15%;
+
+                .DinamicTag{
+                    position: relative;
+                    input[type=text]{ .inputText; float: left; }
+                    .sel-list{
                         &:focus { outline: none; }
-                        width: 100%;
-                        border-bottom: 1px solid #EEE;
-                        display: block;
-                        padding: 2px 0px 4px 2px;
-                        cursor: pointer;
-                    }  
-                }
-                .ForTags{
-                    float: left;
-                    span{
-                        display: block;
-                        float:left;
-                        height: 28px;
-                        background-color: darkturquoise;
-                        margin-left: 5px;
-                        text-align: center;
-                        padding: 6px 5px 1px 5px;
-                        color: #FBFBFB;
-                        margin-top: 2px;
-                        .transition;
-                        cursor: pointer;
-                        &:hover{ 
-                            background-image: url("Images/cross.png");
-                            background-size: 35%;
-                            background-repeat: no-repeat;
-                            transform: rotate(7deg);
-                            background-position-x: right;
-                       }
+                        padding: 3px 3px 0px 3px;
+                        background-color: #fbfbfb;
+                        position: absolute;
+                        width: 200px;
+                        max-height: 100px;
+                        overflow: auto;
+                        float: left;
+                        top: 35px;  
+                        .focus{ background-color: #00CED1; }                  
+                        .optionTag{
+                            &:hover{ background-color: antiquewhite; }
+                            &:focus { outline: none; }
+                            width: 100%;
+                            border-bottom: 1px solid #EEE;
+                            display: block;
+                            padding: 2px 0px 4px 2px;
+                            cursor: pointer;
+                        }  
+
                     }
-                }
+                    .ForTags{
+                        float: left;
+                        span{
+                            display: block;
+                            float:left;
+                            height: 28px;
+                            background-color: darkturquoise;
+                            margin-left: 5px;
+                            text-align: center;
+                            padding: 6px 5px 1px 5px;
+                            color: #FBFBFB;
+                            margin-top: 2px;
+                            .transition;
+                            cursor: pointer;
+                            &:hover{ 
+                                background-image: url("Images/cross.png");
+                                background-size: 35%;
+                                background-repeat: no-repeat;
+                                transform: rotate(7deg);
+                                background-position-x: right;
+                           }
+                        }
+                    }
+                }  
+                
+                
+                 
+            
             }
             .mainTaskInfo{
                 input{ .inputText; margin-bottom: 10px; }

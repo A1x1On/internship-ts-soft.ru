@@ -1,0 +1,15 @@
+﻿@using System.Globalization
+@model IEnumerable<TaskManager.Models.DateTasks>
+
+<div class="Dates">
+    @{
+        string date = "";
+        foreach (var d in Model.Take(100))
+        {
+            date = d.Date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+           <span id="@d.Id" class="fDate" ng-click="filterBy($event)">@date</span>
+        }
+        <span class="fResetDate" ng-click="filterBy($event)">Обнулить фильтр dates</span>
+}
+</div>
+

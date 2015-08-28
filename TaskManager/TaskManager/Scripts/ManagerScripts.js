@@ -41,6 +41,17 @@
         }, 1000);
     });
 
+
+    // Event for adding button of task
+    $(".container").click(function (event) {
+        if ($(event.target).is(".btnInsert")) {
+            $(".blockInsertTask").fadeIn();
+        }
+        if ($(event.target).is(".container")) {
+            $(".blockInsertTask").fadeOut();
+        }
+    });
+
 });
 
 

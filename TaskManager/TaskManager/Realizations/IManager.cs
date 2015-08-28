@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TaskManager.Models;
 
 namespace TaskManager.Realizations
 {
@@ -11,6 +12,9 @@ namespace TaskManager.Realizations
         /// <param name="taskId">ID of task</param>
         string EndActTask(int taskId);
 
+
+
+        string GetTagsOfTask(int taskId);
 
         string ChangeStatus(int taskId);
 
@@ -54,11 +58,18 @@ namespace TaskManager.Realizations
         IEnumerable<Tasks> GetTasks(int curId, int tagId, DateTime dateTime);
 
         /// <summary>
-        /// 
+        /// Getting of tags
         /// </summary>
         /// <param name="curId"></param>
         /// <returns></returns>
         IEnumerable<Tags> GetTags(int curId);
+
+        /// <summary>
+        /// Getting of dates
+        /// </summary>
+        /// <param name="curId"></param>
+        /// <returns></returns>
+        IEnumerable<DateTasks> GetDates(int curId);
 
         /// <summary>
         /// Getting of Tags with inputted Keyword and angular service if such tag exists in DB

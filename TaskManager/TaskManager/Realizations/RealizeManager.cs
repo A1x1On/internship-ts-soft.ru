@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Common.CommandTrees;
 using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
+using System.Runtime.Serialization.Json;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using Microsoft.Ajax.Utilities;
 using TaskManager.Models;
 using WebGrease.Css.Extensions;
 
@@ -278,8 +280,6 @@ namespace TaskManager.Realizations
 
                 });
             }
-
-
             return tasksAsList.Count != 0 ? tasksAsList : query.ToList();
         }
 
@@ -299,7 +299,7 @@ namespace TaskManager.Realizations
                         where tasks.UsId == curId
                         select new { tasks, cross };
 
-            foreach (var c in query)
+            foreach (var c in query.DistinctBy(x=>x.cross.TagsId))
             {
                 tag = m_db.Tags.Where(x => x.Id == c.cross.TagsId).First();
                 tagsAsList.Add(new Tags()
@@ -310,6 +310,27 @@ namespace TaskManager.Realizations
             }
 
             return tagsAsList;
+        }
+
+        /// <summary>
+        /// Getting of dates
+        /// </summary>
+        /// <param name="CurId"></param>
+        /// <returns></returns>
+        public IEnumerable<DateTasks> GetDates(int curId)
+        {
+            List<DateTasks> datesAsList = new List<DateTasks>();
+            int i = 0;
+
+            var query = from tasks in m_db.Tasks.Distinct()
+                        where tasks.UsId == curId
+                        select tasks;
+            foreach (var q in query.DistinctBy(x => x.TaskTerm))
+            {
+                i++;
+                datesAsList.Add(new DateTasks(){ Id = i, Date = q.TaskTerm });
+            }
+            return datesAsList;
         }
 
         /// <summary>
@@ -331,6 +352,31 @@ namespace TaskManager.Realizations
             }
             return query;
         }
+
+
+        public string GetTagsOfTask(int taskId)
+        {
+            string tags = "";
+            var query = m_db.Tags.Join(
+                m_db.CrossTasksTags,
+                t => t.Id,
+                c => c.TagsId,
+                (t, c) => new {Tags = t, CrossTasksTags = c})
+                .Where(x => x.CrossTasksTags.TaskId == taskId)
+                .Select(p => p.Tags);
+
+            foreach (var q in query)
+            {
+                tags = tags + ", " + q.TitleTag;
+            }
+
+            return tags;
+
+        }
+
+
+
+
 
         /// <summary>
         /// Getting of User id
@@ -382,11 +428,11 @@ namespace TaskManager.Realizations
             int TagsId;
 
             tagRow = tagRow.ToLower();
-            foreach (Match t in Regex.Matches(tagRow, @"([ \b\w\- \w\b] +)"))
+            foreach (Match t in Regex.Matches(tagRow, @"([\b\w\-\w\b]+)"))
             {
                 tagRes = m_db.Tags.FirstOrDefault(x => x.TitleTag == t.Value); // search next tag of Match list
 
-                if (way == 0) // Condition for insert of task
+                if (way == 0) // Condition for insert of tag
                 {
                     if (tagRes == null)
                     {

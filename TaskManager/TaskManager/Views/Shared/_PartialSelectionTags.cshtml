@@ -3,8 +3,9 @@
 <div class="Tags">
     @foreach (var Tag in Model.Take(100))
     {
-        <a href="@Url.Action("Index", "Manager", new {@tagId = @Tag.Id})" id="@Tag.Id">@Tag.TitleTag</a>
+        <span id="@Tag.Id" class="fTag" ng-click="filterBy($event)">@Tag.TitleTag</span>
     }
+    <span class="fResetTag" ng-click="filterBy($event)">Обнулить фильтр tags</span>
 </div>
 
  
