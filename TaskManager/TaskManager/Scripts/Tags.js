@@ -43,7 +43,6 @@ $(".sel-list").live("keyup", function (event) {
         if ($(".optionTag:nth-child(" + i + ")").html() != undefined) {
             $(".optionTag:nth-child(" + i + ")").focus();
             ActOptionTag();
-
         }
         else {
             i = i - 1;

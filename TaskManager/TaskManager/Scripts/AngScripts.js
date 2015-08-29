@@ -112,13 +112,10 @@
             $(".inputTag").val("");
             $(".ForTags").html("");
             arrayOfTags = $.grep(arrayOfTags, function (el) { return null })
-            console.log(arrayOfTags);
         }
 
         // By pressing the task to show memo of detail information
         $scope.OpenTask = function (obj) {
-
-            
             key = obj.currentTarget.id;
                 if ($(".blockInsertTask").css("display") === "none") {
                     $(".blockInsertTask").css("display", "none");
@@ -172,8 +169,6 @@
             }, function () {
                 alert('Fail of forming tags');
             });
-
-            console.log(arrayOfTags);
         };
 
     });
