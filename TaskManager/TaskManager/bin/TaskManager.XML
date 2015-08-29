@@ -140,6 +140,12 @@
             Variable is login Authorized user
             </summary>
         </member>
+        <member name="M:TaskManager.Controllers.api.TasksController.GetTasks">
+            <summary>
+            Getting of tasks
+            </summary>
+            <returns>List of tasks</returns>
+        </member>
         <member name="M:TaskManager.Controllers.api.TasksController.GetValuesTask(System.Int32)">
             <summary>
             Dynamic opening of detail task on the Index page
@@ -192,9 +198,16 @@
         </member>
         <member name="M:TaskManager.Realizations.IManager.EndActTask(System.Int32)">
             <summary>
-            Finishing of task
+            Turn off activity of task(status)
             </summary>
             <param name="taskId">ID of task</param>
+        </member>
+        <member name="M:TaskManager.Realizations.IManager.GetTagsOfTask(System.Int32)">
+            <summary>
+            Getting of tags for each task on the page of list Tasks
+            </summary>
+            <param name="taskId"></param>
+            <returns></returns>
         </member>
         <member name="M:TaskManager.Realizations.IManager.UpdateStatusEachTask(System.Int32)">
             <summary>
@@ -331,7 +344,7 @@
             </summary>
             <param name="tasId">ID of task</param>
         </member>
-        <member name="M:TaskManager.Realizations.RealizeManager.ChangeStatus(System.Int32)">
+        <member name="M:TaskManager.Realizations.RealizeManager.BeginActTask(System.Int32)">
             <summary>
             Cancel inactive status
             </summary>
@@ -376,7 +389,7 @@
             Getting of tasks
             </summary>
             <param name="curId">Authorized user</param>
-            <returns>List of tasks for _PartialSelectionTasks.cshtml</returns>
+            <returns>List of tasks</returns>
         </member>
         <member name="M:TaskManager.Realizations.RealizeManager.GetTags(System.Int32)">
             <summary>
@@ -398,6 +411,13 @@
             </summary>
             <param name="tagKeyword">Key word from (text input of class="inputTag")</param>
             <returns>list of received tags</returns>
+        </member>
+        <member name="M:TaskManager.Realizations.RealizeManager.GetTagsOfTask(System.Int32)">
+            <summary>
+            Getting of tags for each task on the page of list Tasks
+            </summary>
+            <param name="taskId"></param>
+            <returns></returns>
         </member>
         <member name="M:TaskManager.Realizations.RealizeManager.GetCurrentUser(System.String)">
             <summary>

@@ -139,6 +139,16 @@ body section .Left-Panel {
   margin-left: 10px;
   margin-right: 10px;
 }
+body section .Left-Panel h2 {
+  padding-left: 6px;
+  padding-bottom: 4px;
+  display: block;
+  float: left;
+  width: 98.5%;
+  font-size: 20px;
+  font-weight: normal;
+  background-color: #FBFBE8;
+}
 body section .Left-Panel .list-tasks {
   float: left;
   max-height: 700px;
@@ -177,7 +187,7 @@ body section .container {
   float: left;
   background-color: #FBFBE8;
   width: 100%;
-  padding: 15px 10px 15px 10px;
+  padding: 22px 10px 15px 15px;
   margin-right: 10px;
   position: relative;
 }
@@ -218,17 +228,6 @@ body section .container .Tasks i .d-status {
 body section .container .Tasks i .d-tags {
   color: darkturquoise;
 }
-body section .container .blockDetailTask {
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  background-color: #FBFBE8;
-  box-shadow: 0px 1px 3px 1px #999;
-  padding: 20px 50px 10px 50px;
-  display: none;
-  top: 12%;
-  left: 15%;
-}
 body section .container .btnInsert {
   width: 210px;
   height: 39px;
@@ -248,13 +247,12 @@ body section .container .btnInsert:hover {
 body section .container .blockInsertTask {
   position: absolute;
   width: 210px;
-  height: 430px;
   padding: 20px 50px 35px 50px;
   background-color: #FBFBE8;
   box-shadow: 0px 1px 3px 1px #999;
   display: none;
-  top: 12%;
-  left: 15%;
+  top: -2%;
+  left: 17%;
 }
 body section .container .blockInsertTask .DinamicTag {
   position: relative;
@@ -300,6 +298,8 @@ body section .container .blockInsertTask .DinamicTag .sel-list .optionTag:focus 
 }
 body section .container .blockInsertTask .DinamicTag .ForTags {
   float: left;
+  padding-top: 10px;
+  padding-bottom: 20px;
 }
 body section .container .blockInsertTask .DinamicTag .ForTags span {
   display: block;

@@ -12,44 +12,34 @@
     // Initializing of controller DinamicTag and factory TService
     ModuleManager.controller("TaskFrom", function ($scope, TService) {
 
-
+        // Select tasks on home page by current user without filters
         $scope.init = function () {
             TService.GetTasks().then(function(d) {
                 $scope.Tasks = d.data;
                 $scope.tagValue = "";
                 $scope.dateValue = "";
-                
             }, function() {
                 alert("Fail of deleting task");
             });
         }
 
-
-
         // Deleting of task
         $scope.DeleteTask = function (obj) {
             idTask = obj.currentTarget.id;
-
             if (idTask != 0) {
-                
-                // Use TService for Deleting of task
                 TService.DeleteTask().then(function (d) {
-                    //$(".Tasks>i").remove();
                     $("i#" + idTask).fadeOut();
                     $(".blockInsertTask").fadeOut();
-
-                    //$scope.Tasks = d.data; in View ng-repeat
                 }, function () {
                     alert("Fail of deleting task");
                 });
             }
         }
 
-        // Getting of tags
+        // Getting of tags to DOM like select tag by keyword
         $scope.TagListToDOM = function (name) {
             key = name;
             if (name != "") {
-                // Use TService for getting data tags
                 TService.GetTags().then(function (d) {
                     $scope.Tags = d.data;
                 }, function () {
@@ -61,24 +51,24 @@
             }
         }
 
+        // Turn off activity of task(status)
         $scope.EndActTask = function (obj) {
             idTask = obj.currentTarget.id;
             TService.EndActTask().then(function (d) {
                 $scope.Tags = d.data;
-
                 $(".finishtag").css("display", "none");
                 $(".Cancelfinishtag").css("display", "block");
-
                 $("i#" + idTask).children(".d-status").html("<b>Cтатус: </b>Завершен");
-              
+
             }, function () {
                 alert("Fail of getting tags");
             });
         }
 
-        $scope.ChangeStatus = function (obj) {
+        // Turn on activity of task(status)
+        $scope.BeginActTask = function (obj) {
             idTask = obj.currentTarget.id;
-            TService.ChangeStatus().then(function (d) {
+            TService.BeginActTask().then(function (d) {
                 $scope.Tags = d.data;
                 $(".finishtag").css("display", "block");
                 $(".Cancelfinishtag").css("display", "none");
@@ -88,15 +78,13 @@
             });
         }
 
+        // Filter tasks by tag and date
         $scope.filterBy = function (obj) {
-            console.log(obj);
-            //alert("((( " + obj.currentTarget);
             if (obj.currentTarget.className == "fDate") {
                 $scope.dateValue = obj.currentTarget.innerHTML;
                 $(".Dates").children("span").css("color", "#FFF");
                 $(".Dates").children("#" + obj.currentTarget.id).css("color", "red");
             }
-
             if (obj.currentTarget.className == "fTag") {
                 $scope.tagValue = obj.currentTarget.innerHTML;
                 $(".Tags").children("span").css("color", "#FFF");
@@ -112,59 +100,43 @@
             }
         }
 
-
-// Clicking on the task at the left panel
+        // By pressing the button to show memo for fill in of task
         $scope.InsertTask = function (obj) {
-            // TaskId is value of task
             key = obj.currentTarget.id;
-
             $(".blockInsertTask").fadeIn();
-
-            $(".finishtag").fadeOut(100);
-            $(".RemoveTask").fadeOut(100);
-
-      
+            $(".finishtag").css("display", "none");
+            $(".RemoveTask").css("display", "none");
             $(".TASKID").val("");
             $(".t-title").val("");
             $(".t-disc").val("");
             $(".inputTag").val("");
             $(".ForTags").html("");
+            arrayOfTags = $.grep(arrayOfTags, function (el) { return null })
+            console.log(arrayOfTags);
         }
 
-
-        // Clicking on the task at the left panel
+        // By pressing the task to show memo of detail information
         $scope.OpenTask = function (obj) {
-            // TaskId is value of task
-            key = obj.currentTarget.id;
 
-            $(".iTask").click(function (event) {
+            
+            key = obj.currentTarget.id;
                 if ($(".blockInsertTask").css("display") === "none") {
                     $(".blockInsertTask").css("display", "none");
                     $(".blockInsertTask").fadeIn();
                 }
-            });
-
-
-   
-            console.log("id : " + obj.currentTarget.id);
-
-            // Use TagService for getting data tags from current task without reloaded page
+            // Getting of values of task to show memo
             TService.GetValuesTask().then(function (t) {
                 $scope.Task = t.data;
-
                 if ($scope.Task[3] !== "1") {
                     $(".finishtag").fadeIn();
                     $(".RemoveTask").fadeIn();
                     $(".Cancelfinishtag").css("display", "none");
-
                 } else {
                     $(".finishtag").fadeOut();
                     setTimeout(function () {
                         $(".Cancelfinishtag").fadeIn();
                     }, 500);
                 }
-
-
                 $(".t-title").val($scope.Task[0]);
                 $(".TASKID").val($scope.Task[5]);
                 $(".finishtag").attr("id", $scope.Task[5]);
@@ -177,16 +149,14 @@
                 var date = $scope.Task[2].substring(0, 2);
                 date = $scope.Task[2].substring(3, 5) + "-" + date;
                 date = $scope.Task[2].substring(6, 10) + "-" + date;
+
                 $(".valDate").val(date);
-                
                 $("#myDate").attr("value", date);
 
                 // setting to null for the Prototype
                 arrayOfTags = $.grep(arrayOfTags, function (el) { return null });
-
                 var re = /[a-zа-я0-9-]+/gi;
                 var str = $scope.Task[4];
-                var html = "";
                 var id100 = 100;
                 $(".ForTags").html("");
                 str = str.match(re) || [];
@@ -199,29 +169,25 @@
                     // Pushing to The prototype
                     arrayOfTags.push(new tag());
                 });
-               
-
             }, function () {
                 alert('Fail of forming tags');
             });
 
+            console.log(arrayOfTags);
         };
 
     });
 
-
+    // Factory "TService" for WEB API services TagsController and TaskController 
     ModuleManager.factory("TService", function ($http) {
         var fac = {};
         fac.GetTags = function () {
             return $http({ method: "GET", url: "/api/Tags/GetTags/", params: { "name": key } });
         }
-        fac.GetTagsOfTask = function () {
-            return $http({ method: "GET", url: "/api/Tags/GetTagsOfTask/", params: { "taskId": idTask } });
-        }
         fac.DeleteTask = function () {
             return $http({ method: "GET", url: "/api/Tasks/DeleteTask/", params: { 'idTask': idTask } });
         }
-        fac.ChangeStatus = function () {
+        fac.BeginActTask = function () {
             return $http({ method: "POST", url: "/api/Tasks/SetActiveStatus/", params: { 'idTask': idTask } });
         }
         fac.EndActTask = function () {
@@ -234,9 +200,7 @@
             return $http({ method: 'GET', url: "/api/Tasks/GetValuesTask", params: { 'id': key } });
         }
         return fac;
-
     });
-
 
 })();
 

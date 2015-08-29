@@ -1,5 +1,4 @@
-﻿@using Microsoft.Ajax.Utilities
-@model TaskManager.Models.TasksAddChangeSelect
+﻿@model TaskManager.Models.TasksAddChangeSelect
 
 @{
     ViewBag.Title = "Index";
@@ -7,45 +6,21 @@
 }
 
 <div class="Left-Panel">
-    <h2>Фильтр</h2>
-    <div class="list-tasks">
-
-        @*@Html.Partial("_PartialSelectionTasks", Model.SelectTasks) *@
-    </div>
+    <h2>Фильтр задач</h2>
     @Html.Partial("_PartialSelectionTags", Model.SelectTags)
     @Html.Partial("_PartialSelectionDates", Model.SelectDates)
-
     <br/><br/>
     @* System massages *@
     @Request.QueryString["m_ResultMessage"]
 </div>
-@{
-    // For filter by tags
-    string tag = Request.QueryString["tagId"];
-}
-<script type="text/javascript">
-    $(document).ready(function () {
-        var tag = "@tag";
-        $(".Tags").children("a#" + tag).css("color", "red");
-        $(".Tags").children("a#" + tag).addClass("TActFilter");
-        $(".Tags").children("a#" + tag).attr("href", "/");
-    });
-</script>
-
 <div class="container">
-
-
-
     <button class="btnInsert" ng-click="InsertTask($event)">Добавить задачу</button>
-
- 
     <div class="Tasks" data-ng-init="init()">
         <div>
             <i id="{{y.TaskId}}" ng-repeat="y in Tasks | filter:{ Tags: tagValue, TaskTerm: dateValue }" ng-click="OpenTask($event)" class="iTask">
                 <div>{{y.Title}}</div><br />
                 <div class="d-disc">{{y.Description}}</div>
                 <div class="d-date">
-
                     <b>Дата:</b> {{y.TaskTerm.substr(0, 10)}}
                 </div>
                 <div class="d-status">
@@ -55,58 +30,42 @@
                     <b>Теги:</b> {{y.Tags}}
                 </div>
             </i>
-
-
         </div>
-
     </div>
-
     <div class="blockInsertTask">
-
         @using (Html.BeginForm("AddChange", "Manager", FormMethod.Post)) // addChange
         {
             @Html.ValidationSummary(true)
             @Html.AntiForgeryToken()
             <div class="mainTaskInfo">
-
                 @Html.TextBoxFor(x => x.AddChange.Title, new { @Class = "t-title", @placeholder = "Введите название" })<br />
                 @Html.ValidationMessageFor(x => x.AddChange.Title)
-
                 @Html.TextBoxFor(x => x.AddChange.Description, new { @Class = "t-disc", @placeholder = "Описание задачи" })<br />
                 @Html.ValidationMessageFor(x => x.AddChange.Description)
                 <input type="date" runat="server" id="myDate" name="sel_date" />
                 @Html.ValidationMessageFor(x => x.AddChange.TaskTerm)
             </div>
-
             @Html.ValidationMessageFor(x => x.AddChange.Tags)
             <div class="DinamicTag" onkeyup="return(false)">
-
                 <input type="text" ng-model="name" ng-keyup="TagListToDOM(name)" class="inputTag" placeholder="Введите тег" />
                 <div class="sel-list" onkeydown="return(false)" tabindex="0">
                     <div class="optionTag" ng-repeat="(i, u) in Tags | filter:query" tabindex='{{i+1}}'>{{u.TitleTag}}</div>
                 </div>
                 <div class="ForTags"></div>
             </div>
-
             @Html.TextBoxFor(x => x.AddChange.Tags, new { @Class = "HIDDDENTAGS", @placeholder = "Введите теги" })
             @Html.HiddenFor(x => x.AddChange.StatusId, new { @Class = "TASKSTATUS", @Value = @Model.CurStatus })<br />
             @Html.HiddenFor(x => x.AddChange.TaskTerm, new { @Class = "valDate", @placeholder = "dd-mm-yy" })
             @Html.HiddenFor(x => x.AddChange.UsId, new { @Value = @Model.CurId })
             @Html.HiddenFor(x => x.AddChange.TaskId, new { @Class = "TASKID" })
-            <br /><br />
             <input type="button" value="Сохранить" class="saveTask" />
             <input type="submit" value="submit" class="saveTasksub" />
             <input type="button" class="RemoveTask" id="" value="Удалить" ng-model="valut" data-ng-click="DeleteTask($event)">
         }
-
         <input type="button" value="Завершить задачу" id="" class="finishtag" data-ng-click="EndActTask($event)" />
-        <input type="button" value="Установить активность" id="" class="Cancelfinishtag" data-ng-click="ChangeStatus($event)" />
+        <input type="button" value="Установить активность" id="" class="Cancelfinishtag" data-ng-click="BeginActTask($event)" />
     </div>
-
-
 </div>
-
-
 @using (Html.BeginForm("Logout", "Account", FormMethod.Post))
 {
     <div class="login">@Model.CurLogin</div>

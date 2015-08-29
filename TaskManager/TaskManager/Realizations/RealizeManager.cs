@@ -1,18 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity.Migrations;
-using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Runtime.Serialization.Json;
-using System.Security.Cryptography;
-using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.Ajax.Utilities;
 using TaskManager.Models;
-using WebGrease.Css.Extensions;
 
 namespace TaskManager.Realizations
 {
@@ -54,23 +47,20 @@ namespace TaskManager.Realizations
         /// </summary>
         /// <param name="taskId"></param>
         /// <returns></returns>
-        public string ChangeStatus(int taskId)
+        public string BeginActTask(int taskId)
         {
-
             try
             {
                 var task = m_db.Tasks.FirstOrDefault(x => x.TaskId == taskId);
                 task.StatusId = 2;
                 m_db.Tasks.AddOrUpdate(task);
                 m_db.SaveChanges();
-
                 return "Задача активна";
             }
             catch (Exception)
             {
                 return "Ошибка изменения статуса на 'Активна'";
             }
-
         }
 
         /// <summary>
@@ -109,7 +99,6 @@ namespace TaskManager.Realizations
         {
             var list = new List<string>();
             string tags = "";
-
             var tagsCross = m_db.Tags.Join(
                 m_db.CrossTasksTags,
                 t => t.Id,
@@ -129,7 +118,6 @@ namespace TaskManager.Realizations
             list.Add(task.StatusId.ToString());
             list.Add(tags);
             list.Add(taskId.ToString());
-
             return list.ToArray();
         }
 
@@ -152,9 +140,7 @@ namespace TaskManager.Realizations
                 };
                 m_db.Tasks.Add(task);
                 m_db.SaveChanges();
-
                 InsertTags(model.Tags, task.TaskId, 0);
-
                 return "Задача сохранена";
             }
             catch (Exception)
@@ -198,8 +184,6 @@ namespace TaskManager.Realizations
             }
         }
 
-
-
         /// <summary>
         /// Removing of task
         /// </summary>
@@ -231,7 +215,7 @@ namespace TaskManager.Realizations
         /// Getting of tasks
         /// </summary>
         /// <param name="curId">Authorized user</param>
-        /// <returns>List of tasks for _PartialSelectionTasks.cshtml</returns>
+        /// <returns>List of tasks</returns>
         public IEnumerable<Tasks> GetTasks(int curUserId, int tagId, DateTime dateTime)
         {
             List<Tasks> tasksAsList = new List<Tasks>();
@@ -241,7 +225,6 @@ namespace TaskManager.Realizations
             query = from tasks in m_db.Tasks
                     where tasks.UsId == curUserId
                     select tasks;
-
 
             // By tag
             if (tagId != 0)
@@ -353,7 +336,11 @@ namespace TaskManager.Realizations
             return query;
         }
 
-
+        /// <summary>
+        /// Getting of tags for each task on the page of list Tasks
+        /// </summary>
+        /// <param name="taskId"></param>
+        /// <returns></returns>
         public string GetTagsOfTask(int taskId)
         {
             string tags = "";
@@ -369,14 +356,8 @@ namespace TaskManager.Realizations
             {
                 tags = tags + ", " + q.TitleTag;
             }
-
-            return tags;
-
+            return tags.Substring(1);
         }
-
-
-
-
 
         /// <summary>
         /// Getting of User id
@@ -426,12 +407,10 @@ namespace TaskManager.Realizations
             Tags tagRes;
             CrossTasksTags cross = null;
             int TagsId;
-
             tagRow = tagRow.ToLower();
             foreach (Match t in Regex.Matches(tagRow, @"([\b\w\-\w\b]+)"))
             {
                 tagRes = m_db.Tags.FirstOrDefault(x => x.TitleTag == t.Value); // search next tag of Match list
-
                 if (way == 0) // Condition for insert of tag
                 {
                     if (tagRes == null)
@@ -439,9 +418,7 @@ namespace TaskManager.Realizations
                         Tags theTag = new Tags() { TitleTag = t.Value };
                         m_db.Tags.Add(theTag);
                         m_db.SaveChanges();
-
                         TagsId = theTag.Id;
-
                         cross = new CrossTasksTags() { TaskId = taskId, TagsId = TagsId };
                     }
                     else
@@ -454,7 +431,6 @@ namespace TaskManager.Realizations
                 {
                     bool addAndAssociate = false;
                     bool associate = true;
-
                     if (tagRes != null) // Tag found in table tags
                     {
                         if (m_db.CrossTasksTags.FirstOrDefault(x => x.TagsId == tagRes.Id && x.TaskId == taskId) != null)
@@ -468,13 +444,11 @@ namespace TaskManager.Realizations
                         associate = false;
                     }
 
-
                     if (addAndAssociate) // add and associate tag
                     {
                         Tags theTag = new Tags() { TitleTag = t.Value };
                         m_db.Tags.Add(theTag);
                         m_db.SaveChanges();
-
                         TagsId = theTag.Id;
                         cross = new CrossTasksTags() { TaskId = taskId, TagsId = TagsId };
                         m_db.CrossTasksTags.Add(cross);
@@ -485,7 +459,6 @@ namespace TaskManager.Realizations
                         m_db.CrossTasksTags.Add(cross);
                     }
                 }
-
                 m_db.SaveChanges();
             }
         }

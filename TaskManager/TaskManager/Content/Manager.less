@@ -67,6 +67,16 @@ body {
             width: 300px;
             margin-left: 10px;
             margin-right: 10px;
+            h2{
+                padding-left: 6px;
+                padding-bottom: 4px;
+                display: block;
+                float: left;
+                width: 98.5%;
+                font-size: 20px;
+                font-weight: normal;
+                background-color: #FBFBE8;
+            }
             .list-tasks{
                 float: left;
                 max-height: 700px;
@@ -74,83 +84,66 @@ body {
                 overflow: auto; 
             }
             .Tags, .Dates{
+                float: left;
+                width: 300px;
+                border-top: 1px dashed #00BDC0;
+                padding-top: 20px;
+                margin-bottom: 20px;
+                span{
+                    &:hover{ background-color: #E0DCDC; color: #00BDC0; }
+                    height: 20px;
+                    display: block;
+                    border: none;
+                    background-color: darkturquoise;
+                    text-decoration: none;
                     float: left;
-                    width: 300px;
-                    border-top: 1px dashed #00BDC0;
-                    padding-top: 20px;
-                    margin-bottom: 20px;
-                    span{
-                        &:hover{ background-color: #E0DCDC; color: #00BDC0; }
-                        height: 20px;
-                        display: block;
-                        border: none;
-                        background-color: darkturquoise;
-                        text-decoration: none;
-                        float: left;
-                        margin-bottom: 2px;
-                        font-size: 13px;
-                        padding: 5px;
-                        color: #FFF;
-                        margin: 2px;
-                        cursor: pointer;
-                    }
+                    margin-bottom: 2px;
+                    font-size: 13px;
+                    padding: 5px;
+                    color: #FFF;
+                    margin: 2px;
+                    cursor: pointer;
                 }
+            }
         }
         .container{
             float: left;
             background-color: #FBFBE8;
             width: 100%;
-            padding: 15px 10px 15px 10px;
+            padding: 22px 10px 15px 15px;
             margin-right: 10px;
             position: relative;
             .Tasks{
-                    i{
-                        &:hover{ background-color: #E0DCDC; color: #00BDC0; }
-                        float: left;
-                        background-color: #FBFBE8;
-                        margin-bottom: 2px;
-                        font-style: normal;
-                        font-size: 13px;
-                        cursor: pointer;
-                        display: block;
-                        text-decoration: none; 
-                        width: 96%;
-                        padding: 5px;
-                        div{ float: left; width: 100%; line-height: 22px; }
-                        div:first-child{ font-size: 20px; }
-                        .d-disc{ max-height: 50px; overflow: hidden; }
-                        .d-date{ color: #666; }
-                        .d-status{ color: darkturquoise; }
-                        .d-tags{ color: darkturquoise; }
-                    }
+                i{
+                    &:hover{ background-color: #E0DCDC; color: #00BDC0; }
+                    float: left;
+                    background-color: #FBFBE8;
+                    margin-bottom: 2px;
+                    font-style: normal;
+                    font-size: 13px;
+                    cursor: pointer;
+                    display: block;
+                    text-decoration: none; 
+                    width: 96%;
+                    padding: 5px;
+                    div{ float: left; width: 100%; line-height: 22px; }
+                    div:first-child{ font-size: 20px; }
+                    .d-disc{ max-height: 50px; overflow: hidden; }
+                    .d-date{ color: #666; }
+                    .d-status{ color: darkturquoise; }
+                    .d-tags{ color: darkturquoise; }
+                }
              } 
-            .blockDetailTask{
-                position: absolute;
-                width: 500px;
-                height: 500px;
-                background-color: #FBFBE8;
-                box-shadow: 0px 1px 3px 1px #999;
-                padding: 20px 50px 10px 50px;
-                display: none;
-                top: 12%;
-                left: 15%;
-
-            }
-            .btnInsert{
-                .inputSubmit; margin: 10px 0px 10px 0px;
-
-            }
+            .btnInsert{ .inputSubmit; margin: 10px 0px 10px 0px; }
             .blockInsertTask{
                 position: absolute;
                 width: 210px;
-                height: 430px;
                 padding: 20px 50px 35px 50px;
                 background-color: #FBFBE8;
                 box-shadow: 0px 1px 3px 1px #999;
                 display: none;
-                top: 12%;
-                left: 15%;
-
+                top: -2%;
+                left: 17%;
                 .DinamicTag{
                     position: relative;
                     input[type=text]{ .inputText; float: left; }
@@ -174,10 +167,11 @@ body {
                             padding: 2px 0px 4px 2px;
                             cursor: pointer;
                         }  
-
                     }
                     .ForTags{
                         float: left;
+                        padding-top: 10px;
+                        padding-bottom: 20px;
                         span{
                             display: block;
                             float:left;

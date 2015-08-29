@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using System.Web.Routing;
 using TaskManager.Realizations;
 using WebMatrix.WebData;
 
 namespace TaskManager.Controllers.api
 {
-
     [RoutePrefix("api/Tasks")]
     public class TasksController : ApiController
     {
@@ -25,32 +19,18 @@ namespace TaskManager.Controllers.api
         /// </summary>
         private string m_Login = WebSecurity.CurrentUserName;
 
-
-
-
+        /// <summary>
+        /// Getting of tasks
+        /// </summary>
+        /// <returns>List of tasks</returns>
         [Route("GetTasks")]
         public IEnumerable<Tasks> GetTasks()
         {
-
-            //int tagId = 0, string date = ""
-            //DateTime dateTime = default(DateTime);
-            //if (date != "")
-            //{
-            //    dateTime = DateTime.Parse(date);
-            //}
-
             List<Tasks> TaskWithTags = new List<Tasks>();
-
-
             IEnumerable<Tasks> tasks = m_Realize.GetTasks(m_Realize.GetCurrentUser(m_Login).UserId, 0, default(DateTime));
-
             IEnumerable<Tags> tags = null;
-
-
             foreach (var t in tasks)
             {
-
-
                 TaskWithTags.Add(new Tasks()
                 {
                     TaskId = t.TaskId,
@@ -60,21 +40,10 @@ namespace TaskManager.Controllers.api
                     UsId = t.UsId,
                     StatusString = t.StatusString,
                     Tags = m_Realize.GetTagsOfTask(t.TaskId)
-                });
-   
-                
+                });  
             }
-
-
-
             return TaskWithTags;
         }
-
-
-       
-
-
-
 
         /// <summary>
         /// Dynamic opening of detail task on the Index page
@@ -113,7 +82,7 @@ namespace TaskManager.Controllers.api
         [Route("SetActiveStatus")]
         public string SetActiveStatus(int idTask)
         {
-            string status = m_Realize.ChangeStatus(idTask);
+            string status = m_Realize.BeginActTask(idTask);
             return status;
         }
 
@@ -148,6 +117,5 @@ namespace TaskManager.Controllers.api
         public void Delete(int id)
         {
         }
-
     }
 }

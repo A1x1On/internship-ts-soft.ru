@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Web.Http;
 using TaskManager.Realizations;
-using WebMatrix.WebData;
 
 namespace TaskManager.Controllers.api
 {
@@ -27,12 +21,8 @@ namespace TaskManager.Controllers.api
         public IEnumerable<Tags> GetTags(string name)
         {
             IEnumerable<Tags> tags = m_Realize.GetTags(name);
-
             return tags;
         }
-
-
-
 
         // GET api/<controller>
         public IEnumerable<string> Get()

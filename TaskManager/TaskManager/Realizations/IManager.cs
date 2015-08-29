@@ -7,16 +7,20 @@ namespace TaskManager.Realizations
     public interface IManager
     {
         /// <summary>
-        /// Finishing of task
+        /// Turn off activity of task(status)
         /// </summary>
         /// <param name="taskId">ID of task</param>
         string EndActTask(int taskId);
 
-
-
+        /// <summary>
+        /// Getting of tags for each task on the page of list Tasks
+        /// </summary>
+        /// <param name="taskId"></param>
+        /// <returns></returns>
         string GetTagsOfTask(int taskId);
 
-        string ChangeStatus(int taskId);
+        // Turn on activity of task(status)
+        string BeginActTask(int taskId);
 
         /// <summary>
         /// Auto-Updating all user's tasks that is updating statuses of the every task
